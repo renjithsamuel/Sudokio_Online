@@ -1,0 +1,146 @@
+
+h1{
+    color: var(--text-color);
+    margin-left: 45vw;
+    letter-spacing: 0.15vw;
+}
+
+.pagewrap{
+    display: flex;
+}
+
+.sudokubox{
+    margin-left: 20vw;
+    border: 1px solid transparent;
+    background-color: transparent;
+    height: fit-content;
+    width: fit-content;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-wrap: wrap;
+    width: 28vw;
+    height: 56vh;
+}
+
+.elem{
+    border: 1px solid var(--border-color);
+    background-color: var(--change-color);
+    height: 6vh;
+    width: 3vw;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    cursor: pointer;
+    transition: all 0.3s ease-in-out;
+}
+
+.elem:hover{
+    background-color: var(--hover-color);
+    box-shadow: 1px 2px 3px 0px var(--hover-color)   ; 
+}
+
+.btns{
+    margin-left: 25vw;
+    display: flex;
+    padding: 2vh;
+    cursor: pointer;
+    color: var(--bg-color);
+}
+
+.submitbtn{
+    padding-top: 0.5vh;
+    border-radius: 10px;
+    width: 7vw;
+    height: 5vh;
+    text-align: center;
+    background-color: var(--change-color);
+}
+.resetbtn{
+    padding-top: 0.5vh;
+    margin-left: 1vw;
+    border-radius: 10px;
+    width: 7vw;
+    height: 5vh;
+    text-align: center;
+    background-color: var(--change-color);
+}
+
+.submitbtn:hover,.resetbtn:hover{
+    background-color: var(--fixed-color);
+}
+
+
+.right{
+    margin-left: 5vw;
+    margin-top: 5vh;
+    width: 25vw;
+    height: 45vh;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px 10px;
+}
+
+.selem{
+    color: var(--text-color);
+    width: 7vw;
+    height: 12vh;
+    border-radius: 10px;
+    background-color: var(--fixed-color);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    cursor: pointer;
+}
+
+.selem:hover{
+    background-color: var(--change-color);
+}
+
+
+
+
+@media only screen and (max-width: 900px) {
+    .pagewrap{
+        display: flex;
+        flex-direction: column;
+    }
+    h1{
+        margin-left: 35vw;
+    }
+    .sudokubox{
+        margin-left: 10vw;
+        width: 75vw;
+        height: 50vh;
+    }
+    .elem{
+        height: 5.55vh;
+        width: 7.78vw;
+    }
+    .right{
+        margin-left: 1vw;
+        flex-wrap: nowrap;
+        width: 100%;
+        height: fit-content;
+    }
+    .selem{
+        color: var(--text-color);
+        width: 8vw;
+        height: 8vh;
+    }
+    .btns{
+        margin-left: 22vw;
+        margin-top: 4vh;
+    }
+    
+    .submitbtn{
+        padding-top: 0.5vh;
+        width: 23vw;
+        height: 5vh;
+    }
+    .resetbtn{
+        width: 23vw;
+        height: 5vh;
+
+    }
+  }
