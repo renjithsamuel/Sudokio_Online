@@ -1,34 +1,63 @@
-    import { useEffect, useRef, useState } from "react";
+    import { useCallback, useEffect, useMemo, useRef, useState } from "react";
     import SelectElem from "../components/SelectElem";
     import SudokuElem from "../components/SudokuElem";
-    import { GoogleLoginButton } from "react-social-login-buttons";
     import { LoginSocialGoogle} from "reactjs-social-login";
     import './sudokuGame.css';
+    import googleImg from "../assets/google.png" ;
+    import leaderBoardImg from '../assets/leaderBoard.svg' 
+    import LeaderBoard from "../components/LeaderBoard";
+    import UserAccountScreen from "../components/UserAccountScreen";
 
     function SudokuGame(){
         
         // global variables 
-        // const selems = useRef();
-        // const elems = useRef();
         const submitbtn = useRef();
         const resetbtn = useRef();
         const sudoku = useRef();
         const [board, setBoard] = useState([]);
         const [currX ,  setCurrx] = useState(0);
         const [currY ,  setCurry] = useState(0);
+        const [isValid ,  setIsValid] = useState(false);
+        const [currentUser,setCurrentUser] = useState({});
+        const [allUsers,setAllUsers] = useState([]);
+        const [oauthData,setOauthData] = useState({});
+        const [isLeaderBoardClicked,setIsLeaderBoardClicked] = useState(false);
+        const [isUserAccClicked,setIsUserAccClicked] = useState(false);
+        let today = '';
+        
+        const sendHTTPRequest = async (url , method , data) =>{
+            let returnData = null;
+            await fetch(url , {
+                method : method,
+                body : JSON.stringify(data),
+                headers : {'content-Type' : 'application/json'}  
+            }).then((response)=>{return response.json()}).then((response)=>returnData = response).catch((err)=>console.log("cannot retrive data!",err));
+            return returnData;
+        } 
 
-        useEffect(() => {
-            sudokuGame();
+        // initializing game
+        useEffect( () => {
+            getLeaderBoard();
+            async function boardCreator(){
+                // const getTimeApi = `http://worldtimeapi.org/api/timezone/Asia/Kolkata`;
+                // let dateApiData = await sendHTTPRequest(getTimeApi,'GET');
+                // console.log(dateApiData);
+                today = new Date().toLocaleDateString('en-US',{day : 'numeric' , month : "short",year : "numeric"});
+                const isBoardAvail = await fetchBoard(today); 
+                if(isBoardAvail===false){console.log('entering sudoku game'); sudokuGame();}
+            }
+            boardCreator();   
             // submit and reset buttons
-            let eventlist2 = submitbtn.current.addEventListener('click',()=>{
-                if(verifySudoku()==true){alert('Congratulations! You won the game'); sudoku.innerHTML=''   ;sudokuGame();}
-                else alert('try again!');   
+            let eventlist2 = submitbtn.current.addEventListener('click', async ()=>{
+                if(verifySudoku() || true)console.log("isValid at listen : " , isValid);
+                if(isValid==true){alert('Congratulations! You won the game');}
+                else {alert('try again!');}
+                setIsValid(true);
             })
             
-            let eventlist3 = resetbtn.current.addEventListener('click',()=>{
+            let eventlist3 = resetbtn.current.addEventListener('click', ()=>{
                 if( confirm("Are you sure!")==true){
-                    sudoku.innerHTML=''   ;
-                    sudokuGame();
+                resetBoard();
                 }else return;
             })
             
@@ -36,11 +65,116 @@
             removeEventListener('click',eventlist2);
             removeEventListener('click',eventlist3);
             }
-        }, [])
-        
+        }, []);
+
+
+        // handling side effects
+        useEffect(()=>{ 
+            const loginUser = async () => {
+                // if(currentUser!=null)return;
+                // if(sessionStorage.getItem('emailId')!=null)return;
+                console.log("inside login user : ");
+                console.log(oauthData);
+                if(oauthData.name == null || oauthData.email==null) { console.log("oauth data not found!");return;}
+                sessionStorage.setItem('username' , oauthData.name);
+                sessionStorage.setItem('emailId',oauthData.email);
+                sessionStorage.setItem('userImgLink',oauthData.picture);
+
+                const getCurrentUserUrl = `http://localhost:3000/api/v1/getCurrentUser`;
+                const postCurrentUserUrl = `http://localhost:3000/api/v1/postUser`;
+                const currentUserObj = {emailId : oauthData.email , username : oauthData.name , userImgLink : oauthData.picture };
+                console.log(currentUserObj);
+                const tempCurrentUser = await sendHTTPRequest(getCurrentUserUrl,'POST',currentUserObj);
+                console.log(tempCurrentUser);
+                if(tempCurrentUser && tempCurrentUser.success==true){
+                    setCurrentUser(tempCurrentUser.data);
+                }else if(tempCurrentUser.error == 'cannot find user! or something went wrong!'){
+                    const postNewUser = await sendHTTPRequest(postCurrentUserUrl,'POST',currentUserObj);
+                    if(postNewUser.success == true){
+                        setCurrentUser(postNewUser.data);
+                        console.log("User posted succesfully!");
+                    }else{
+                        console.log("something went wrong while posting new user!");
+                    }
+                }else{
+                    console.log("some unknown server error occured!");
+                }
+            }
+            loginUser();
+        },[oauthData]);
+
+
+        useEffect(()=>{
+            console.log(allUsers);
+            if(sessionStorage.getItem('emailId')!=null || currentUser==null){
+
+                console.log('setting current user~ ',allUsers.filter((elem)=> elem.emailId == sessionStorage.getItem('emailId'))[0]);
+                setCurrentUser(()=>{return (allUsers.filter((elem)=> elem.emailId == sessionStorage.getItem('emailId')))[0]});}
+        },[allUsers])
+
+
+        // small functions for various online competitive game environment
+        const fetchBoard = async (date) => {
+            // console.log(date);
+            const getBoardUrl = `http://localhost:3000/api/v1/getBoard`;
+            let tempBoard = await sendHTTPRequest(getBoardUrl,'POST',{date : date});
+            if(tempBoard && tempBoard.success==true){
+                let newBoardData = tempBoard.data.board;
+                setBoard(newBoardData);
+                return true;
+            }
+            return false;
+        }
+
+        const postNewBoard = async (newBoard) => {
+            const postBoardUrl =  `http://localhost:3000/api/v1/postBoard`;
+            console.log("inside post" , newBoard);
+            let postResponse = await sendHTTPRequest(postBoardUrl,'POST',{
+                board : newBoard,
+                date : today
+            });
+            if(postResponse.success == false){
+                console.log("Something went wrong while posting!");
+            }else{
+                console.log("board posted successfully!");
+            }
+        }
+
+        const resetBoard = ()=>{
+            // console.log(permanentBoard);
+            setBoard((prevBoard)=>{
+                return prevBoard.map((arr)=>{
+                    return (arr).map(e=>{
+                        if(e.fixed==false)return  { fixed : false, val: 0 }; 
+                        return e;
+                    })
+                })
+            });
+            setIsValid(true);
+        };
+
+        const logOut = ()=>{
+            if(isLeaderBoardClicked==true)setIsLeaderBoardClicked(false);
+            if(isUserAccClicked==true)setIsUserAccClicked(false);
+            setCurrentUser(null);
+            sessionStorage.clear();
+        }
+
+
+        const getLeaderBoard = async ()=>{
+                const getAllUsersUrl = `http://localhost:3000/api/v1/getUsers`;
+                const tempAllUsers = await sendHTTPRequest(getAllUsersUrl , 'GET');
+                if(tempAllUsers && tempAllUsers.success==true){
+                    setAllUsers(tempAllUsers.data);
+                }else{
+                    console.log("Something went wrong while fetching all users!");
+                    return;
+                }
+        }
+
+    // board generation logics
         const generateRandomValue = () => Math.floor(Math.random() * 9) + 1;
 
-        
         // function to generate random numbers
         function r(a){
             return Math.floor(Math.random() * a) + 1;
@@ -98,10 +232,7 @@
             // Solve the Sudoku puzzle
             Solve(newBoard, 0, 0);
             console.log('printing sudoku board : ');
-            printBoard(newBoard);
             setBoard(newBoard);
-          
-            // Skip the randomization step for some elements
             for(let i=0;i<(newBoard.length*newBoard[0].length)/2;i++){
                     let x = r(8);
                     let y = r(8);
@@ -110,6 +241,8 @@
                         newBoard[x][y]={val:0,fixed:false};
                     }
                 }
+            // posting the newly genereated board:
+            postNewBoard(newBoard);
           }
 
         // Partially solved sudoku generated
@@ -119,10 +252,13 @@
             for(let i=0;i<board.length;i++){
                 for(let j=0;j<board[0].length;j++){
                     let val = board[i][j].val;
-                    if(isfinalSafe(board,i,j,val)==false)return false;
+                    if(val===0 || isfinalSafe(board,i,j,val)==false ){console.log("val : ",val,"isValid: ",isValid);setIsValid(false);return;}
                 }
+                if (!isValid) {
+                    return;
+                  }
             }
-            return true;
+            setIsValid(true);
         }
 
         function isfinalSafe(board , row, col, val){
@@ -139,6 +275,7 @@
             }
             return true;
         }
+                
 
         // function to print the sudoku
         function printBoard( board){
@@ -155,22 +292,39 @@
 
         return  (
             <>
-                <h1>Sudoku</h1>
-                <LoginSocialGoogle
-                            client_id={"765286335673-0ida964dqmv0obr3ilg7rjb0b6b0anr3.apps.googleusercontent.com"}
-                            scope="openid profile email"
-                            discoveryDocs="claims_supported"
-                            access_type="offline"
-                            onResolve={({ provider, data }) => {
-                                console.log(provider, data);
-                            }}
-                            onReject={(err) => {
-                                console.log(err);
-                            }}
-                        >
-                    <GoogleLoginButton  />
-                    
-                </LoginSocialGoogle>
+                {(isLeaderBoardClicked==true)?<LeaderBoard allUsers={allUsers} setIsLeaderBoardClicked={setIsLeaderBoardClicked} currentUser={sessionStorage.getItem('username')}/>:''}
+                {(isUserAccClicked==true)?<UserAccountScreen user={currentUser} setIsUserAccClicked={setIsUserAccClicked} logOut={logOut}/>:''}
+                <div className="navBar">
+                    <h1>Sudoku</h1>
+                    <div className="online">
+                        {(currentUser==null)?
+                            <div className="loginWithGoogle">
+                            <LoginSocialGoogle
+                                        client_id={"765286335673-0ida964dqmv0obr3ilg7rjb0b6b0anr3.apps.googleusercontent.com"}
+                                        scope="openid profile email"
+                                        discoveryDocs="claims_supported"
+                                        access_type="offline"
+                                        onResolve={({ provider, data }) => {
+                                            // console.log(provider);
+                                            console.log(data);
+                                            setOauthData(data);
+                                        }}
+                                        onReject={(err) => {
+                                            console.log(err);
+                                        }}
+                                    >
+                                <div className="googleBtn"><img src={googleImg} alt="google" height={30} width={30} /><span id="loginWord">Login</span></div>
+                            </LoginSocialGoogle>
+                        </div>
+                        :
+                            <div className="userAccBtn" onClick={()=>{if(isLeaderBoardClicked==true){setIsLeaderBoardClicked(false);}setIsUserAccClicked(true);}}>
+                                <img src={sessionStorage.getItem('userImgLink')} alt="user" height={50} width={50} />
+                            </div>        
+                        }
+                        <div className="leaderBoard" onClick={()=>{if(isUserAccClicked==true){setIsUserAccClicked(false);}setIsLeaderBoardClicked(true)}}> <img src={leaderBoardImg} alt="leaderBoard" height={40} width={40} /></div>
+                    </div>
+                </div>
+
                 <div className="pagewrap">
                     <div className="left">
                         <div className="sudokubox" ref={sudoku}>

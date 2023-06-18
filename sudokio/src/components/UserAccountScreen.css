@@ -1,0 +1,118 @@
+.userAccScreenBackDrop{
+    position: fixed;
+    height: fit-content;
+    width: 80vw;
+    backdrop-filter: blur(50px);
+    background-color: rgba(79, 129, 238, 0.137);
+    z-index: 1;
+    top: 5vh;
+    left: 10vw;
+    padding: 3vh;
+    border-radius: 30px;
+}
+
+.UserAccScreenWrapper{
+    width: 70vw;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: flex-start;
+}
+
+
+.topOfUserAcc{
+    display: flex;
+    width: 50vw;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 2vh;
+}
+
+.userWelcome{
+    text-indent: 0.5vw;
+    font-weight: 800;
+    font-size: x-large;
+    margin: 1.5vh;
+    
+    background-color: rgba(109, 109, 210, 0.952);
+    border-radius:10px ;
+    padding: 1vh;
+    backdrop-filter: blur(10px);
+    box-shadow: 0 8px 10px 0 rgba(40, 54, 110, 0.751);
+}
+.userWelcome:hover{
+    cursor: default;
+    box-shadow: 0 8px 20px 0 rgba(9, 22, 74, 0.751);
+}
+
+.controlsUser{
+    display: flex;
+}
+
+.closeUserAccBtn{
+    background-color: rgba(240, 248, 255, 0.867);
+    height: 7vh;
+    width: 3vw;
+    border-radius: 10px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+
+.closeUserAccBtn:hover{
+    background-color: rgba(164, 169, 173, 0.867);
+    cursor: pointer;
+    box-shadow: 0px 0px 2px 2px rgb(152, 152, 152);
+}
+
+.logoutBtn{
+    background-color: rgba(240, 248, 255, 0.867);
+    height: 7vh;
+    width: 3vw;
+    border-radius: 10px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-right: 1vw;
+}
+
+
+.logoutBtn:hover{
+    background-color: rgba(164, 169, 173, 0.867);
+    cursor: pointer;
+    box-shadow: 0px 0px 2px 2px rgb(152, 152, 152);
+
+}
+
+
+
+
+.userListItem{
+    background-color: rgba(222, 222, 222, 0.551);
+    padding: 1vh;
+    margin-bottom: 0.5vh;
+    display: flex;
+    justify-content: space-between;
+    border-radius: 10px;
+}
+.userListItem:hover{
+    box-shadow: 0 8px 20px 0 rgba(40, 54, 110, 0.751);
+    cursor: default;
+}
+
+.userLeft {
+    text-indent: 0.5vw;
+    font-weight: 800;
+    font-size: large;
+    width: 15vw;
+    letter-spacing: 1.5px;
+}
+.userRight{
+    font-weight: 600;
+    font-size: medium;
+    width: 20vw;
+    margin-left: 3vw;
+    letter-spacing: 1.5px;
+    color: rgb(29, 1, 55);
+}

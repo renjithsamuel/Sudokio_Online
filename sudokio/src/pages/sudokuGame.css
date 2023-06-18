@@ -1,12 +1,91 @@
 
 h1{
     color: var(--text-color);
-    margin-left: 45vw;
+    margin-left: 0;
     letter-spacing: 0.15vw;
+}
+
+.navBar{
+    display: flex;
+    justify-content: space-around;
+}
+
+.online{
+    display: flex;
+}
+
+
+.userAccBtn{
+    margin-top: 3.5vh;
+    margin-right: 1vw;
+    border-radius: 50%;
+}
+
+.userAccBtn img{
+    border-radius: 50%;
+    box-shadow: 0px 0px 2px 2px rgb(152, 152, 152);
+}
+
+.userAccBtn img:hover{
+    cursor: pointer;
+    box-shadow: 0px 0px 2px 4px rgb(152, 152, 152);
+}
+
+.leaderBoard{
+    background-color: rgba(240, 248, 255, 0.884);
+    padding: 1vh;
+    margin-top: 3.5vh;
+    height: 5vh;
+    border-radius: 10px;
+}
+
+.leaderBoard:active{
+    background-color: rgb(149, 149, 149);
+    transform: scale(1.5)  translateY(4px);  
+}
+
+.leaderBoard:hover{
+    cursor: pointer;
+    box-shadow: 1px 2px 4px 4px rgb(152, 152, 152);
+}
+
+.loginWithGoogle{
+    margin-top: 3vh;
+    font-size: small;
+    width: 8vw;
+    height: 3vh;
+    border-radius: 50%;
+}
+
+.googleBtn{
+    padding: 2vh;
+    background-color: rgba(240, 248, 255, 0.842);
+    display: flex;
+    border-radius: 20px;
+    transition: all 0.2s ease;
+    margin-right: 0.5vw;
+}
+
+.googleBtn:active{
+    background-color: rgb(149, 149, 149);
+    transform: scale(1.5)  translateY(4px);  
+}
+
+.googleBtn:hover{
+    cursor: pointer;
+    box-shadow: 1px 2px 4px 4px rgb(152, 152, 152);
+}
+
+#loginWord{
+    margin-left: 1vw;
+    margin-right: 0.2vw;
+    font-weight: 600;
+    font-size: large;
 }
 
 .pagewrap{
     display: flex;
+    margin-top: 3vh;
 }
 
 .sudokubox{
@@ -37,10 +116,12 @@ h1{
 
 .elem:hover{
     background-color: var(--hover-color);
-    box-shadow: 1px 2px 3px 0px var(--hover-color)   ; 
+    box-shadow: 0px 0px 3px 1px var(--hover-color)   ; 
+    z-index: 1;
 }
 
 .btns{
+    margin-top: 3vh;
     margin-left: 25vw;
     display: flex;
     padding: 2vh;
@@ -95,6 +176,7 @@ h1{
 
 .selem:hover{
     background-color: var(--change-color);
+    box-shadow: 0 8px 20px 0 rgba(1, 118, 136, 0.751);
 }
 
 
@@ -109,7 +191,6 @@ h1{
         margin-left: 35vw;
     }
     .sudokubox{
-        margin-left: 10vw;
         width: 75vw;
         height: 50vh;
     }
