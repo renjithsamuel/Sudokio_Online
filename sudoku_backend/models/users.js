@@ -1,6 +1,9 @@
 const mongoose = require('mongoose');
 
 const usersSchema = mongoose.Schema({
+    userId : {
+        type : String
+    },
     username : {
         type : String,
         required : [true , "send the username!"]
@@ -23,6 +26,18 @@ const usersSchema = mongoose.Schema({
     },
     overallRanking : {
         type : Number
+    },
+    todayGameWon : {
+        type : Boolean
+    },
+    userImgLink : {
+        type : String
+    },
+    heart : {
+        type : Number
+    },
+    timer : {
+        type : Object
     }
 }, { timestamps: true }) 
 

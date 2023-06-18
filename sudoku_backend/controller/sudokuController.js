@@ -1,150 +1,233 @@
-const Sudokos = require('../models/sudokos');
-const Users = require('../models/users');
+    const Sudokos = require('../models/sudokos');
+    const Users = require('../models/users');
 
-// Board controller
-exports.getBoard = async ( req , res , next ) => {
-    try {
-        const board = await Sudokos.find();
-        return res.status(200).json({
-            success : true,
-            data  : board , 
-            count : board.length
-        })
-    }catch(err){
-        return res.status(500).json({
-            success : false , 
-            error : "Internal server error " + err 
-        })
-    }
-}
-
-// create board in 12 noon : 
-exports.postBoard = async (req,res,next) => {
-    if(req.body.board==null || req.body.date==null)
-        return res.status(400).json({
-        success : false,
-        error : "send correct values!"
-    })
-    try{
-        const board = await Sudokos.create(req.body);
-        if(board == null){
-            return res.status(400).json({
-                success : false,
-                error : "something went wrong!"
+    // Board controller
+    exports.getBoard = async ( req , res , next ) => {
+        // res.setHeader('Access-Control-Allow-Origin', 'http://localhost:5173');
+        // res.setHeader("Access-Control-Allow-Origin", "*");
+        // res.header("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept");
+        // headers.append('Access-Control-Allow-Credentials', 'true');
+        if(req.body.date == null)return res.status(400).send("send valid date!");
+        try {
+            const board = await Sudokos.findOne({date : req.body.date});
+            if(!board){
+                return res.status(400).json({
+                    success : false,
+                    error : "cannot find document"
+                })
+            }
+            return res.status(200).json({
+                success : true,
+                data  : board,
+            })
+        }catch(err){
+            return res.status(500).json({
+                success : false , 
+                error : "Internal server error " + err 
             })
         }
-        return res.status(200).json({
-            success : true,
-            data : board,
-            count : board.length
-        })
-    }catch(err){
-        return res.status(500).json({
-            success : false,
-            error : "Internal server error "+ err
-        })
     }
-}
 
-// User controller
-exports.getUsers = async (req,res,next) =>{
-    try{
-        const users = await Users.find();
-        if(!users){
+    // create board in 12 noon : 
+    exports.postBoard = async (req,res,next) => {
+        if(req.body.board==null || req.body.date==null)
             return res.status(400).json({
-                success : false ,
-                error : "Something went wrong!",
-            })
-        }
-        return res.status(200).json({
-            success : true ,
-            data : users,
-            count : users.length
-        })
-    }catch(err){
-        return res.status(500).json({
-            success : false,
-            error : "Internal server error "+ err
-        })
-    }
-}
-
-exports.postUser = async (req,res,next) =>{
-    if(req.body.username == null || req.body.emailId == null){
-        return res.status(400).json({
             success : false,
             error : "send correct values!"
         })
-    }
-    try{
-        const totalNumberOfUsers = await Users.estimatedDocumentCount();
-        const obj = {
-            username  : req.body.username,
-            emailId : req.body.emailId , 
-            todayScore : 0,
-            totalScore : 0,
-            numberOfGamesPlayed : 0,
-            todayRanking : 0,
-            overallRanking : totalNumberOfUsers,
-        }
-        const user = await Users.create(obj);
-        if(!user){
-            return res.status(400).json({
+        try{
+            const board = await Sudokos.create(req.body);
+            if(board == null){
+                return res.status(400).json({
+                    success : false,
+                    error : "something went wrong!"
+                })
+            }
+            await Users.updateMany({},{todayGameWon : false,todayScore:0,heart:3,timer : {hours:0,minutes:0,seconds : 0}}); 
+            return res.status(200).json({
+                success : true,
+                data : board,
+                count : board.length
+            })
+        }catch(err){
+            return res.status(500).json({
                 success : false,
-                error : "something went wrong "
+                error : "Internal server error "+ err
             })
         }
-        return res.status(200).json({
-            success : true,
-            data : user
-        })
-    }catch(err){
-        return res.status(500).json({
-            success: false ,
-            error : "Internal server error ",err
-        })
     }
-}
 
-
-exports.patchUser = async (req,res,next) =>{
-    const Id = req.params.id;
-    if(Id==null)return res.status(400).send("send valid id of user!");
-    if(req.body.username==null && req.body.emailId==null && req.body.todayScore==null && req.body.totalScore==null && req.body.numberOfGamesPlayed==null && req.body.todayRanking ==null && req.body.overallRanking==null){
-        return res.status(400).json({
-            success : false,
-            error : "send any one valid data to update!"
-        })
-    }
-    try{
-        const userOldObj = await Users.findById(Id);
-        const obj = {
-            username  : req.body.username || userOldObj.username,
-            emailId : req.body.emailId || userOldObj.emailId, 
-            todayScore : req.body.todayScore || userOldObj.todayScore,
-            totalScore : req.body.todayScore || userOldObj.totalScore,
-            numberOfGamesPlayed : req.body.numberOfGamesPlayed || userOldObj.numberOfGamesPlayed,
-            todayRanking : req.body.todayRanking || userOldObj.todayRanking,
-            overallRanking : req.body.overallRanking || userOldObj.overallRanking,
-        }
-        const user = await Users.findByIdAndUpdate(Id , obj, {new:true});
-        if(!user){
-            return res.status(400).json({
+    // User controller
+    exports.getUsers = async (req,res,next) =>{
+        try{
+            const users = await Users.find();
+            if(!users){
+                return res.status(400).json({
+                    success : false ,
+                    error : "Something went wrong!",
+                })
+            }
+            return res.status(200).json({
+                success : true ,
+                data : users,
+                count : users.length
+            })
+        }catch(err){
+            return res.status(500).json({
                 success : false,
-                error : "something went wrong!"                
+                error : "Internal server error "+ err
             })
         }
-        return res.status(200).json({
-            success : true,
-            data : user,
-        })
-    }catch(err){
-        return res.status(500).json({
-            success : false,
-            error : "Internal server error!" + err
-        })
     }
-}
+
+    exports.getCurrentUser = async (req,res,next) =>{
+        const emailId = req.body.emailId;
+        const username = req.body.username;
+        const userImgLink = req.body.userImgLink;
+        if(emailId==null || username==null)return res.status(400).json({success : false , error : "send valid values to login!"})
+        try { 
+            const user = await Users.findOne({emailId : emailId , username : username});
+            if(!user){
+                return res.status(404).json({
+                    success : false,
+                    error : "cannot find user! or something went wrong!"
+                })
+            }
+            return res.status(200).json({
+                success : true,
+                data : user
+            })
+        }catch(err){
+            return res.status(500).json({
+                success : false,
+                error : "Internal server error!" + err
+            })
+        }
+    }
+
+    exports.postUser = async (req,res,next) =>{
+        if(req.body.username == null || req.body.emailId == null){
+            return res.status(400).json({
+                success : false,
+                error : "send correct values!"
+            })
+        }
+        try{
+            const totalNumberOfUsers = await Users.estimatedDocumentCount();
+            const obj = {
+                username  : req.body.username,
+                emailId : req.body.emailId , 
+                todayScore : 0,
+                totalScore : 0,
+                numberOfGamesPlayed : 0,
+                todayRanking : 0,
+                overallRanking : totalNumberOfUsers,
+                todayGameWon : false,
+                heart : 3,
+                timer : {hours : 0 , minutes : 0 , seconds : 0}
+            }
+            const user = await Users.create(obj);
+            if(!user){
+                return res.status(400).json({
+                    success : false,
+                    error : "something went wrong "
+                })
+            }
+            return res.status(200).json({
+                success : true,
+                data : user
+            })
+        }catch(err){
+            return res.status(500).json({
+                success: false ,
+                error : "Internal server error ",err
+            })
+        }
+    }
+
+
+    exports.patchUser = async (req,res,next) =>{
+        const Id = req.params.id;
+        if(Id==null)return res.status(400).send("send valid id of user!");
+        if(req.body.username==null && req.body.emailId==null && req.body.todayScore==null && req.body.totalScore==null && req.body.numberOfGamesPlayed==null && req.body.todayRanking ==null && req.body.overallRanking==null && req.body.todayGameWon == null && req.body.heart == null && req.body.timer == null){
+            return res.status(400).json({
+                success : false,
+                error : "send any one valid data to update!"
+            })
+        }
+        try{
+            const userOldObj = await Users.findById(Id);
+            const obj = {
+                username  : req.body.username || userOldObj.username,
+                emailId : req.body.emailId || userOldObj.emailId, 
+                todayScore : req.body.todayScore || userOldObj.todayScore,
+                totalScore : req.body.todayScore || userOldObj.totalScore,
+                numberOfGamesPlayed : req.body.numberOfGamesPlayed || userOldObj.numberOfGamesPlayed,
+                todayRanking : req.body.todayRanking || userOldObj.todayRanking,
+                overallRanking : req.body.overallRanking || userOldObj.overallRanking,
+                todayGameWon : req.body.todayGameWon || userOldObj.todayGameWon,
+                heart : req.body.heart || userOldObj.heart,
+                timer : req.body.timer || userOldObj.timer
+            }
+            const user = await Users.findByIdAndUpdate(Id , obj, {new:true});
+            if(!user){
+                return res.status(400).json({
+                    success : false,
+                    error : "something went wrong!"                
+                })
+            }
+            return res.status(200).json({
+                success : true,
+                data : user,
+            })
+        }catch(err){
+            return res.status(500).json({
+                success : false,
+                error : "Internal server error!" + err
+            })
+        }
+    }
+
+    exports.patchManyUsers = async (req, res, next) => {
+        if (!Array.isArray(req.body)) {
+          return res.status(400).json({
+            success: false,
+            error: "Send a valid response! Patching many requires an array of objects."
+          });
+        }
+        try {
+          const data = await Promise.all(req.body.map(async (user) => {
+            // Update todayRanking
+            const updatedTodayRanking = await Users.updateOne(
+              { emailId: user.emailId },
+              { $set: { todayRanking: user.todayRanking } }
+            );
+      
+            // Update totalRanking
+            const updatedTotalRanking = await Users.updateOne(
+              { emailId: user.emailId },
+              { $set: { totalRanking: user.totalRanking } }
+            );
+      
+            return {
+              emailId: user.emailId,
+              todayRankingUpdated: updatedTodayRanking.nModified > 0,
+              totalRankingUpdated: updatedTotalRanking.nModified > 0
+            };
+          }));
+      
+          return res.status(200).json({
+            success: true,
+            data
+          });
+
+        } catch (err) {
+          return res.status(500).json({
+            success: false,
+            error: "Something went wrong while updating ranking!"  + err
+          });
+        }
+      };
 
     exports.deleteUserById = async (req,res,next) => {
         const Id = req.params.id;

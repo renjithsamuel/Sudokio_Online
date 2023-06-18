@@ -25,13 +25,16 @@
     }
 }
 
+html{
+    z-index: 0;
+}
 
 body{
     background-color: var(--bg-color);
     display: flex;
     flex-direction: column;
     justify-content: center;
-
+    z-index: 0;
 }
 
 

@@ -3,7 +3,7 @@ import './LeaderBoard.css'
 import LeaderBoardListElement from './LeaderBoardListElement';
 import cancelIcon from '../assets/cancel-icon.svg'
 
-function LeaderBoard({allUsers,setIsLeaderBoardClicked,currentUser}){
+function LeaderBoard({allUsers,setIsLeaderBoardClicked,currentUser,hudRef}){
     const [isTotal , setIsTotal] = useState(false);
 
     useEffect(()=>{
@@ -30,7 +30,7 @@ function LeaderBoard({allUsers,setIsLeaderBoardClicked,currentUser}){
                                 all time
                             </div>
                         </div>
-                        <div className="closeLeaderBoardBtn" onClick={()=>{setIsLeaderBoardClicked(false)}}>
+                        <div className="closeLeaderBoardBtn" onClick={()=>{setIsLeaderBoardClicked(false);hudRef.current.style.visibility = 'visible'}}>
                                 <img src={cancelIcon} alt="close" height={40} width={40} />
                         </div>
                     </div>

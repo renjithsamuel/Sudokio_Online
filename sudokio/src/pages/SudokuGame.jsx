@@ -3,16 +3,19 @@
     import SudokuElem from "../components/SudokuElem";
     import { LoginSocialGoogle} from "reactjs-social-login";
     import './sudokuGame.css';
-    import googleImg from "../assets/google.png" ;
-    import leaderBoardImg from '../assets/leaderBoard.svg' 
     import LeaderBoard from "../components/LeaderBoard";
     import UserAccountScreen from "../components/UserAccountScreen";
+    import googleImg from "../assets/google.png" ;
+    import leaderBoardImg from '../assets/leaderBoard.svg'
+    import pauseImg from '../assets/pause.svg' 
+    import playImg from '../assets/play.svg' 
 
     function SudokuGame(){
         
         // global variables 
         const submitbtn = useRef();
         const resetbtn = useRef();
+        const hudRef = useRef();
         const sudoku = useRef();
         const [board, setBoard] = useState([]);
         const [currX ,  setCurrx] = useState(0);
@@ -23,6 +26,13 @@
         const [oauthData,setOauthData] = useState({});
         const [isLeaderBoardClicked,setIsLeaderBoardClicked] = useState(false);
         const [isUserAccClicked,setIsUserAccClicked] = useState(false);
+        const [nowGameScore,setNowGameScore] = useState(0);
+        const [heart,setHeart] = useState(3);
+        const [gameStarted,setGameStarted] = useState(false);
+        const [gameOver,setGameOver] = useState(false);
+        const [todayGameWon,setTodayGameWon] = useState(false);
+        const [gameTimer , setGameTimer ] = useState({hours : 0 , minutes : 0 , seconds : 0});
+        const [timerInterval, setTimerInterval] = useState(null);
         let today = '';
         
         const sendHTTPRequest = async (url , method , data) =>{
@@ -50,7 +60,26 @@
             // submit and reset buttons
             let eventlist2 = submitbtn.current.addEventListener('click', async ()=>{
                 if(verifySudoku() || true)console.log("isValid at listen : " , isValid);
-                if(isValid==true){alert('Congratulations! You won the game');}
+                if(isValid==true)
+                {
+                    alert('Congratulations! You won the game');
+                    calculateScore();
+                    setCurrentUser((prevCurrentUser)=>{
+                        return {...prevCurrentUser,todayScore : nowGameScore};
+                    }) 
+                    setTodayGameWon(true);
+                    updateRanking();
+                    const updatePlayerStats = {
+                        numberOfGamesPlayed : currentUser.numberOfGamesPlayed+1 ,
+                        totalScore : currentUser.totalScore + nowGameScore,
+                        todayScore : nowGameScore,
+                        todayRanking : currentUser.todayRanking,
+                        overallRanking : currentUser.overallRanking,
+                        todayGameWon : true,
+                        heart : heart
+                    }
+                    updateStats(updatePlayerStats);
+                }
                 else {alert('try again!');}
                 setIsValid(true);
             })
@@ -88,10 +117,12 @@
                 console.log(tempCurrentUser);
                 if(tempCurrentUser && tempCurrentUser.success==true){
                     setCurrentUser(tempCurrentUser.data);
+                    sessionStorage.setItem('userId',tempCurrentUser.data._id)
                 }else if(tempCurrentUser.error == 'cannot find user! or something went wrong!'){
                     const postNewUser = await sendHTTPRequest(postCurrentUserUrl,'POST',currentUserObj);
                     if(postNewUser.success == true){
                         setCurrentUser(postNewUser.data);
+                        sessionStorage.setItem('userId',postNewUser.data._id)
                         console.log("User posted succesfully!");
                     }else{
                         console.log("something went wrong while posting new user!");
@@ -105,13 +136,77 @@
 
 
         useEffect(()=>{
-            console.log(allUsers);
+            console.log("all users  " , allUsers );
+            console.log("currentusers  " , currentUser );
             if(sessionStorage.getItem('emailId')!=null || currentUser==null){
-
                 console.log('setting current user~ ',allUsers.filter((elem)=> elem.emailId == sessionStorage.getItem('emailId'))[0]);
-                setCurrentUser(()=>{return (allUsers.filter((elem)=> elem.emailId == sessionStorage.getItem('emailId')))[0]});}
-        },[allUsers])
+                setCurrentUser(()=>{return (allUsers.filter((elem)=> elem.emailId == sessionStorage.getItem('emailId')))[0]});
+            }else if(sessionStorage.getItem('emailId')==null ){
+                setCurrentUser(null);
+            }
+        },[allUsers]);
+        
+        useEffect(()=>{
+            
+            if(JSON.stringify(currentUser)!='{}' && currentUser!=undefined && JSON.stringify(currentUser.timer)!== JSON.stringify({hours:0,minutes:0,seconds:0})){
+                console.log("currentusers inside currentuser timer  " , currentUser );
+                 setGameTimer(currentUser.timer);
+                 setHeart(currentUser.heart);
+            }
+            if(currentUser!=null)sessionStorage.setItem('userId',currentUser._id)
+        },[currentUser])
 
+        // countDownTimer 
+        useEffect(()=>{
+                const countDownTimerFunction = ()=>{
+                        if (gameStarted ==  false) {
+                            clearInterval(timerInterval);
+                            return;
+                        }
+                        const intervalId = setInterval(() => {
+                        let timer = gameTimer;
+                        timer.seconds+=1;
+                        if(timer.seconds==60){
+                            timer.seconds = 0;
+                            timer.minutes += 1;
+                            if(timer.minutes==60){
+                                timer.hours = 1;
+                                timer.minutes = 0;
+                                timer.seconds = 0;
+                                
+                            }
+                        }
+                        setGameTimer({
+                            hours : timer.hours,
+                            minutes : timer.minutes,
+                            seconds : timer.seconds
+                        });
+                        console.log(gameTimer);
+                        if (timer.hours == 1) {
+                            clearInterval(timerInterval);
+                            setGameStarted(false);
+                            console.log("game time is over!");   
+                            alert('Game Over'); 
+                            setGameOver(true);
+                        }
+                    }, 1000 );
+                    setTimerInterval(intervalId);
+                }
+            countDownTimerFunction();
+            return () => {
+                clearInterval(timerInterval);
+              };
+        },[gameStarted]);
+
+
+        useEffect(()=>{
+            updateHeart();
+            if(heart==0){
+                setGameStarted(false);
+                setGameOver(true);
+                alert('Game Over')
+            }
+        },[heart])
 
         // small functions for various online competitive game environment
         const fetchBoard = async (date) => {
@@ -141,7 +236,6 @@
         }
 
         const resetBoard = ()=>{
-            // console.log(permanentBoard);
             setBoard((prevBoard)=>{
                 return prevBoard.map((arr)=>{
                     return (arr).map(e=>{
@@ -157,6 +251,7 @@
             if(isLeaderBoardClicked==true)setIsLeaderBoardClicked(false);
             if(isUserAccClicked==true)setIsUserAccClicked(false);
             setCurrentUser(null);
+            hudRef.current.style.visibility  = 'visible';
             sessionStorage.clear();
         }
 
@@ -164,6 +259,7 @@
         const getLeaderBoard = async ()=>{
                 const getAllUsersUrl = `http://localhost:3000/api/v1/getUsers`;
                 const tempAllUsers = await sendHTTPRequest(getAllUsersUrl , 'GET');
+                
                 if(tempAllUsers && tempAllUsers.success==true){
                     setAllUsers(tempAllUsers.data);
                 }else{
@@ -171,6 +267,99 @@
                     return;
                 }
         }
+
+
+        const updateRanking = async ()=>{
+            // todayRanking
+            const sortedByTodayRank = allUsers.sort((a,b)=>b.todayScore - a.todayScore);
+            let updatedAllUsers;
+            allUsers.map((user)=>{
+                updatedAllUsers =  sortedByTodayRank.map((sortedUser,index)=>{
+                    if(user.emailId == sortedUser.emailId){
+                        user.todayRanking = index+1;
+                        return user;
+                    }
+                })
+            })
+            const sortedByTotalRank = allUsers.sort((a,b)=>b.totalScore - a.totalScore);
+            allUsers.map((user)=>{
+                updatedAllUsers =  sortedByTotalRank.map((sortedUser,index)=>{
+                    if(user.emailId == sortedUser.emailId){
+                        user.totalRanking = index+1;
+                        return user;
+                    }
+                })
+            })
+            const updateRankingUrl = `http://localhost:3000/api/v1/patchManyUsers`;
+            const updatedTodayRankingResponse = await sendHTTPRequest(updateRankingUrl , 'PATCH' , updatedAllUsers);
+            if(updatedTodayRankingResponse.success==true){
+                console.log(updatedTodayRankingResponse);
+                console.log("ranking updated successfully!");
+            }else{
+                console.log("something went wrong while updating ranking!");
+            }
+        }
+
+        const updateStats = async (updatePlayerStats) => {
+                    const patchCurrentUserUrl = `http://localhost:3000/api/v1/patchUserById/${currentUser._id}`;
+                    const updatedStatsResponse = await sendHTTPRequest(patchCurrentUserUrl,'PATCH',updatePlayerStats);
+                    if(updatedStatsResponse.success==true){
+                        console.log("user stats updated successfully!");
+                    }else{
+                        console.log("something went wrong while updating user stats!");
+                    }
+        }
+
+        const calculateScore = ()=>{
+            let sum = 1;
+            sum+=gameTimer.hours*60;
+            sum+=gameTimer.minutes;
+            sum+=(gameTimer.seconds/60);
+            sum=Math.floor(sum);
+            let currentScore = Math.floor((heart*500)/sum);
+            console.log("current score ",currentScore);
+            setNowGameScore(currentScore);
+        }
+
+        const updateHeart = async () => {
+            if(currentUser==null)return;
+            const  updateHeartUrl = `http://localhost:3000/api/v1/patchUserById/${currentUser._id}`;
+            const updatedHeart = await sendHTTPRequest(updateHeartUrl , 'PATCH' , {heart : heart});
+            if(updateHeart &&  updatedHeart.success == true){
+                console.log("heart updated successfully");
+            }else{
+                console.log("something went wrong while updating heart!");
+            }
+        }
+
+        const updatePausedGame = async ()=> {
+            if(currentUser==null)return;
+            if(todayGameWon)
+            {
+                alert("You have already won today's Game!");
+                return;
+            }else if(gameOver){
+                alert("Your chances have finished for today! try again tomorrow!");
+                return;
+            }else{
+                 setGameStarted(!gameStarted);
+                 if(gameStarted==false){
+                    const updateTimerUrl = `http://localhost:3000/api/v1/patchUserById/${currentUser._id}`;
+                    let updatedTimer = await sendHTTPRequest(updateTimerUrl , `PATCH` , {timer : gameTimer});
+                    console.log(updatedTimer);
+                    if(updatedTimer && updatedTimer.success==false){
+                        console.log("something went wrong while updating timer!");
+                    }else if(updatedTimer &&  updatedTimer.success==true){
+                        console.log("timer updated successfully!");
+                    }else{
+                        console.log("something else went wrong");
+                    }
+                 }
+            } 
+        }
+
+
+
 
     // board generation logics
         const generateRandomValue = () => Math.floor(Math.random() * 9) + 1;
@@ -292,12 +481,12 @@
 
         return  (
             <>
-                {(isLeaderBoardClicked==true)?<LeaderBoard allUsers={allUsers} setIsLeaderBoardClicked={setIsLeaderBoardClicked} currentUser={sessionStorage.getItem('username')}/>:''}
-                {(isUserAccClicked==true)?<UserAccountScreen user={currentUser} setIsUserAccClicked={setIsUserAccClicked} logOut={logOut}/>:''}
+                {(isLeaderBoardClicked==true)?<LeaderBoard allUsers={allUsers} setIsLeaderBoardClicked={setIsLeaderBoardClicked} currentUser={sessionStorage.getItem('username')} hudRef={hudRef}/>:''}
+                {(isUserAccClicked==true)?<UserAccountScreen user={currentUser} setIsUserAccClicked={setIsUserAccClicked} logOut={logOut} hudRef={hudRef}/>:''}
                 <div className="navBar">
                     <h1>Sudoku</h1>
                     <div className="online">
-                        {(currentUser==null)?
+                        {(currentUser==null || currentUser==undefined)?
                             <div className="loginWithGoogle">
                             <LoginSocialGoogle
                                         client_id={"765286335673-0ida964dqmv0obr3ilg7rjb0b6b0anr3.apps.googleusercontent.com"}
@@ -317,33 +506,50 @@
                             </LoginSocialGoogle>
                         </div>
                         :
-                            <div className="userAccBtn" onClick={()=>{if(isLeaderBoardClicked==true){setIsLeaderBoardClicked(false);}setIsUserAccClicked(true);}}>
+                            <div className="userAccBtn" onClick={()=>{if(isLeaderBoardClicked==true){setIsLeaderBoardClicked(false);}setIsUserAccClicked(true);hudRef.current.style.visibility = 'hidden'}}>
                                 <img src={sessionStorage.getItem('userImgLink')} alt="user" height={50} width={50} />
                             </div>        
                         }
-                        <div className="leaderBoard" onClick={()=>{if(isUserAccClicked==true){setIsUserAccClicked(false);}setIsLeaderBoardClicked(true)}}> <img src={leaderBoardImg} alt="leaderBoard" height={40} width={40} /></div>
+                        <div className="leaderBoard" onClick={()=>{if(isUserAccClicked==true){setIsUserAccClicked(false);}setIsLeaderBoardClicked(true);hudRef.current.style.visibility = 'hidden';}}> <img src={leaderBoardImg} alt="leaderBoard" height={40} width={40} /></div>
                     </div>
                 </div>
 
+                <div className="hud" ref={hudRef}>
+                        <div className="hudLeft" >
+                            <div className="timer" > {gameTimer.hours +  " : " + gameTimer.minutes + " : " + gameTimer.seconds} </div>
+                        </div>
+                        <div className="pauseBtn" onClick={()=>{updatePausedGame();}} >
+                            {    (gameStarted)?
+                                    <img src={pauseImg} alt="pause" height={40} width={40} />
+                                :                            
+                                    <img src={playImg} alt="play" height={40} width={40} />
+                            }
+                        </div>
+                        <div className="hudRight" >
+                            <div className="heart"  style={{backgroundColor:(heart>=1)?'var(--fixed-color)':'var(--text-color)'}}></div>
+                            <div className="heart"  style={{backgroundColor:(heart>=2)?'var(--fixed-color)':'var(--text-color)'}}></div>
+                            <div className="heart" style={{backgroundColor:(heart==3)?'var(--fixed-color)':'var(--text-color)'}} ></div>
+                        </div>
+                </div>
                 <div className="pagewrap">
                     <div className="left">
                         <div className="sudokubox" ref={sudoku}>
-                            {
-                                board.map((row, rowIndex) => (
+                                {board.map((row, rowIndex) => (
                                     row.map((elem, colIndex) => (
-                                    <SudokuElem 
-                                     key={`${rowIndex}-${colIndex}`}
-                                     elem={elem} 
-                                     style={(currX==rowIndex && currY==colIndex)?'var(--hover-color)':'var(--change-color)'}
-                                     onclick={()=>{             
-                                        setCurrx(rowIndex);
-                                        setCurry(colIndex);
-                                        }}
-                                    />
-                                    ))
-                                ))
-                            }
-
+                                        <SudokuElem 
+                                        key={`${rowIndex}-${colIndex}`}
+                                        elem={elem} 
+                                        style={(currX==rowIndex && currY==colIndex)?'var(--hover-color)':'var(--change-color)'}
+                                        onclick={()=>{             
+                                            setCurrx(rowIndex);
+                                            setCurry(colIndex);
+                                            }}
+                                        />
+                                        ))
+                                    ))}
+                            <div className="pauseCover" style={{display:(gameStarted)?'none':'flex'}}>
+                                <img src={pauseImg} alt="paused" height={50} width={50} />
+                            </div>
                         </div>
                         <div className="btns">
                             <div className="submitbtn" ref={submitbtn}>
@@ -362,6 +568,10 @@
                                 val={i + 1}
                                 onclick = {()=>{           
                                     if(board[currX][currY].fixed==false &&  currX!=0 && currY!=0){
+                                    if(isSafe(board,currX,currY,i+1)==false){
+                                        if(heart>0)
+                                        setHeart(heart-1);
+                                    }
                                     board[currX][currY].val = i+1;
                                     setBoard(board);
                                 }

@@ -13,7 +13,8 @@ app.use(cors({
     origin:'*'
 }));
 
-const mongoDBString = `mongodb+srv://ranjithsamuelking:Samking123@cluster0.gp8dend.mongodb.net/sudokio?retryWrites=true&w=majority`;
+// const mongoDBString = `mongodb+srv://ranjithsamuelking:Samking123@cluster0.gp8dend.mongodb.net/sudokio?retryWrites=true&w=majority`;
+const mongoDBString = `mongodb://0.0.0.0:27017/sudokio`;
 mongoose.connect(mongoDBString, {
     useNewUrlParser: true,
     useUnifiedTopology: true

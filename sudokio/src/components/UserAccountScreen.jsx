@@ -4,7 +4,7 @@ import cancelIcon from '../assets/cancel-icon.svg'
 import logoutIcon from '../assets/logout-icon.svg'
 
 
-function UserAccountScreen({user,setIsUserAccClicked,logOut}){
+function UserAccountScreen({user,setIsUserAccClicked,logOut,hudRef}){
     return (<>
             <div className="userAccScreenBackDrop">
                 <div className="UserAccScreenWrapper">
@@ -14,7 +14,7 @@ function UserAccountScreen({user,setIsUserAccClicked,logOut}){
                             <div className="logoutBtn" onClick={()=>{logOut()}}>
                                     <img src={logoutIcon} alt="close" height={30} width={30} />
                             </div>
-                            <div className="closeUserAccBtn" onClick={()=>setIsUserAccClicked(false)}>
+                            <div className="closeUserAccBtn" onClick={()=>{setIsUserAccClicked(false);hudRef.current.style.visibility = 'visible'}}>
                                     <img src={cancelIcon} alt="close" height={40} width={40} />
                             </div>
                         </div>
