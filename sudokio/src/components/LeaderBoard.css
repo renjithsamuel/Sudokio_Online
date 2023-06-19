@@ -51,7 +51,6 @@
     display: flex;
     font-size: large;
     font-weight: 600;
-
 }
 
 .todayRanking,.overAllRanking{
@@ -59,13 +58,13 @@
     height: 5vh;
     width: 5vw;
     padding: 1vh;
-    background-color: rgb(68, 68, 167);
+    background-color: rgb(105, 105, 173);
     color: aliceblue;
 }
 
 .todayRanking:hover,.overAllRanking:hover{
     cursor: pointer;
-    background-color: rgba(132, 132, 192, 0.856);
+    background-color: rgba(65, 65, 141, 0.856);
     box-shadow: 0px 0px 3px 2px rgb(152, 152, 152);
 }
 

@@ -253,6 +253,11 @@
             setCurrentUser(null);
             hudRef.current.style.visibility  = 'visible';
             sessionStorage.clear();
+            setGameOver(false);
+            setGameTimer({hours:0,minutes:0,seconds:0});
+            setHeart(3);
+            setGameStarted(false);
+            resetBoard();
         }
 
 
@@ -333,7 +338,7 @@
         }
 
         const updatePausedGame = async ()=> {
-            if(currentUser==null)return;
+            if(currentUser==null){ setGameStarted(!gameStarted); return;};
             if(todayGameWon)
             {
                 alert("You have already won today's Game!");

@@ -21,12 +21,12 @@ function LeaderBoard({allUsers,setIsLeaderBoardClicked,currentUser,hudRef}){
                 <div className="leaderBoardWrapper">
                     <div className="topOfLeaderBoard">
                         <div className="totalSelector">
-                            <div className="todayRanking" onClick={()=>{setIsTotal(false)}} style={{backgroundColor:(isTotal)?'rgb(68, 68, 167)':'rgb(97, 97, 188)'}}>
+                            <div className="todayRanking" onClick={()=>{setIsTotal(false)}} style={{backgroundColor:(isTotal)?'rgb(97, 97, 188)':'rgb(68, 68, 167)'}}>
                                 today
                             </div>
                             <div className="sepratorSelector">
                             </div>
-                            <div className="overAllRanking" onClick={()=>{setIsTotal(true)}} style={{backgroundColor:(!isTotal)?'rgb(68, 68, 167)':'rgb(97, 97, 188)'}}>
+                            <div className="overAllRanking" onClick={()=>{setIsTotal(true)}} style={{backgroundColor:(!isTotal)?'rgb(97, 97, 188)':'rgb(68, 68, 167)'}}>
                                 all time
                             </div>
                         </div>
