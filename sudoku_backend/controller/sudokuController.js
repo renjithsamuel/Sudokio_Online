@@ -43,7 +43,17 @@
                     error : "something went wrong!"
                 })
             }
-            await Users.updateMany({},{todayGameWon : false,todayScore:0,heart:3,timer : {hours:0,minutes:0,seconds : 0}}); 
+            const users = await Users.find();
+            // updating streak and resetting user for today's game : 
+            await Promise.all(users.map(async (user) => {
+                // Update todayRanking
+                await Users.updateOne(
+                  { emailId: user.emailId , todayGameWon : true },
+                  { $set: { streak : user.streak+1 } }
+                );
+                return;
+              }));
+            await Users.updateMany({},{todayGameWon:false,todayScore:0,heart:3,timer:{hours:0,minutes:0,seconds:0},gameOverToday:false, }); 
             return res.status(200).json({
                 success : true,
                 data : board,
@@ -124,7 +134,9 @@
                 overallRanking : totalNumberOfUsers,
                 todayGameWon : false,
                 heart : 3,
-                timer : {hours : 0 , minutes : 0 , seconds : 0}
+                timer : {hours : 0 , minutes : 0 , seconds : 0},
+                streak :  0,
+                gameOverToday : false,
             }
             const user = await Users.create(obj);
             if(!user){
@@ -149,7 +161,8 @@
     exports.patchUser = async (req,res,next) =>{
         const Id = req.params.id;
         if(Id==null)return res.status(400).send("send valid id of user!");
-        if(req.body.username==null && req.body.emailId==null && req.body.todayScore==null && req.body.totalScore==null && req.body.numberOfGamesPlayed==null && req.body.todayRanking ==null && req.body.overallRanking==null && req.body.todayGameWon == null && req.body.heart == null && req.body.timer == null){
+        if(req.body.username==null && req.body.emailId==null && req.body.todayScore==null && req.body.totalScore==null && req.body.numberOfGamesPlayed==null && req.body.todayRanking ==null && req.body.overallRanking==null && req.body.todayGameWon == null && req.body.heart == null && req.body.timer == null && req.body.gameOverToday){
+            console.log("heree!");
             return res.status(400).json({
                 success : false,
                 error : "send any one valid data to update!"
@@ -167,7 +180,9 @@
                 overallRanking : req.body.overallRanking || userOldObj.overallRanking,
                 todayGameWon : req.body.todayGameWon || userOldObj.todayGameWon,
                 heart : req.body.heart || userOldObj.heart,
-                timer : req.body.timer || userOldObj.timer
+                timer : req.body.timer || userOldObj.timer,
+                streak : req.body.streak || userOldObj.streak,
+                gameOverToday : req.body.gameOverToday || userOldObj.gameOverToday
             }
             const user = await Users.findByIdAndUpdate(Id , obj, {new:true});
             if(!user){

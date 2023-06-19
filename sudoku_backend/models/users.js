@@ -38,6 +38,10 @@ const usersSchema = mongoose.Schema({
     },
     timer : {
         type : Object
+    },streak : {
+        type : Number
+    },gameOverToday : {
+        type : Boolean
     }
 }, { timestamps: true }) 
 
