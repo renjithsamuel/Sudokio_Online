@@ -38,7 +38,9 @@ function UserAccountScreen({user,setIsUserAccClicked,logOut,hudRef}){
                             <div className="userListItem">
                                 <div className="userLeft">sudoku's cleared </div><div className="userRight">  :  {user.numberOfGamesPlayed}</div>
                             </div>
-                            
+                            <div className="userListItem">
+                                <div className="userLeft">streak  </div><div className="userRight">  :  {user.streak}</div>
+                            </div>
                         </div>
                 </div>
             </div>

@@ -1,4 +1,4 @@
-    import { useCallback, useEffect, useMemo, useRef, useState } from "react";
+    import { useEffect, useRef, useState } from "react";
     import SelectElem from "../components/SelectElem";
     import SudokuElem from "../components/SudokuElem";
     import { LoginSocialGoogle} from "reactjs-social-login";
@@ -9,6 +9,7 @@
     import leaderBoardImg from '../assets/leaderBoard.svg'
     import pauseImg from '../assets/pause.svg' 
     import playImg from '../assets/play.svg' 
+
 
     function SudokuGame(){
         
@@ -53,6 +54,7 @@
                 // let dateApiData = await sendHTTPRequest(getTimeApi,'GET');
                 // console.log(dateApiData);
                 today = new Date().toLocaleDateString('en-US',{day : 'numeric' , month : "short",year : "numeric"});
+                // console.log(today);
                 const isBoardAvail = await fetchBoard(today); 
                 if(isBoardAvail===false){console.log('entering sudoku game'); sudokuGame();}
             }
@@ -76,7 +78,8 @@
                         todayRanking : currentUser.todayRanking,
                         overallRanking : currentUser.overallRanking,
                         todayGameWon : true,
-                        heart : heart
+                        heart : heart,
+                        timer : gameTimer,
                     }
                     updateStats(updatePlayerStats);
                 }
@@ -102,19 +105,19 @@
             const loginUser = async () => {
                 // if(currentUser!=null)return;
                 // if(sessionStorage.getItem('emailId')!=null)return;
-                console.log("inside login user : ");
-                console.log(oauthData);
+                // console.log("inside login user : ");
+                // console.log(oauthData);
                 if(oauthData.name == null || oauthData.email==null) { console.log("oauth data not found!");return;}
                 sessionStorage.setItem('username' , oauthData.name);
                 sessionStorage.setItem('emailId',oauthData.email);
                 sessionStorage.setItem('userImgLink',oauthData.picture);
 
-                const getCurrentUserUrl = `http://localhost:3000/api/v1/getCurrentUser`;
-                const postCurrentUserUrl = `http://localhost:3000/api/v1/postUser`;
+                const getCurrentUserUrl = `https://sudokionode.onrender.com/api/v1/getCurrentUser`;
+                const postCurrentUserUrl = `https://sudokionode.onrender.com/api/v1/postUser`;
                 const currentUserObj = {emailId : oauthData.email , username : oauthData.name , userImgLink : oauthData.picture };
-                console.log(currentUserObj);
+                // console.log(currentUserObj);
                 const tempCurrentUser = await sendHTTPRequest(getCurrentUserUrl,'POST',currentUserObj);
-                console.log(tempCurrentUser);
+                // console.log(tempCurrentUser);
                 if(tempCurrentUser && tempCurrentUser.success==true){
                     setCurrentUser(tempCurrentUser.data);
                     sessionStorage.setItem('userId',tempCurrentUser.data._id)
@@ -148,13 +151,16 @@
         
         useEffect(()=>{
             
-            if(JSON.stringify(currentUser)!='{}' && currentUser!=undefined && JSON.stringify(currentUser.timer)!== JSON.stringify({hours:0,minutes:0,seconds:0})){
-                console.log("currentusers inside currentuser timer  " , currentUser );
+            if(JSON.stringify(currentUser)!='{}' && currentUser!=undefined){
+                // console.log("currentusers inside currentuser timer  " , currentUser );
                  setGameTimer(currentUser.timer);
                  setHeart(currentUser.heart);
+                //  console.log("today game won : " , todayGameWon);
+                 setTodayGameWon(currentUser.todayGameWon);
+                 setGameOver(currentUser.gameOverToday);    
             }
             if(currentUser!=null)sessionStorage.setItem('userId',currentUser._id)
-        },[currentUser])
+        },[currentUser]);
 
         // countDownTimer 
         useEffect(()=>{
@@ -188,6 +194,7 @@
                             console.log("game time is over!");   
                             alert('Game Over'); 
                             setGameOver(true);
+                            updateGameOver();
                         }
                     }, 1000 );
                     setTimerInterval(intervalId);
@@ -204,14 +211,15 @@
             if(heart==0){
                 setGameStarted(false);
                 setGameOver(true);
+                updateGameOver();
                 alert('Game Over')
             }
-        },[heart])
+        },[heart]);
 
         // small functions for various online competitive game environment
         const fetchBoard = async (date) => {
             // console.log(date);
-            const getBoardUrl = `http://localhost:3000/api/v1/getBoard`;
+            const getBoardUrl = `https://sudokionode.onrender.com/api/v1/getBoard`;
             let tempBoard = await sendHTTPRequest(getBoardUrl,'POST',{date : date});
             if(tempBoard && tempBoard.success==true){
                 let newBoardData = tempBoard.data.board;
@@ -222,7 +230,7 @@
         }
 
         const postNewBoard = async (newBoard) => {
-            const postBoardUrl =  `http://localhost:3000/api/v1/postBoard`;
+            const postBoardUrl =  `https://sudokionode.onrender.com/api/v1/postBoard`;
             console.log("inside post" , newBoard);
             let postResponse = await sendHTTPRequest(postBoardUrl,'POST',{
                 board : newBoard,
@@ -262,7 +270,7 @@
 
 
         const getLeaderBoard = async ()=>{
-                const getAllUsersUrl = `http://localhost:3000/api/v1/getUsers`;
+                const getAllUsersUrl = `https://sudokionode.onrender.com/api/v1/getUsers`;
                 const tempAllUsers = await sendHTTPRequest(getAllUsersUrl , 'GET');
                 
                 if(tempAllUsers && tempAllUsers.success==true){
@@ -295,7 +303,7 @@
                     }
                 })
             })
-            const updateRankingUrl = `http://localhost:3000/api/v1/patchManyUsers`;
+            const updateRankingUrl = `https://sudokionode.onrender.com/api/v1/patchManyUsers`;
             const updatedTodayRankingResponse = await sendHTTPRequest(updateRankingUrl , 'PATCH' , updatedAllUsers);
             if(updatedTodayRankingResponse.success==true){
                 console.log(updatedTodayRankingResponse);
@@ -306,7 +314,7 @@
         }
 
         const updateStats = async (updatePlayerStats) => {
-                    const patchCurrentUserUrl = `http://localhost:3000/api/v1/patchUserById/${currentUser._id}`;
+                    const patchCurrentUserUrl = `https://sudokionode.onrender.com/api/v1/patchUserById/${currentUser._id}`;
                     const updatedStatsResponse = await sendHTTPRequest(patchCurrentUserUrl,'PATCH',updatePlayerStats);
                     if(updatedStatsResponse.success==true){
                         console.log("user stats updated successfully!");
@@ -328,7 +336,7 @@
 
         const updateHeart = async () => {
             if(currentUser==null)return;
-            const  updateHeartUrl = `http://localhost:3000/api/v1/patchUserById/${currentUser._id}`;
+            const  updateHeartUrl = `https://sudokionode.onrender.com/v1/patchUserById/${currentUser._id}`;
             const updatedHeart = await sendHTTPRequest(updateHeartUrl , 'PATCH' , {heart : heart});
             if(updateHeart &&  updatedHeart.success == true){
                 console.log("heart updated successfully");
@@ -338,6 +346,7 @@
         }
 
         const updatePausedGame = async ()=> {
+            console.log("inside pause game ",todayGameWon);
             if(currentUser==null){ setGameStarted(!gameStarted); return;};
             if(todayGameWon)
             {
@@ -349,7 +358,7 @@
             }else{
                  setGameStarted(!gameStarted);
                  if(gameStarted==false){
-                    const updateTimerUrl = `http://localhost:3000/api/v1/patchUserById/${currentUser._id}`;
+                    const updateTimerUrl = `https://sudokionode.onrender.com/api/v1/patchUserById/${currentUser._id}`;
                     let updatedTimer = await sendHTTPRequest(updateTimerUrl , `PATCH` , {timer : gameTimer});
                     console.log(updatedTimer);
                     if(updatedTimer && updatedTimer.success==false){
@@ -361,6 +370,21 @@
                     }
                  }
             } 
+        }
+
+        const updateGameOver = async ()=>{
+            if(gameStarted==false){
+                const updateGameOver = `https://sudokionode.onrender.com/api/v1/patchUserById/${currentUser._id}`;
+                let updatedGameOver = await sendHTTPRequest(updateGameOver , `PATCH` , {gameOverToday : true});
+                console.log(updatedGameOver);
+                if(updatedGameOver && updatedGameOver.success==false){
+                    console.log("something went wrong while updating game over!");
+                }else if(updatedGameOver &&  updatedGameOver.success==true){
+                    console.log("update Game Over updated successfull!");
+                }else{
+                    console.log("something else went wrong");
+                }
+             }
         }
 
 
@@ -494,7 +518,7 @@
                         {(currentUser==null || currentUser==undefined)?
                             <div className="loginWithGoogle">
                             <LoginSocialGoogle
-                                        client_id={"765286335673-0ida964dqmv0obr3ilg7rjb0b6b0anr3.apps.googleusercontent.com"}
+                                        client_id={import.meta.env.VITE_SUDOKIO_CLIENTID}
                                         scope="openid profile email"
                                         discoveryDocs="claims_supported"
                                         access_type="offline"
