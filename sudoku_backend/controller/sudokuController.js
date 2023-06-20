@@ -48,9 +48,19 @@
             await Promise.all(users.map(async (user) => {
                 // Update todayRanking
                 await Users.updateOne(
-                  { emailId: user.emailId , todayGameWon : true },
-                  { $set: { streak : user.streak+1 } }
-                );
+                    { emailId: user.emailId },
+                    {
+                      $set: {
+                        streak: {
+                          $cond: {
+                            if: { $eq: ["$todayGameWon", true] },
+                            then: { $add: ["$streak", 1] },
+                            else: 0
+                          }
+                        }
+                      }
+                    }
+                  );
                 return;
               }));
             await Users.updateMany({},{todayGameWon:false,todayScore:0,heart:3,timer:{hours:0,minutes:0,seconds:0},gameOverToday:false,todayBoard : []}); 

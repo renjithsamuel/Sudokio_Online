@@ -160,7 +160,7 @@
                 //  console.log("today game won : " , todayGameWon);
                  setTodayGameWon(currentUser.todayGameWon);
                  setGameOver(currentUser.gameOverToday);
-                 if(currentUser.todayBoard!=[])setBoard(currentUser.todayBoard);   
+                 if(JSON.stringify(currentUser.todayBoard)!='[]')setBoard(currentUser.todayBoard);   
             }
             if(currentUser!=null)sessionStorage.setItem('userId',currentUser._id)
         },[currentUser]);
