@@ -34,6 +34,7 @@
         const [todayGameWon,setTodayGameWon] = useState(false);
         const [gameTimer , setGameTimer ] = useState({hours : 0 , minutes : 0 , seconds : 0});
         const [timerInterval, setTimerInterval] = useState(null);
+        const [isConnected, setIsConnected] = useState(false);
         let today = '';
         
         const sendHTTPRequest = async (url , method , data) =>{
@@ -48,6 +49,7 @@
 
         // initializing game
         useEffect( () => {
+            connectToServer();
             getLeaderBoard();
             async function boardCreator(){
                 // const getTimeApi = `http://worldtimeapi.org/api/timezone/Asia/Kolkata`;
@@ -268,7 +270,16 @@
             resetBoard();
         }
 
+        const connectToServer = async ()=>{
+            const getHealthApi = `https://sudokionode.onrender.com/api/v1/health`;
+            const res = await sendHTTPRequest(getHealthApi,`GET`);
+            if(res && res.success==true){
+                console.log("returning true!");
+                setIsConnected(true);
+            }
+        }
 
+        
         const getLeaderBoard = async ()=>{
                 const getAllUsersUrl = `https://sudokionode.onrender.com/api/v1/getUsers`;
                 const tempAllUsers = await sendHTTPRequest(getAllUsersUrl , 'GET');
@@ -542,6 +553,8 @@
                         <div className="leaderBoard" onClick={()=>{if(isUserAccClicked==true){setIsUserAccClicked(false);}setIsLeaderBoardClicked(true);hudRef.current.style.visibility = 'hidden';}}> <img src={leaderBoardImg} alt="leaderBoard" height={40} width={40} /></div>
                     </div>
                 </div>
+
+                {(isConnected)? '' : <h3>Connecting to server!</h3>}
 
                 <div className="hud" ref={hudRef}>
                         <div className="hudLeft" >

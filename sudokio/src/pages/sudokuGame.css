@@ -1,5 +1,5 @@
 
-h1{
+h1,h3{
     color: var(--text-color);
     margin-left: 15vw;
     margin-right: 52vw;

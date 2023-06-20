@@ -22,7 +22,7 @@ mongoose.connect(mongoDBString, {
 
 // applying routes
 app.get('/api/v1/health',(req,res,next)=>{
-    return res.send("app is working prefectly!");
+    return res.status(200).json({success : true,message : "app is working prefectly!"});
 })
 app.use('/api/v1', sudokuRoutes);
 
