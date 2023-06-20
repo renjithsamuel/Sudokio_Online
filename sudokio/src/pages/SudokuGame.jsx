@@ -6,7 +6,7 @@
     import LeaderBoard from "../components/LeaderBoard";
     import UserAccountScreen from "../components/UserAccountScreen";
     import googleImg from "../assets/google.png" ;
-    import leaderBoardImg from '../assets/leaderBoard.svg'
+    import leaderBoardImg from '../assets/leaderboard.svg'
     import pauseImg from '../assets/pause.svg' 
     import playImg from '../assets/play.svg' 
 
