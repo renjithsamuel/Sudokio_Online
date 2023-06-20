@@ -347,7 +347,7 @@
 
         const updateHeart = async () => {
             if(currentUser==null)return;
-            const  updateHeartUrl = `https://sudokionode.onrender.com/v1/patchUserById/${currentUser._id}`;
+            const  updateHeartUrl = `https://sudokionode.onrender.com/api/v1/patchUserById/${currentUser._id}`;
             const updatedHeart = await sendHTTPRequest(updateHeartUrl , 'PATCH' , {heart : heart});
             if(updateHeart &&  updatedHeart.success == true){
                 console.log("heart updated successfully");
@@ -368,7 +368,6 @@
                 return;
             }else{
                  setGameStarted(!gameStarted);
-                 if(gameStarted==false){
                     const updateTimerUrl = `https://sudokionode.onrender.com/api/v1/patchUserById/${currentUser._id}`;
                     let updatedTimer = await sendHTTPRequest(updateTimerUrl , `PATCH` , {timer : gameTimer});
                     console.log(updatedTimer);
@@ -379,7 +378,6 @@
                     }else{
                         console.log("something else went wrong");
                     }
-                 }
             } 
         }
 
