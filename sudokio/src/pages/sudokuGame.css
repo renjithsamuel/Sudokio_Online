@@ -2,7 +2,6 @@
 h1,h3{
     color: var(--text-color);
     margin-left: 15vw;
-    margin-right: 52vw;
     letter-spacing: 0.15vw;
 
 }
@@ -14,6 +13,7 @@ h1,h3{
 }
 
 .online{
+    margin-left: 50vw;
     display: flex;
 }
 
@@ -240,30 +240,63 @@ h1,h3{
         flex-direction: column;
     }
     h1{
-        margin-left: 35vw;
+        margin-left: 8vw;
+        font-size: xx-large;
+    }
+    .online{
+        margin-left: 28vw;
+    }
+    .userAccBtn{
+        margin-top: 2.5vh;
+        margin-right: 4vw;
+    }
+    .userAccBtn img{
+        width: 10vw;
+    }
+
+    .leaderBoard{
+        border-radius: 50%;
+        margin-top: 2.5vh;
+    }
+    .hud{
+        margin-left: 17vw;
+        width: 60vw;
+    }
+    .hudLeft{
+        font-weight: 400;
+        font-size: large;
+    }
+    .pauseBtn img{
+        width:7vw;
+    }
+    .heart{
+        width: 3vw;
+        height: 2vh;
     }
     .sudokubox{
-        width: 75vw;
+        margin-left: 6vw;
+        width: 85vw;
         height: 50vh;
     }
     .elem{
+        width: 9vw;
         height: 5.55vh;
-        width: 7.78vw;
     }
     .right{
-        margin-left: 1vw;
+        margin-left: 7.5vw;
         flex-wrap: nowrap;
-        width: 100%;
+        width: 81vw;
         height: fit-content;
+        margin-top: 2vh;
     }
     .selem{
         color: var(--text-color);
-        width: 8vw;
+        width: 9vw;
         height: 8vh;
     }
     .btns{
         margin-left: 22vw;
-        margin-top: 4vh;
+        margin-top: 2.5vh;
     }
     
     .submitbtn{
@@ -275,5 +308,9 @@ h1,h3{
         width: 23vw;
         height: 5vh;
 
+    }
+    .pauseCover{
+        width: 85vw;
+        height: 53vh;
     }
   }

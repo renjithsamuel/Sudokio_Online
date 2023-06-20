@@ -84,3 +84,29 @@
     border-bottom-right-radius: 20px;
 }
 
+@media only screen and (max-width: 900px) {
+    .leaderBoardBackDrop{
+        background-color: rgba(6, 32, 87, 0.762);
+        width: 80vw;
+        left: 5vw;
+    }
+
+    .closeLeaderBoardBtn{
+        width: 8vw;
+        height: 6vh;
+        /* right: 5vw ; */
+        left: 50vw;
+    }
+    .todayRanking,.overAllRanking{
+        width: 15vw;
+        height: 4vh;
+
+    }
+    .sepratorSelector{
+        height: 6vh;
+    }
+
+    .leaderBoardWrapper{
+        padding-left: 5vw ;
+    }
+}

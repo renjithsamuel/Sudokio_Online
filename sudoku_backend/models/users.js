@@ -42,6 +42,8 @@ const usersSchema = mongoose.Schema({
         type : Number
     },gameOverToday : {
         type : Boolean
+    },todayBoard : {
+        type : Array
     }
 }, { timestamps: true }) 
 

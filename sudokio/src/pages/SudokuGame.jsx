@@ -159,7 +159,8 @@
                  setHeart(currentUser.heart);
                 //  console.log("today game won : " , todayGameWon);
                  setTodayGameWon(currentUser.todayGameWon);
-                 setGameOver(currentUser.gameOverToday);    
+                 setGameOver(currentUser.gameOverToday);
+                 if(currentUser.todayBoard!=[])setBoard(currentUser.todayBoard);   
             }
             if(currentUser!=null)sessionStorage.setItem('userId',currentUser._id)
         },[currentUser]);
@@ -245,7 +246,7 @@
             }
         }
 
-        const resetBoard = ()=>{
+        const resetBoard = async ()=>{
             setBoard((prevBoard)=>{
                 return prevBoard.map((arr)=>{
                     return (arr).map(e=>{
@@ -254,6 +255,17 @@
                     })
                 })
             });
+
+            // reset the board in the backend: 
+            const updateBoardUrl = `https://sudokionode.onrender.com/api/v1/patchUserById/${currentUser._id}`;
+            let updatedBoard = await sendHTTPRequest(updateBoardUrl , `PATCH` , { todayBoard : []});
+            if(updatedBoard && updatedBoard.success==false){
+                console.log("something went wrong while updating timer!");
+            }else if(updatedBoard &&  updatedBoard.success==true){
+                console.log("timer updated successfully!");
+            }else{
+                console.log("something else went wrong");
+            }
             setIsValid(true);
         };
 
@@ -369,7 +381,7 @@
             }else{
                  setGameStarted(!gameStarted);
                     const updateTimerUrl = `https://sudokionode.onrender.com/api/v1/patchUserById/${currentUser._id}`;
-                    let updatedTimer = await sendHTTPRequest(updateTimerUrl , `PATCH` , {timer : gameTimer});
+                    let updatedTimer = await sendHTTPRequest(updateTimerUrl , `PATCH` , {timer : gameTimer , todayBoard : board});
                     console.log(updatedTimer);
                     if(updatedTimer && updatedTimer.success==false){
                         console.log("something went wrong while updating timer!");

@@ -116,3 +116,30 @@
     letter-spacing: 1.5px;
     color: rgb(29, 1, 55);
 }
+
+
+@media only screen and (max-width: 900px) {
+    .userAccScreenBackDrop{
+        background-color: rgba(6, 32, 87, 0.762);
+        width: 86vw;
+        left: 2vw;
+    }
+    .topOfUserAcc{
+        margin-left: 10vw;
+        width: 80vw;
+    }
+    .closeUserAccBtn,.logoutBtn{
+        width: 9vw;
+        height: 6vh;
+    }
+    .userListItem{
+        margin-left: 12vw;
+    }
+    .userLeft {
+        width: 26vw;
+    }
+    .userRight{
+        width: 50vw;
+    }
+
+}

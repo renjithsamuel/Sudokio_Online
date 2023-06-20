@@ -25,3 +25,14 @@
 }
 
 
+
+
+@media only screen and (max-width: 900px) {
+    .leaderBoardListWrapper{
+        font-size: large;
+        font-weight: 600;
+        height: 5vh;
+        width: 80vw;
+    }
+
+}
