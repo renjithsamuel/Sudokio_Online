@@ -246,6 +246,17 @@ h1,h3{
     .online{
         margin-left: 28vw;
     }
+    .loginWithGoogle{
+        margin-top: 2vh;
+        width: 15vw;
+        margin-right : 1.5vw
+    }
+    .googleBtn{
+        border-radius: 50px;       
+    }
+    #loginWord{
+        display: none;
+    }
     .userAccBtn{
         margin-top: 2.5vh;
         margin-right: 4vw;
