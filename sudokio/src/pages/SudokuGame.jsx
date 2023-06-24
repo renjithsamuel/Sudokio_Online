@@ -62,18 +62,18 @@
             }
             boardCreator();   
             
-            setInterval(async () => {
-                const updateTimerUrl = `https://sudokionode.onrender.com/api/v1/patchUserById/${currentUser._id}`;
-                let updatedTimer = await sendHTTPRequest(updateTimerUrl , `PATCH` , {timer : gameTimer , todayBoard : board});
-                console.log(updatedTimer);
-                if(updatedTimer && updatedTimer.success==false){
-                    console.log("something went wrong while updating timer!");
-                }else if(updatedTimer &&  updatedTimer.success==true){
-                    console.log("timer updated successfully!");
-                }else{
-                    console.log("something else went wrong");
-                }
-            }, 10000);
+            // setInterval(async () => {
+            //     const updateTimerUrl = `https://sudokionode.onrender.com/api/v1/patchUserById/${currentUser._id}`;
+            //     let updatedTimer = await sendHTTPRequest(updateTimerUrl , `PATCH` , {timer : gameTimer , todayBoard : board});
+            //     console.log(updatedTimer);
+            //     if(updatedTimer && updatedTimer.success==false){
+            //         console.log("something went wrong while updating timer!");
+            //     }else if(updatedTimer &&  updatedTimer.success==true){
+            //         console.log("timer updated successfully!");
+            //     }else{
+            //         console.log("something else went wrong");
+            //     }
+            // }, 20000);
 
         }, []);
 
