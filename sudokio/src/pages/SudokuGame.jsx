@@ -21,7 +21,7 @@
         const [board, setBoard] = useState([]);
         const [currX ,  setCurrx] = useState(0);
         const [currY ,  setCurry] = useState(0);
-        const [isValid ,  setIsValid] = useState(false);
+        const [isValid ,  setIsValid] = useState(true);
         const [currentUser,setCurrentUser] = useState({});
         const [allUsers,setAllUsers] = useState([]);
         const [oauthData,setOauthData] = useState({});
@@ -61,44 +61,20 @@
                 if(isBoardAvail===false){console.log('entering sudoku game'); sudokuGame();}
             }
             boardCreator();   
-            // submit and reset buttons
-            let eventlist2 = submitbtn.current.addEventListener('click', async ()=>{
-                if(verifySudoku() || true)console.log("isValid at listen : " , isValid);
-                if(isValid==true)
-                {
-                    alert('Congratulations! You won the game');
-                    calculateScore();
-                    setCurrentUser((prevCurrentUser)=>{
-                        return {...prevCurrentUser,todayScore : nowGameScore};
-                    }) 
-                    setTodayGameWon(true);
-                    updateRanking();
-                    const updatePlayerStats = {
-                        numberOfGamesPlayed : currentUser.numberOfGamesPlayed+1 ,
-                        totalScore : currentUser.totalScore + nowGameScore,
-                        todayScore : nowGameScore,
-                        todayRanking : currentUser.todayRanking,
-                        overallRanking : currentUser.overallRanking,
-                        todayGameWon : true,
-                        heart : heart,
-                        timer : gameTimer,
-                    }
-                    updateStats(updatePlayerStats);
+            
+            setInterval(async () => {
+                const updateTimerUrl = `https://sudokionode.onrender.com/api/v1/patchUserById/${currentUser._id}`;
+                let updatedTimer = await sendHTTPRequest(updateTimerUrl , `PATCH` , {timer : gameTimer , todayBoard : board});
+                console.log(updatedTimer);
+                if(updatedTimer && updatedTimer.success==false){
+                    console.log("something went wrong while updating timer!");
+                }else if(updatedTimer &&  updatedTimer.success==true){
+                    console.log("timer updated successfully!");
+                }else{
+                    console.log("something else went wrong");
                 }
-                else {alert('try again!');}
-                setIsValid(true);
-            })
-            
-            let eventlist3 = resetbtn.current.addEventListener('click', ()=>{
-                if( confirm("Are you sure!")==true){
-                resetBoard();
-                }else return;
-            })
-            
-            return () => {
-            removeEventListener('click',eventlist2);
-            removeEventListener('click',eventlist3);
-            }
+            }, 10000);
+
         }, []);
 
 
@@ -110,9 +86,9 @@
                 // console.log("inside login user : ");
                 // console.log(oauthData);
                 if(oauthData.name == null || oauthData.email==null) { console.log("oauth data not found!");return;}
-                sessionStorage.setItem('username' , oauthData.name);
-                sessionStorage.setItem('emailId',oauthData.email);
-                sessionStorage.setItem('userImgLink',oauthData.picture);
+                localStorage.setItem('username' , oauthData.name);
+                localStorage.setItem('emailId',oauthData.email);
+                localStorage.setItem('userImgLink',oauthData.picture);
 
                 const getCurrentUserUrl = `https://sudokionode.onrender.com/api/v1/getCurrentUser`;
                 const postCurrentUserUrl = `https://sudokionode.onrender.com/api/v1/postUser`;
@@ -122,12 +98,12 @@
                 // console.log(tempCurrentUser);
                 if(tempCurrentUser && tempCurrentUser.success==true){
                     setCurrentUser(tempCurrentUser.data);
-                    sessionStorage.setItem('userId',tempCurrentUser.data._id)
+                    localStorage.setItem('userId',tempCurrentUser.data._id)
                 }else if(tempCurrentUser.error == 'cannot find user! or something went wrong!'){
                     const postNewUser = await sendHTTPRequest(postCurrentUserUrl,'POST',currentUserObj);
                     if(postNewUser.success == true){
                         setCurrentUser(postNewUser.data);
-                        sessionStorage.setItem('userId',postNewUser.data._id)
+                        localStorage.setItem('userId',postNewUser.data._id)
                         console.log("User posted succesfully!");
                     }else{
                         console.log("something went wrong while posting new user!");
@@ -143,16 +119,15 @@
         useEffect(()=>{
             console.log("all users  " , allUsers );
             console.log("currentusers  " , currentUser );
-            if(sessionStorage.getItem('emailId')!=null || currentUser==null){
-                console.log('setting current user~ ',allUsers.filter((elem)=> elem.emailId == sessionStorage.getItem('emailId'))[0]);
-                setCurrentUser(()=>{return (allUsers.filter((elem)=> elem.emailId == sessionStorage.getItem('emailId')))[0]});
-            }else if(sessionStorage.getItem('emailId')==null ){
+            if(localStorage.getItem('emailId')!=null || currentUser==null){
+                console.log('setting current user~ ',allUsers.filter((elem)=> elem.emailId == localStorage.getItem('emailId'))[0]);
+                setCurrentUser(()=>{return (allUsers.filter((elem)=> elem.emailId == localStorage.getItem('emailId')))[0]});
+            }else if(localStorage.getItem('emailId')==null ){
                 setCurrentUser(null);
             }
         },[allUsers]);
         
-        useEffect(()=>{
-            
+        useEffect(()=>{            
             if(JSON.stringify(currentUser)!='{}' && currentUser!=undefined){
                 // console.log("currentusers inside currentuser timer  " , currentUser );
                  setGameTimer(currentUser.timer);
@@ -160,9 +135,10 @@
                 //  console.log("today game won : " , todayGameWon);
                  setTodayGameWon(currentUser.todayGameWon);
                  setGameOver(currentUser.gameOverToday);
-                 if(JSON.stringify(currentUser.todayBoard)!='[]')setBoard(currentUser.todayBoard);   
+                 if(JSON.stringify(currentUser.todayBoard)!='[]'){
+                 setBoard(currentUser.todayBoard);}
             }
-            if(currentUser!=null)sessionStorage.setItem('userId',currentUser._id)
+            if(currentUser!=null)localStorage.setItem('userId',currentUser._id)
         },[currentUser]);
 
         // countDownTimer 
@@ -182,7 +158,6 @@
                                 timer.hours = 1;
                                 timer.minutes = 0;
                                 timer.seconds = 0;
-                                
                             }
                         }
                         setGameTimer({
@@ -274,7 +249,7 @@
             if(isUserAccClicked==true)setIsUserAccClicked(false);
             setCurrentUser(null);
             hudRef.current.style.visibility  = 'visible';
-            sessionStorage.clear();
+            localStorage.clear();
             setGameOver(false);
             setGameTimer({hours:0,minutes:0,seconds:0});
             setHeart(3);
@@ -369,7 +344,6 @@
         }
 
         const updatePausedGame = async ()=> {
-            console.log("inside pause game ",todayGameWon);
             if(currentUser==null){ setGameStarted(!gameStarted); return;};
             if(todayGameWon)
             {
@@ -381,6 +355,7 @@
             }else{
                  setGameStarted(!gameStarted);
                     const updateTimerUrl = `https://sudokionode.onrender.com/api/v1/patchUserById/${currentUser._id}`;
+                    console.log( "inside update paused game : " ,  board);
                     let updatedTimer = await sendHTTPRequest(updateTimerUrl , `PATCH` , {timer : gameTimer , todayBoard : board});
                     console.log(updatedTimer);
                     if(updatedTimer && updatedTimer.success==false){
@@ -408,12 +383,44 @@
              }
         }
 
+        const submitFunc = () => {
+            if(true)console.log("isValid at listen : " , isValid);
+            let flag = 0;
+            if(verifySudoku(flag))
+            {
+                alert('Congratulations! You won the game');
+                calculateScore();
+                setCurrentUser((prevCurrentUser)=>{
+                    return {...prevCurrentUser,todayScore : nowGameScore};
+                }) 
+                setTodayGameWon(true);
+                updateRanking();
+                const updatePlayerStats = {
+                    numberOfGamesPlayed : currentUser.numberOfGamesPlayed+1,
+                    totalScore : currentUser.totalScore + nowGameScore,
+                    todayScore : nowGameScore,
+                    todayRanking : currentUser.todayRanking,
+                    overallRanking : currentUser.overallRanking,
+                    todayGameWon : true,
+                    heart : heart,
+                    timer : gameTimer,
+                }
+                updateStats(updatePlayerStats);
+            }
+            else {alert('try again!');}
+            setIsValid(true);
+        }
 
+
+        const resetFunc =  ()=>{
+            if( confirm("Are you sure!")==true){
+            resetBoard();
+            }else return;
+        }
 
 
     // board generation logics
         const generateRandomValue = () => Math.floor(Math.random() * 9) + 1;
-
         // function to generate random numbers
         function r(a){
             return Math.floor(Math.random() * a) + 1;
@@ -438,7 +445,6 @@
 
         // backtracking function that solves the puzzle
         function Solve( board, row, col){
-            console.log("inside solve fun : ");
             if(row==board.length-1 && col==board[0].length)return true;
             if(col==board[0].length){row++;col=0;}
             if(board[row][col].val!=0)return Solve(board,row,col+1);
@@ -449,7 +455,7 @@
                 })  
                 if(isSafe(board,row,col,i)){
                     board[row][col] = obj;
-                    if(Solve(board,row,col+1)){printBoard(board);return true;}
+                    if(Solve(board,row,col+1)){return true;}
                     
                 }
                 board[row][col] = { val: 0, fixed: false };
@@ -487,17 +493,21 @@
         // Partially solved sudoku generated
         
         // function that finally verifies the users gameplay
-        function verifySudoku(){
-            for(let i=0;i<board.length;i++){
-                for(let j=0;j<board[0].length;j++){
+        const verifySudoku =  (flag) => {
+            console.log(board.length);
+            if(flag==0)
+            {for(let i=0;i<board.length && !flag;i++){
+                for(let j=0;j<board[0].length && !flag;j++){
                     let val = board[i][j].val;
-                    if(val===0 || isfinalSafe(board,i,j,val)==false ){console.log("val : ",val,"isValid: ",isValid);setIsValid(false);return;}
+                    if(val==0 || isfinalSafe(board,i,j,val)==false )
+                    {
+                        flag = 1;
+                        return false;
+                    }
                 }
-                if (!isValid) {
-                    return;
-                  }
             }
-            setIsValid(true);
+            flag = 1;
+            return true;}
         }
 
         function isfinalSafe(board , row, col, val){
@@ -531,7 +541,7 @@
 
         return  (
             <>
-                {(isLeaderBoardClicked==true)?<LeaderBoard allUsers={allUsers} setIsLeaderBoardClicked={setIsLeaderBoardClicked} currentUser={sessionStorage.getItem('username')} hudRef={hudRef}/>:''}
+                {(isLeaderBoardClicked==true)?<LeaderBoard allUsers={allUsers} setIsLeaderBoardClicked={setIsLeaderBoardClicked} currentUser={localStorage.getItem('username')} hudRef={hudRef}/>:''}
                 {(isUserAccClicked==true)?<UserAccountScreen user={currentUser} setIsUserAccClicked={setIsUserAccClicked} logOut={logOut} hudRef={hudRef}/>:''}
                 <div className="navBar">
                     <h1>Sudoku</h1>
@@ -557,7 +567,7 @@
                         </div>
                         :
                             <div className="userAccBtn" onClick={()=>{if(isLeaderBoardClicked==true){setIsLeaderBoardClicked(false);}setIsUserAccClicked(true);hudRef.current.style.visibility = 'hidden'}}>
-                                <img src={sessionStorage.getItem('userImgLink')} alt="user" height={50} width={50} />
+                                <img src={localStorage.getItem('userImgLink')} alt="user" height={50} width={50} />
                             </div>        
                         }
                         <div className="leaderBoard" onClick={()=>{if(isUserAccClicked==true){setIsUserAccClicked(false);}setIsLeaderBoardClicked(true);hudRef.current.style.visibility = 'hidden';}}> <img src={leaderBoardImg} alt="leaderBoard" height={40} width={40} /></div>
@@ -604,10 +614,10 @@
                             </div>
                         </div>
                         <div className="btns">
-                            <div className="submitbtn" ref={submitbtn}>
+                            <div className="submitbtn" ref={submitbtn}  onClick={()=>{submitFunc()}}>
                                 submit
                             </div>
-                            <div className="resetbtn" ref={resetbtn}>
+                            <div className="resetbtn" ref={resetbtn}  onClick={()=>{resetFunc()}}>
                                 reset
                             </div>
                         </div>

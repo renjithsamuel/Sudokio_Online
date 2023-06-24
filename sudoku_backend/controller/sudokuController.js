@@ -43,27 +43,25 @@
                     error : "something went wrong!"
                 })
             }
-            const users = await Users.find();
-            // updating streak and resetting user for today's game : 
-            await Promise.all(users.map(async (user) => {
-                // Update todayRanking
-                await Users.updateOne(
-                    { emailId: user.emailId },
-                    {
-                      $set: {
-                        streak: {
-                          $cond: {
-                            if: { $eq: ["$todayGameWon", true] },
-                            then: { $add: ["$streak", 1] },
-                            else: 0
-                          }
-                        }
-                      }
-                    }
-                  );
-                return;
-              }));
             await Users.updateMany({},{todayGameWon:false,todayScore:0,heart:3,timer:{hours:0,minutes:0,seconds:0},gameOverToday:false,todayBoard : []}); 
+            // updating streak and resetting user for today's game : 
+            const users = await Users.find();
+            try {
+                    await Promise.all(users.map(async (user) => {
+                        // Update todayRanking
+                        await Users.updateOne(
+                            { emailId: user.emailId },
+                            {
+                                $set: {
+                                    streak: user.todayGameWon ? user.streak + 1 : 0 
+                                }
+                            }
+                        );
+                    }));
+              } catch (error) {
+                console.error(error);
+              }
+
             return res.status(200).json({
                 success : true,
                 data : board,
@@ -172,7 +170,7 @@
     exports.patchUser = async (req,res,next) =>{
         const Id = req.params.id;
         if(Id==null)return res.status(400).send("send valid id of user!");
-        if(req.body.username==null && req.body.emailId==null && req.body.todayScore==null && req.body.totalScore==null && req.body.numberOfGamesPlayed==null && req.body.todayRanking ==null && req.body.overallRanking==null && req.body.todayGameWon == null && req.body.heart == null && req.body.timer == null && req.body.gameOverToday && req.body.board){
+        if(req.body.username==null && req.body.emailId==null && req.body.todayScore==null && req.body.totalScore==null && req.body.numberOfGamesPlayed==null && req.body.todayRanking ==null && req.body.overallRanking==null && req.body.todayGameWon == null && req.body.heart == null && req.body.timer == null && req.body.gameOverToday && req.body.todayBoard){
             console.log("heree!");
             return res.status(400).json({
                 success : false,
@@ -194,7 +192,7 @@
                 timer : req.body.timer || userOldObj.timer,
                 streak : req.body.streak || userOldObj.streak,
                 gameOverToday : req.body.gameOverToday || userOldObj.gameOverToday,
-                todayBoard : req.body.board || userOldObj.todayBoard,
+                todayBoard : req.body.todayBoard || userOldObj.todayBoard,
             }
             const user = await Users.findByIdAndUpdate(Id , obj, {new:true});
             if(!user){
