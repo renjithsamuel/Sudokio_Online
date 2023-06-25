@@ -9,6 +9,7 @@
     left: 10vw;
     padding: 3vh;
     border-radius: 10px;
+    filter: drop-shadow(1px 2px 4px var(--secondary-color));
 }
 
 .UserAccScreenWrapper{
@@ -126,7 +127,7 @@
 
 @media only screen and (max-width: 900px) {
     .userAccScreenBackDrop{
-        background-color: rgba(6, 32, 87, 0.762);
+        background-color: var(--cover-color);
         width: 86vw;
         left: 2vw;
     }

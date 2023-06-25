@@ -10,6 +10,7 @@
     padding: 3vh;
     margin-bottom: 5vh;
     border-radius: 10px;
+    filter: drop-shadow(1px 2px 4px var(--secondary-color));
 }
 
 .leaderBoardWrapper{
@@ -86,7 +87,7 @@
 
 @media only screen and (max-width: 900px) {
     .leaderBoardBackDrop{
-        background-color: rgba(6, 32, 87, 0.762);
+        background-color: var(--cover-color);
         width: 80vw;
         left: 5vw;
     }

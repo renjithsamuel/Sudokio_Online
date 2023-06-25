@@ -65,6 +65,7 @@
                 // console.log(dateApiData);
                 today = new Date().toLocaleDateString('en-US',{day : 'numeric' , month : "short",year : "numeric"});
                 // console.log(today);
+                // sudokuGame();
                 const isBoardAvail = await fetchBoard(today); 
                 if(isBoardAvail===false){console.log('entering sudoku game'); sudokuGame();}
             }
@@ -457,7 +458,7 @@
         const generateRandomValue = () => Math.floor(Math.random() * 9) + 1;
         // function to generate random numbers
         function r(a){
-            return Math.floor(Math.random() * a) + 1;
+            return Math.floor(Math.random() * a) ;
         }
 
         // function to check the positional correctness
@@ -507,14 +508,15 @@
               }))
             );
             newBoard[0][0] = { val: generateRandomValue(), fixed: true };
-            newBoard[8][8] = { val: generateRandomValue(), fixed: true };          
+            newBoard[3][3] = { val: generateRandomValue(), fixed: true };
+            newBoard[6][6] = { val: generateRandomValue(), fixed: true };          
             // Solve the Sudoku puzzle
             Solve(newBoard, 0, 0);
             console.log('printing sudoku board : ');
             setBoard(newBoard);
-            for(let i=0;i<(newBoard.length*newBoard[0].length)/2;i++){
-                    let x = r(8);
-                    let y = r(8);
+            for(let i=0;i<(newBoard.length*newBoard[0].length)/3;i++){
+                    let x = r(9);
+                    let y = r(9);
                     if(newBoard[x][y]==0)i--;
                     else{
                         newBoard[x][y]={val:0,fixed:false};
@@ -571,10 +573,8 @@
             }
         }
     
-
-
         return  (
-            <>
+            <>  
                 {(isLeaderBoardClicked==true)?<LeaderBoard allUsers={allUsers} setIsLeaderBoardClicked={setIsLeaderBoardClicked} currentUser={localStorage.getItem('username')} hudRef={hudRef} theme={theme}/>:''}
                 {(isUserAccClicked==true)?<UserAccountScreen user={currentUser} setIsUserAccClicked={setIsUserAccClicked} logOut={logOut} hudRef={hudRef} theme={theme}/>:''}
                 <div className="navBar">
