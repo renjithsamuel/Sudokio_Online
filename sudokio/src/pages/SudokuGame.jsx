@@ -23,8 +23,6 @@
     function SudokuGame(){
         
         // global variables 
-        const submitbtn = useRef();
-        const resetbtn = useRef();
         const hudRef = useRef();
         const sudoku = useRef();
         const [board, setBoard] = useState([]);
@@ -175,7 +173,6 @@
                             minutes : timer.minutes,
                             seconds : timer.seconds
                         });
-                        console.log(gameTimer);
                         if (timer.hours == 1) {
                             clearInterval(timerInterval);
                             setGameStarted(false);
