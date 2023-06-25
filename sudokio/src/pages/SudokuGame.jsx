@@ -400,7 +400,7 @@
         const updateTheme = async ()=>{
                 const updateThemeUrl = `https://sudokionode.onrender.com/api/v1/patchUserById/${currentUser._id}`;
                 let updatedTheme = await sendHTTPRequest(updateThemeUrl , `PATCH` , {theme : theme});
-                console.log(updatedGameOver);
+                console.log(updatedTheme);
                 if(updatedTheme && updatedTheme.success==false){
                     console.log("something went wrong while updating Theme!");
                 }else if(updatedTheme &&  updatedTheme.success==true){
