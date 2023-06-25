@@ -141,6 +141,7 @@
                  setGameTimer(currentUser.timer);
                  setHeart(currentUser.heart);
                  setTheme(currentUser.theme);
+                 document.documentElement.setAttribute('data-theme', currentUser.theme);
                 //  console.log("today game won : " , todayGameWon);
                  setTodayGameWon(currentUser.todayGameWon);
                  setGameOver(currentUser.gameOverToday);
