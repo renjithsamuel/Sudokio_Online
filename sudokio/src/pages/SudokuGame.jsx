@@ -8,8 +8,6 @@
     import googleImg from "../assets/google.png" ;
     import leaderBoardImgLight from '../assets/leaderBoard-light.svg'
     import leaderBoardImgDark from '../assets/leaderBoard-dark.svg'
-    import pauseImg from '../assets/pause.svg' 
-    import playImg from '../assets/play.svg' 
     import darkMode from '../assets/darkMode.svg'
     import lightMode from '../assets/lightMode.svg'
     import pauseLight from '../assets/pause-light.svg'
@@ -75,7 +73,7 @@
             boardCreator();   
             
             // setInterval(async () => {
-            //     const updateTimerUrl = `http://localhost:3000/api/v1/patchUserById/${currentUser._id}`;
+            //     const updateTimerUrl = `https://sudokionode.onrender.com/api/v1/patchUserById/${currentUser._id}`;
             //     let updatedTimer = await sendHTTPRequest(updateTimerUrl , `PATCH` , {timer : gameTimer , todayBoard : board});
             //     console.log(updatedTimer);
             //     if(updatedTimer && updatedTimer.success==false){
@@ -102,8 +100,8 @@
                 localStorage.setItem('emailId',oauthData.email);
                 localStorage.setItem('userImgLink',oauthData.picture);
 
-                const getCurrentUserUrl = `http://localhost:3000/api/v1/getCurrentUser`;
-                const postCurrentUserUrl = `http://localhost:3000/api/v1/postUser`;
+                const getCurrentUserUrl = `https://sudokionode.onrender.com/api/v1/getCurrentUser`;
+                const postCurrentUserUrl = `https://sudokionode.onrender.com/api/v1/postUser`;
                 const currentUserObj = {emailId : oauthData.email , username : oauthData.name , userImgLink : oauthData.picture };
                 // console.log(currentUserObj);
                 const tempCurrentUser = await sendHTTPRequest(getCurrentUserUrl,'POST',currentUserObj);
@@ -209,7 +207,7 @@
         // small functions for various online competitive game environment
         const fetchBoard = async (date) => {
             // console.log(date);
-            const getBoardUrl = `http://localhost:3000/api/v1/getBoard`;
+            const getBoardUrl = `https://sudokionode.onrender.com/api/v1/getBoard`;
             let tempBoard = await sendHTTPRequest(getBoardUrl,'POST',{date : date});
             if(tempBoard && tempBoard.success==true){
                 let newBoardData = tempBoard.data.board;
@@ -220,7 +218,7 @@
         }
 
         const postNewBoard = async (newBoard) => {
-            const postBoardUrl =  `http://localhost:3000/api/v1/postBoard`;
+            const postBoardUrl =  `https://sudokionode.onrender.com/api/v1/postBoard`;
             console.log("inside post" , newBoard);
             let postResponse = await sendHTTPRequest(postBoardUrl,'POST',{
                 board : newBoard,
@@ -244,7 +242,7 @@
             });
 
             // reset the board in the backend: 
-            const updateBoardUrl = `http://localhost:3000/api/v1/patchUserById/${currentUser._id}`;
+            const updateBoardUrl = `https://sudokionode.onrender.com/api/v1/patchUserById/${currentUser._id}`;
             let updatedBoard = await sendHTTPRequest(updateBoardUrl , `PATCH` , { todayBoard : []});
             if(updatedBoard && updatedBoard.success==false){
                 console.log("something went wrong while updating timer!");
@@ -270,7 +268,7 @@
         }
 
         const connectToServer = async ()=>{
-            const getHealthApi = `http://localhost:3000/api/v1/health`;
+            const getHealthApi = `https://sudokionode.onrender.com/api/v1/health`;
             const res = await sendHTTPRequest(getHealthApi,`GET`);
             if(res && res.success==true){
                 console.log("returning true!");
@@ -280,7 +278,7 @@
 
         
         const getLeaderBoard = async ()=>{
-                const getAllUsersUrl = `http://localhost:3000/api/v1/getUsers`;
+                const getAllUsersUrl = `https://sudokionode.onrender.com/api/v1/getUsers`;
                 const tempAllUsers = await sendHTTPRequest(getAllUsersUrl , 'GET');
                 
                 if(tempAllUsers && tempAllUsers.success==true){
@@ -313,7 +311,7 @@
                     }
                 })
             })
-            const updateRankingUrl = `http://localhost:3000/api/v1/patchManyUsers`;
+            const updateRankingUrl = `https://sudokionode.onrender.com/api/v1/patchManyUsers`;
             const updatedTodayRankingResponse = await sendHTTPRequest(updateRankingUrl , 'PATCH' , updatedAllUsers);
             if(updatedTodayRankingResponse.success==true){
                 console.log(updatedTodayRankingResponse);
@@ -324,7 +322,7 @@
         }
 
         const updateStats = async (updatePlayerStats) => {
-                    const patchCurrentUserUrl = `http://localhost:3000/api/v1/patchUserById/${currentUser._id}`;
+                    const patchCurrentUserUrl = `https://sudokionode.onrender.com/api/v1/patchUserById/${currentUser._id}`;
                     const updatedStatsResponse = await sendHTTPRequest(patchCurrentUserUrl,'PATCH',updatePlayerStats);
                     if(updatedStatsResponse.success==true){
                         console.log("user stats updated successfully!");
@@ -346,7 +344,7 @@
 
         const updateHeart = async () => {
             if(currentUser==null)return;
-            const  updateHeartUrl = `http://localhost:3000/api/v1/patchUserById/${currentUser._id}`;
+            const  updateHeartUrl = `https://sudokionode.onrender.com/api/v1/patchUserById/${currentUser._id}`;
             const updatedHeart = await sendHTTPRequest(updateHeartUrl , 'PATCH' , {heart : heart});
             if(updateHeart &&  updatedHeart.success == true){
                 console.log("heart updated successfully");
@@ -366,7 +364,7 @@
                 return;
             }else{
                  setGameStarted(!gameStarted);
-                    const updateTimerUrl = `http://localhost:3000/api/v1/patchUserById/${currentUser._id}`;
+                    const updateTimerUrl = `https://sudokionode.onrender.com/api/v1/patchUserById/${currentUser._id}`;
                     console.log( "inside update paused game : " ,  board);
                     let updatedTimer = await sendHTTPRequest(updateTimerUrl , `PATCH` , {timer : gameTimer , todayBoard : board});
                     console.log(updatedTimer);
@@ -382,7 +380,7 @@
 
         const updateGameOver = async ()=>{
             if(gameStarted==false){
-                const updateGameOver = `http://localhost:3000/api/v1/patchUserById/${currentUser._id}`;
+                const updateGameOver = `https://sudokionode.onrender.com/api/v1/patchUserById/${currentUser._id}`;
                 let updatedGameOver = await sendHTTPRequest(updateGameOver , `PATCH` , {gameOverToday : true});
                 console.log(updatedGameOver);
                 if(updatedGameOver && updatedGameOver.success==false){

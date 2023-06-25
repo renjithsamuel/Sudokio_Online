@@ -1,4 +1,4 @@
-import React, { forwardRef, useEffect, useRef, useState } from "react";
+import React, { useState } from "react";
 
 function SelectElem({val,onclick}) {
     const [hovered, setHovered] = useState(false);

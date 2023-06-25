@@ -1,4 +1,4 @@
-import React, { forwardRef, useEffect, useRef, useState } from "react";
+import React, { useState } from "react";
 
 function SudokuElem({elem,onclick,style}) {
       const [hovered, setHovered] = useState(false);

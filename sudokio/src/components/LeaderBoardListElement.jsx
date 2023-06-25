@@ -1,4 +1,3 @@
-import { useEffect } from "react";
 import './LeaderBoardListElement.css'
 
 function LeaderBoardListElement({username , ranking , score,currentUser}){
