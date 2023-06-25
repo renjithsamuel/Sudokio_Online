@@ -1,9 +1,10 @@
 import { useEffect, useState } from 'react'
 import './LeaderBoard.css'  
 import LeaderBoardListElement from './LeaderBoardListElement';
-import cancelIcon from '../assets/cancel-icon.svg'
+import closeLight from '../assets/close-light.svg'
+import closeDark from '../assets/close-dark.svg'
 
-function LeaderBoard({allUsers,setIsLeaderBoardClicked,currentUser,hudRef}){
+function LeaderBoard({allUsers,setIsLeaderBoardClicked,currentUser,hudRef,theme}){
     const [isTotal , setIsTotal] = useState(false);
 
     useEffect(()=>{
@@ -21,17 +22,17 @@ function LeaderBoard({allUsers,setIsLeaderBoardClicked,currentUser,hudRef}){
                 <div className="leaderBoardWrapper">
                     <div className="topOfLeaderBoard">
                         <div className="totalSelector">
-                            <div className="todayRanking" onClick={()=>{setIsTotal(false)}} style={{backgroundColor:(isTotal)?'rgb(97, 97, 188)':'rgb(68, 68, 167)'}}>
+                            <div className="todayRanking" onClick={()=>{setIsTotal(false)}} style={{backgroundColor:(!isTotal)?'var(--primary-color)':'var(--secondary-color)'}}>
                                 today
                             </div>
                             <div className="sepratorSelector">
                             </div>
-                            <div className="overAllRanking" onClick={()=>{setIsTotal(true)}} style={{backgroundColor:(!isTotal)?'rgb(97, 97, 188)':'rgb(68, 68, 167)'}}>
+                            <div className="overAllRanking" onClick={()=>{setIsTotal(true)}} style={{backgroundColor:(isTotal)?'var(--primary-color)':'var(--secondary-color)'}}>
                                 all time
                             </div>
                         </div>
                         <div className="closeLeaderBoardBtn" onClick={()=>{setIsLeaderBoardClicked(false);hudRef.current.style.visibility = 'visible'}}>
-                                <img src={cancelIcon} alt="close" height={40} width={40} />
+                               {(theme=='light')? <img src={closeLight} alt="close" height={40} width={40} /> : <img src={closeDark} alt="close" height={40} width={40} />  }
                         </div>
                     </div>
                     <LeaderBoardListElement username={'username'} ranking={'ranking'} score={'score'} />

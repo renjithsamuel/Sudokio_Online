@@ -1,10 +1,10 @@
-import { useEffect } from "react";
 import './UserAccountScreen.css';
-import cancelIcon from '../assets/cancel-icon.svg'
-import logoutIcon from '../assets/logout-icon.svg'
+import closeLight from '../assets/close-light.svg'
+import closeDark from '../assets/close-dark.svg'
+import logoutLight from '../assets/logout-light.svg'
+import logoutDark from '../assets/logout-dark.svg'
 
-
-function UserAccountScreen({user,setIsUserAccClicked,logOut,hudRef}){
+function UserAccountScreen({user,setIsUserAccClicked,logOut,hudRef,theme}){
     return (<>
             <div className="userAccScreenBackDrop">
                 <div className="UserAccScreenWrapper">
@@ -12,10 +12,14 @@ function UserAccountScreen({user,setIsUserAccClicked,logOut,hudRef}){
                         <div className="userWelcome">Hi {user.username}!</div>
                         <div className="controlsUser">
                             <div className="logoutBtn" onClick={()=>{logOut()}}>
-                                    <img src={logoutIcon} alt="close" height={30} width={30} />
+                                  { (theme=='light')? <img src={logoutLight} alt="close" height={30} width={30} />
+                                    : <img src={logoutDark} alt="close" height={30} width={30} />
+                                  }
                             </div>
                             <div className="closeUserAccBtn" onClick={()=>{setIsUserAccClicked(false);hudRef.current.style.visibility = 'visible'}}>
-                                    <img src={cancelIcon} alt="close" height={40} width={40} />
+                                   {(theme=='light')? <img src={closeLight} alt="close" height={40} width={40} />
+                                      : <img src={closeDark} alt="close" height={40} width={40} />
+                                   }
                             </div>
                         </div>
                     </div>

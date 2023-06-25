@@ -5,7 +5,7 @@ function LeaderBoardListElement({username , ranking , score,currentUser}){
 
     return (
         <>
-            <div className="leaderBoardListWrapper" style={{backgroundColor:(currentUser==username)?'rgb(97, 97, 188)':'rgba(240, 248, 255, 0.858)'}}>
+            <div className="leaderBoardListWrapper" style={{backgroundColor:(currentUser==username)?'var(--secondary-color)':'var(--primary-color)'}}>
                 <div className="username">
                     {username}
                 </div>

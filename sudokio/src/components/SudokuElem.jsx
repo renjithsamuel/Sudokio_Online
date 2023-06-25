@@ -11,7 +11,7 @@ function SudokuElem({elem,onclick,style}) {
         setHovered(false);
       };
     return ( <> 
-            <div className="elem" style={{backgroundColor:elem.fixed ? "var(--fixed-color)" : (hovered||style=='var(--hover-color)') ? "var(--hover-color)" : elem.style}}
+            <div className="elem" style={{backgroundColor:elem.fixed ? "var(--secondary-color)" : (hovered||style=='var(--hover-color)') ? "var(--hover-color)" : elem.style , color: 'var(--text-color)'}}
               onClick={onclick}
               onMouseEnter={handleMouseEnter}
             onMouseLeave={handleMouseLeave}

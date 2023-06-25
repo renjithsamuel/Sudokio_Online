@@ -3,13 +3,13 @@
     height: fit-content;
     width: 70vw;
     backdrop-filter: blur(50px);
-    background-color: rgba(79, 129, 238, 0.137);
+    background-color: var(--cover-color);
     z-index: 1;
     top: 5vh;
     left: 10vw;
     padding: 3vh;
     margin-bottom: 5vh;
-    border-radius: 30px;
+    border-radius: 10px;
 }
 
 .leaderBoardWrapper{
@@ -34,15 +34,15 @@
     padding: 0.3vw;
     width: 3vw;
     height: 6vh;
-    background-color: rgba(240, 248, 255, 0.912);
-    border-radius: 10px;
+    background-color: var(--secondary-color);
+    border-radius: 50% ;
     position: absolute;
     left:29vw;
 }
 
 
 .closeLeaderBoardBtn:hover{
-    background-color: rgb(137, 137, 137);
+    background-color: var(--hover-color);
     cursor: pointer;
 }
 
@@ -58,20 +58,20 @@
     height: 5vh;
     width: 8vw;
     padding: 1vh;
-    background-color: rgb(105, 105, 173);
-    color: aliceblue;
+    background-color: var(--primary-color);
+    color: var(--text-color);
 }
 
 .todayRanking:hover,.overAllRanking:hover{
     cursor: pointer;
-    background-color: rgba(65, 65, 141, 0.856);
+    background-color: var(--hover-color);
     box-shadow: 0px 0px 3px 2px rgb(152, 152, 152);
 }
 
 .sepratorSelector{
     height: 7vh;
     width: 0.2vw;
-    background-color: rgb(178, 151, 203);
+    background-color: var(--hover-color);
 }
 
 .todayRanking{

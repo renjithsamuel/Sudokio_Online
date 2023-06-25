@@ -1,12 +1,13 @@
 .leaderBoardListWrapper{
+    color: var(--text-color);
     padding: 0.5vh;
     display: flex;
     justify-content: space-around;
     font-size: large;
-    font-weight: 700;
+    font-weight: 500;
     height: 5vh;
     width: 50vw;
-    background-color: rgba(240, 248, 255, 0.858);
+    background-color: var(--secondary-color);
     border-radius: 10px;
     margin-bottom: 0.4vh;
     transform: scale(1);
@@ -21,7 +22,7 @@
 .separatorListLeaderBoard{
     width: 0.3vw;
     height: 100%;
-    background-color: rgba(132, 141, 199, 0.129);
+    background-color: var(--hover-color);
 }
 
 

@@ -6,9 +6,20 @@
     import LeaderBoard from "../components/LeaderBoard";
     import UserAccountScreen from "../components/UserAccountScreen";
     import googleImg from "../assets/google.png" ;
-    import leaderBoardImg from '../assets/leaderboard.svg'
+    import leaderBoardImgLight from '../assets/leaderBoard-light.svg'
+    import leaderBoardImgDark from '../assets/leaderBoard-dark.svg'
     import pauseImg from '../assets/pause.svg' 
     import playImg from '../assets/play.svg' 
+    import darkMode from '../assets/darkMode.svg'
+    import lightMode from '../assets/lightMode.svg'
+    import pauseLight from '../assets/pause-light.svg'
+    import pauseDark from '../assets/pause-dark.svg'
+    import playLight from '../assets/play-light.svg'
+    import playDark from '../assets/play-dark.svg'
+    import submitLight from '../assets/submit-light.svg'
+    import submitDark from '../assets/submit-dark.svg'
+    import resetLight from '../assets/reset-light.svg'
+    import resetDark from '../assets/reset-dark.svg'
 
 
     function SudokuGame(){
@@ -35,6 +46,7 @@
         const [gameTimer , setGameTimer ] = useState({hours : 0 , minutes : 0 , seconds : 0});
         const [timerInterval, setTimerInterval] = useState(null);
         const [isConnected, setIsConnected] = useState(false);
+        const [theme , setTheme] = useState('dark');
         let today = '';
         
         const sendHTTPRequest = async (url , method , data) =>{
@@ -63,7 +75,7 @@
             boardCreator();   
             
             // setInterval(async () => {
-            //     const updateTimerUrl = `https://sudokionode.onrender.com/api/v1/patchUserById/${currentUser._id}`;
+            //     const updateTimerUrl = `http://localhost:3000/api/v1/patchUserById/${currentUser._id}`;
             //     let updatedTimer = await sendHTTPRequest(updateTimerUrl , `PATCH` , {timer : gameTimer , todayBoard : board});
             //     console.log(updatedTimer);
             //     if(updatedTimer && updatedTimer.success==false){
@@ -90,8 +102,8 @@
                 localStorage.setItem('emailId',oauthData.email);
                 localStorage.setItem('userImgLink',oauthData.picture);
 
-                const getCurrentUserUrl = `https://sudokionode.onrender.com/api/v1/getCurrentUser`;
-                const postCurrentUserUrl = `https://sudokionode.onrender.com/api/v1/postUser`;
+                const getCurrentUserUrl = `http://localhost:3000/api/v1/getCurrentUser`;
+                const postCurrentUserUrl = `http://localhost:3000/api/v1/postUser`;
                 const currentUserObj = {emailId : oauthData.email , username : oauthData.name , userImgLink : oauthData.picture };
                 // console.log(currentUserObj);
                 const tempCurrentUser = await sendHTTPRequest(getCurrentUserUrl,'POST',currentUserObj);
@@ -197,7 +209,7 @@
         // small functions for various online competitive game environment
         const fetchBoard = async (date) => {
             // console.log(date);
-            const getBoardUrl = `https://sudokionode.onrender.com/api/v1/getBoard`;
+            const getBoardUrl = `http://localhost:3000/api/v1/getBoard`;
             let tempBoard = await sendHTTPRequest(getBoardUrl,'POST',{date : date});
             if(tempBoard && tempBoard.success==true){
                 let newBoardData = tempBoard.data.board;
@@ -208,7 +220,7 @@
         }
 
         const postNewBoard = async (newBoard) => {
-            const postBoardUrl =  `https://sudokionode.onrender.com/api/v1/postBoard`;
+            const postBoardUrl =  `http://localhost:3000/api/v1/postBoard`;
             console.log("inside post" , newBoard);
             let postResponse = await sendHTTPRequest(postBoardUrl,'POST',{
                 board : newBoard,
@@ -232,7 +244,7 @@
             });
 
             // reset the board in the backend: 
-            const updateBoardUrl = `https://sudokionode.onrender.com/api/v1/patchUserById/${currentUser._id}`;
+            const updateBoardUrl = `http://localhost:3000/api/v1/patchUserById/${currentUser._id}`;
             let updatedBoard = await sendHTTPRequest(updateBoardUrl , `PATCH` , { todayBoard : []});
             if(updatedBoard && updatedBoard.success==false){
                 console.log("something went wrong while updating timer!");
@@ -258,7 +270,7 @@
         }
 
         const connectToServer = async ()=>{
-            const getHealthApi = `https://sudokionode.onrender.com/api/v1/health`;
+            const getHealthApi = `http://localhost:3000/api/v1/health`;
             const res = await sendHTTPRequest(getHealthApi,`GET`);
             if(res && res.success==true){
                 console.log("returning true!");
@@ -268,7 +280,7 @@
 
         
         const getLeaderBoard = async ()=>{
-                const getAllUsersUrl = `https://sudokionode.onrender.com/api/v1/getUsers`;
+                const getAllUsersUrl = `http://localhost:3000/api/v1/getUsers`;
                 const tempAllUsers = await sendHTTPRequest(getAllUsersUrl , 'GET');
                 
                 if(tempAllUsers && tempAllUsers.success==true){
@@ -301,7 +313,7 @@
                     }
                 })
             })
-            const updateRankingUrl = `https://sudokionode.onrender.com/api/v1/patchManyUsers`;
+            const updateRankingUrl = `http://localhost:3000/api/v1/patchManyUsers`;
             const updatedTodayRankingResponse = await sendHTTPRequest(updateRankingUrl , 'PATCH' , updatedAllUsers);
             if(updatedTodayRankingResponse.success==true){
                 console.log(updatedTodayRankingResponse);
@@ -312,7 +324,7 @@
         }
 
         const updateStats = async (updatePlayerStats) => {
-                    const patchCurrentUserUrl = `https://sudokionode.onrender.com/api/v1/patchUserById/${currentUser._id}`;
+                    const patchCurrentUserUrl = `http://localhost:3000/api/v1/patchUserById/${currentUser._id}`;
                     const updatedStatsResponse = await sendHTTPRequest(patchCurrentUserUrl,'PATCH',updatePlayerStats);
                     if(updatedStatsResponse.success==true){
                         console.log("user stats updated successfully!");
@@ -334,7 +346,7 @@
 
         const updateHeart = async () => {
             if(currentUser==null)return;
-            const  updateHeartUrl = `https://sudokionode.onrender.com/api/v1/patchUserById/${currentUser._id}`;
+            const  updateHeartUrl = `http://localhost:3000/api/v1/patchUserById/${currentUser._id}`;
             const updatedHeart = await sendHTTPRequest(updateHeartUrl , 'PATCH' , {heart : heart});
             if(updateHeart &&  updatedHeart.success == true){
                 console.log("heart updated successfully");
@@ -354,7 +366,7 @@
                 return;
             }else{
                  setGameStarted(!gameStarted);
-                    const updateTimerUrl = `https://sudokionode.onrender.com/api/v1/patchUserById/${currentUser._id}`;
+                    const updateTimerUrl = `http://localhost:3000/api/v1/patchUserById/${currentUser._id}`;
                     console.log( "inside update paused game : " ,  board);
                     let updatedTimer = await sendHTTPRequest(updateTimerUrl , `PATCH` , {timer : gameTimer , todayBoard : board});
                     console.log(updatedTimer);
@@ -370,7 +382,7 @@
 
         const updateGameOver = async ()=>{
             if(gameStarted==false){
-                const updateGameOver = `https://sudokionode.onrender.com/api/v1/patchUserById/${currentUser._id}`;
+                const updateGameOver = `http://localhost:3000/api/v1/patchUserById/${currentUser._id}`;
                 let updatedGameOver = await sendHTTPRequest(updateGameOver , `PATCH` , {gameOverToday : true});
                 console.log(updatedGameOver);
                 if(updatedGameOver && updatedGameOver.success==false){
@@ -417,6 +429,12 @@
             resetBoard();
             }else return;
         }
+
+        const toggleTheme = () => {
+            const newTheme = theme === 'light' ? 'dark' : 'light';
+            setTheme(newTheme);
+            document.documentElement.setAttribute('data-theme', newTheme);
+        };
 
 
     // board generation logics
@@ -541,8 +559,8 @@
 
         return  (
             <>
-                {(isLeaderBoardClicked==true)?<LeaderBoard allUsers={allUsers} setIsLeaderBoardClicked={setIsLeaderBoardClicked} currentUser={localStorage.getItem('username')} hudRef={hudRef}/>:''}
-                {(isUserAccClicked==true)?<UserAccountScreen user={currentUser} setIsUserAccClicked={setIsUserAccClicked} logOut={logOut} hudRef={hudRef}/>:''}
+                {(isLeaderBoardClicked==true)?<LeaderBoard allUsers={allUsers} setIsLeaderBoardClicked={setIsLeaderBoardClicked} currentUser={localStorage.getItem('username')} hudRef={hudRef} theme={theme}/>:''}
+                {(isUserAccClicked==true)?<UserAccountScreen user={currentUser} setIsUserAccClicked={setIsUserAccClicked} logOut={logOut} hudRef={hudRef} theme={theme}/>:''}
                 <div className="navBar">
                     <h1>Sudoku</h1>
                     <div className="online">
@@ -570,7 +588,16 @@
                                 <img src={localStorage.getItem('userImgLink')} alt="user" height={50} width={50} />
                             </div>        
                         }
-                        <div className="leaderBoard" onClick={()=>{if(isUserAccClicked==true){setIsUserAccClicked(false);}setIsLeaderBoardClicked(true);hudRef.current.style.visibility = 'hidden';}}> <img src={leaderBoardImg} alt="leaderBoard" height={40} width={40} /></div>
+                        <div className="leaderBoard" onClick={()=>{if(isUserAccClicked==true){setIsUserAccClicked(false);}setIsLeaderBoardClicked(true);hudRef.current.style.visibility = 'hidden';}}> 
+                            {(theme=='light')?<img src={leaderBoardImgLight} alt="leaderBoard" height={40} width={40} />
+                            : <img src={leaderBoardImgDark} alt="leaderBoard" height={40} width={40} /> }    
+                        </div>
+                        <div className="darkMode" onClick={()=>{toggleTheme()}}>
+                            {
+                                (theme=='dark')?<img src={darkMode} alt="dark" height={40} width={40} /> 
+                                              :  <img src={lightMode} alt="light" height={40} width={40} />    
+                            }
+                        </div>
                     </div>
                 </div>
 
@@ -580,17 +607,10 @@
                         <div className="hudLeft" >
                             <div className="timer" > {gameTimer.hours +  " : " + gameTimer.minutes + " : " + gameTimer.seconds} </div>
                         </div>
-                        <div className="pauseBtn" onClick={()=>{updatePausedGame();}} >
-                            {    (gameStarted)?
-                                    <img src={pauseImg} alt="pause" height={40} width={40} />
-                                :                            
-                                    <img src={playImg} alt="play" height={40} width={40} />
-                            }
-                        </div>
                         <div className="hudRight" >
-                            <div className="heart"  style={{backgroundColor:(heart>=1)?'var(--fixed-color)':'var(--text-color)'}}></div>
-                            <div className="heart"  style={{backgroundColor:(heart>=2)?'var(--fixed-color)':'var(--text-color)'}}></div>
-                            <div className="heart" style={{backgroundColor:(heart==3)?'var(--fixed-color)':'var(--text-color)'}} ></div>
+                            <div className="heart"  style={{display:(heart>=1)?'flex':'none'}}></div>
+                            <div className="heart"  style={{display:(heart>=2)?'flex':'none'}}></div>
+                            <div className="heart" style={{display:(heart==3)?'flex':'none'}}></div>
                         </div>
                 </div>
                 <div className="pagewrap">
@@ -601,7 +621,7 @@
                                         <SudokuElem 
                                         key={`${rowIndex}-${colIndex}`}
                                         elem={elem} 
-                                        style={(currX==rowIndex && currY==colIndex)?'var(--hover-color)':'var(--change-color)'}
+                                        style={(currX==rowIndex && currY==colIndex)?'var(--hover-color)':'var(--primary-color)'}
                                         onclick={()=>{             
                                             setCurrx(rowIndex);
                                             setCurry(colIndex);
@@ -610,16 +630,33 @@
                                         ))
                                     ))}
                             <div className="pauseCover" style={{display:(gameStarted)?'none':'flex'}}>
-                                <img src={pauseImg} alt="paused" height={50} width={50} />
+                                {(theme=='light')?<img src={pauseLight} alt="paused" height={50} width={50} />
+                                                    :  <img src={pauseDark} alt="paused" height={50} width={50} />}
                             </div>
                         </div>
-                        <div className="btns">
-                            <div className="submitbtn" ref={submitbtn}  onClick={()=>{submitFunc()}}>
-                                submit
-                            </div>
-                            <div className="resetbtn" ref={resetbtn}  onClick={()=>{resetFunc()}}>
-                                reset
-                            </div>
+                    </div>
+
+                    <div className="middle">
+                        <div className="controlElem" onClick={()=>{updatePausedGame();}}>
+                            {(gameStarted)?
+                            // pause buttons
+                            (theme=='light')?<img src={pauseLight} alt="pause" height={38} width={38} />
+                                            : <img src={pauseDark} alt="pause" height={38} width={38} />
+                            : 
+                            // playButtons
+                            (theme=='light')?<img src={playLight} alt="play" height={38} width={38} />
+                            : <img src={playDark} alt="play" height={38} width={38} />
+                            }
+                        </div>
+                        <div className="controlElem" onClick={()=>{resetFunc()}}>
+                            {(theme=='light')?<img src={resetLight} alt="reset" height={38} width={38} />
+                                            : <img src={resetDark} alt="reset" height={38} width={38} />
+                            }
+                        </div>
+                        <div className="controlElem"  onClick={()=>{submitFunc()}}>
+                            {(theme=='light')?<img src={submitLight} alt="submit" height={38} width={38} />
+                                            : <img src={submitDark} alt="submit" height={38} width={38} />
+                            }
                         </div>
                     </div>
                     

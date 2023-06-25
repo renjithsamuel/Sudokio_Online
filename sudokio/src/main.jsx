@@ -1,7 +1,7 @@
 import React from 'react'
 import ReactDOM from 'react-dom/client'
-import App from './App.jsx'
+import SudokuGame from './pages/SudokuGame'
 
 ReactDOM.createRoot(document.getElementById('root')).render(
-    <App />
+    <SudokuGame />
 )

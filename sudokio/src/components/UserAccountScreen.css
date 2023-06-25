@@ -3,12 +3,12 @@
     height: fit-content;
     width: 80vw;
     backdrop-filter: blur(50px);
-    background-color: rgba(79, 129, 238, 0.137);
+    background-color: var(--cover-color);
     z-index: 1;
     top: 5vh;
     left: 10vw;
     padding: 3vh;
-    border-radius: 30px;
+    border-radius: 10px;
 }
 
 .UserAccScreenWrapper{
@@ -33,16 +33,17 @@
     font-weight: 800;
     font-size: x-large;
     margin: 1.5vh;
-    
-    background-color: rgba(109, 109, 210, 0.952);
+    color: var(--text-color);
+    background-color: var(--secondary-color);
     border-radius:10px ;
     padding: 1vh;
     backdrop-filter: blur(10px);
-    box-shadow: 0 8px 10px 0 rgba(40, 54, 110, 0.751);
+    box-shadow: 0 8px 10px 0 var(--hover-color);
+    filter: drop-shadow(1px 1px 5px var(--hover-color));
 }
 .userWelcome:hover{
     cursor: default;
-    box-shadow: 0 8px 20px 0 rgba(9, 22, 74, 0.751);
+    box-shadow: 0 1px 20px 0 var(--text-color);
 }
 
 .controlsUser{
@@ -50,38 +51,42 @@
 }
 
 .closeUserAccBtn{
-    background-color: rgba(240, 248, 255, 0.867);
-    height: 7vh;
+    background-color: var(--secondary-color);
+    padding: 0.3vh;
     width: 3vw;
-    border-radius: 10px;
+    height: 6vh;
+    border-radius: 50%;
     display: flex;
     justify-content: center;
     align-items: center;
+    filter: drop-shadow(1px 1px 5px var(--hover-color));
 }
 
 
 .closeUserAccBtn:hover{
-    background-color: rgba(164, 169, 173, 0.867);
+    background-color: var(--hover-color);
     cursor: pointer;
-    box-shadow: 0px 0px 2px 2px rgb(152, 152, 152);
+    box-shadow: 0px 0px 2px 2px var(--primary-color);
 }
 
 .logoutBtn{
-    background-color: rgba(240, 248, 255, 0.867);
-    height: 7vh;
+    background-color: var(--secondary-color);
+    padding: 0.3vh;
     width: 3vw;
-    border-radius: 10px;
+    height: 6vh;
+    border-radius: 50%;
     display: flex;
     justify-content: center;
     align-items: center;
     margin-right: 1vw;
+    filter: drop-shadow(1px 1px 5px var(--hover-color));
 }
 
 
 .logoutBtn:hover{
-    background-color: rgba(164, 169, 173, 0.867);
+    background-color: var(--hover-color);
     cursor: pointer;
-    box-shadow: 0px 0px 2px 2px rgb(152, 152, 152);
+    box-shadow: 0px 0px 2px 2px var(--hover-color);
 
 }
 
@@ -89,32 +94,33 @@
 
 
 .userListItem{
-    background-color: rgba(222, 222, 222, 0.885);
+    background-color: var(--primary-color);
     padding: 1vh;
     margin-bottom: 0.5vh;
     display: flex;
     justify-content: space-between;
     border-radius: 10px;
+    color: var(--text-color);
 }
 .userListItem:hover{
-    box-shadow: 0 8px 20px 0 rgba(40, 54, 110, 0.751);
+    box-shadow: 0 8px 20px 0 var(--secondary-color);
     cursor: default;
 }
 
 .userLeft {
     text-indent: 0.5vw;
-    font-weight: 800;
-    font-size: large;
+    font-weight: 500;
+    font-size: medium;
     width: 15vw;
     letter-spacing: 1.5px;
 }
 .userRight{
-    font-weight: 600;
+    font-weight: 500;
     font-size: medium;
     width: 20vw;
     margin-left: 3vw;
     letter-spacing: 1.5px;
-    color: rgb(29, 1, 55);
+    color: var(--text-color);
 }
 
 

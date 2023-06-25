@@ -1,4 +1,105 @@
 
+:root{
+    /* --bg-color : #002c47 ;
+    --text-color : #fdfdfd ;
+    --fixed-color : #2986ce ;
+    --border-color : rgb(0, 78, 151) ;
+    --change-color : #5bbae2 ;
+    --hover-color : #b5d1de ; */
+    /* dark */
+    /* --dark-bg-color : #060315;
+    --dark-primary-color : #471E5B;
+    --dark-secondary-color : #0A1430;
+    --dark-elem-color : #471D5B */
+    /* light */
+    /* --light-bg-color : rgba(248, 248, 248, 1);
+    --light-primary-color : #FFFFFF;
+    --light-secondary-color : #DEDEDE; */
+    /* final uses */
+    --bg-color : #060315;
+    --primary-color : #471E5B;
+    --secondary-color :  #101c3f;
+    --norm-elem-color : rgba(52, 20, 67, 1);
+    --fixed-elem-color : rgba(10, 20, 48, 1);
+    --text-color : #fdfdfd ;
+    --hover-color :  #7a4096d0;
+    --cover-color : #7a4096d0;
+}   
+
+[data-theme="light"] {
+    --bg-color : rgba(248, 248, 248, 1);;
+    --primary-color : #FFFFFF;
+    --secondary-color :  #DEDEDE;
+    --norm-elem-color : #FFFFFF;
+    --fixed-elem-color : #DEDEDE;
+    --text-color : #232323 ;
+    --hover-color :  #b5b5b5;
+    --cover-color : #b5b5b5ee;
+}
+
+*{
+    animation: slide-up 0.6s ease-in-out   forwards ;
+    transition: all 0.3s ease-in-out;
+    scroll-behavior: smooth;
+    font-family: 'Poppins';
+}
+
+@keyframes slide-up {
+    from {
+        transform: translateY(20px);
+        opacity: 0;
+    }
+    to{
+        transform: translateY(0px);
+        opacity: 1;
+    }
+}
+
+html{
+    z-index: 0;
+}
+
+body{
+    background-color: var(--bg-color);
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    z-index: 0;
+}
+
+.wholeWrapper{
+    height: 100%;
+    width: 100%;
+}
+
+
+::-webkit-scrollbar {
+    /* display: none; */
+    width: 2px;
+    border-radius: 30px;
+  }
+  
+  /* Track */
+  ::-webkit-scrollbar-track {
+    background: var(--primary-color);
+    border-radius: 30px;
+  }
+  
+  /* Handle */
+  ::-webkit-scrollbar-thumb {
+      background: var(--secondary-color);
+      border-radius: 30px;
+      transition: all 0.5s ease;
+  }
+  
+  /* Handle on hover */
+  ::-webkit-scrollbar-thumb:hover {
+    background: var(--hover-color);
+  }
+
+
+
+
 h1,h3{
     color: var(--text-color);
     margin-left: 15vw;
@@ -22,34 +123,36 @@ h1,h3{
     margin-top: 3.5vh;
     margin-right: 1vw;
     border-radius: 50%;
+    filter: drop-shadow(1px 1px 5px var(--hover-color));
 }
 
 .userAccBtn img{
     border-radius: 50%;
-    box-shadow: 0px 0px 2px 2px rgb(152, 152, 152);
+    box-shadow: 0px 0px 2px 2px var(--primary-color);
 }
 
 .userAccBtn img:hover{
     cursor: pointer;
-    box-shadow: 0px 0px 2px 4px rgb(152, 152, 152);
+    box-shadow: 0px 0px 2px 4px var(--hover-color);
 }
 
 .leaderBoard{
-    background-color: rgba(240, 248, 255, 0.884);
+    background-color: var(--primary-color);
     padding: 1vh;
     margin-top: 3.5vh;
     height: 5vh;
     border-radius: 10px;
+    filter: drop-shadow(1px 1px 5px var(--hover-color));
 }
 
 .leaderBoard:active{
-    background-color: rgb(149, 149, 149);
+    background-color: var(--hover-color);
     transform: scale(1.5)  translateY(4px);  
 }
 
 .leaderBoard:hover{
     cursor: pointer;
-    box-shadow: 1px 2px 4px 4px rgb(152, 152, 152);
+    box-shadow: 1px 2px 4px 4px var(--hover-color);
 }
 
 .loginWithGoogle{
@@ -62,22 +165,23 @@ h1,h3{
 
 .googleBtn{
     padding: 1.5vh;
-    background-color: rgba(240, 248, 255, 0.842);
+    background-color: var(--primary-color);
     display: flex;
     border-radius: 15px;
     transition: all 0.2s ease;
     margin-right: 0.7vw;
     margin-top: 0.2vh;
+    filter: drop-shadow(1px 1px 5px var(--hover-color));
 }
 
 .googleBtn:active{
-    background-color: rgb(149, 149, 149);
+    background-color: var(--primary-color);
     transform: scale(1.5)  translateY(4px);  
 }
 
 .googleBtn:hover{
     cursor: pointer;
-    box-shadow: 1px 2px 4px 4px rgb(152, 152, 152);
+    box-shadow: 1px 2px 4px 4px var(--hover-color);
 }
 
 #loginWord{
@@ -85,11 +189,27 @@ h1,h3{
     margin-right: 0.2vw;
     font-weight: 600;
     font-size: large;
+    color: var(--text-color);
 }
 
+
+.darkMode{
+    background-color: var(--primary-color);
+    height: 6vh;
+    padding: 0.5vh;
+    border-radius: 10px;
+    margin-top: 3.5vh;
+    margin-left: 0.8vw;
+    filter: drop-shadow(1px 1px 5px var(--hover-color));
+}
+
+.darkMode:hover{
+    cursor: pointer;
+    box-shadow: 1px 2px 4px 4px var(--hover-color);
+    
+}
 .pagewrap{
     display: flex;
-    margin-top: 3vh;
 }
 
 .hud{
@@ -104,14 +224,11 @@ h1,h3{
 }
 .hudLeft{
     margin-left: 1vw;
-    color: whitesmoke;
-    font-size: x-large;
+    color: var(--text-color);
+    font-size: large;
     font-weight: 500;
 }
 
-.pauseBtn:hover{
-    cursor: pointer;
-}
 
 .hudRight{
     z-index: -1;
@@ -121,7 +238,7 @@ h1,h3{
 .heart{
     width: 1vw;
     height: 2.2vh;
-    background-color: var(--fixed-color);
+    background-color: var(--hover-color);
     border-radius: 50%;
     margin-right: 0.8vw;
 }
@@ -143,22 +260,22 @@ h1,h3{
 
 .pauseCover{
     position: absolute;
-    background-color: rgba(217, 217, 217, 0.463);
+    background-color: var(--cover-color);
     width: 28vw;
     height: 56vh;
     display: flex;
     justify-content: center;
     align-items: center;
-    backdrop-filter: blur(5px);
-    border-radius: 10px;
+    backdrop-filter: blur(3px);
+    border-radius: 2px;
     z-index: 1;
 }
 
 .elem{
-    border: 1px solid var(--border-color);
-    background-color: var(--change-color);
+    border: 1px solid var(--bg-color);
+    background-color: var(--primary-color);
     height: 6vh;
-    width: 3vw;
+    width: 3vw; 
     display: flex;
     justify-content: center;
     align-items: center;
@@ -168,42 +285,30 @@ h1,h3{
 
 .elem:hover{
     background-color: var(--hover-color);
-    box-shadow: 0px 0px 3px 1px var(--hover-color)   ; 
+    box-shadow: 0px 0px 3px 1px var(--hover-color); 
     z-index: 1;
 }
 
-.btns{
-    margin-top: 3vh;
-    margin-left: 25vw;
-    display: flex;
-    padding: 2vh;
-    cursor: pointer;
-    color: var(--bg-color);
-}
-
-.submitbtn{
-    padding-top: 0.5vh;
-    border-radius: 10px;
-    width: 7vw;
-    height: 5vh;
-    text-align: center;
-    background-color: var(--change-color);
-}
-.resetbtn{
-    padding-top: 0.5vh;
+.middle{
     margin-left: 1vw;
-    border-radius: 10px;
-    width: 7vw;
-    height: 5vh;
-    text-align: center;
-    background-color: var(--change-color);
+    margin-top: 3vh;
 }
 
-.submitbtn:hover,.resetbtn:hover{
-    background-color: var(--fixed-color);
+.controlElem{
+    background-color: var(--primary-color);
+    padding: 0.4vh;
+    width: 2.5vw;
+    height: 5.2vh;
+    margin: 0.5vh;
+    margin-top: 1vh;
+    border-radius: 2px;
+    filter: drop-shadow(1px 1px 5px var(--secondary-color));
 }
 
-
+.controlElem:hover{
+    background-color: var(--hover-color);
+    cursor: pointer;
+}
 .right{
     margin-left: 5vw;
     margin-top: 5vh;
@@ -215,20 +320,21 @@ h1,h3{
 }
 
 .selem{
+    background-color: var(--primary-color);
     color: var(--text-color);
     width: 7vw;
     height: 12vh;
-    border-radius: 10px;
-    background-color: var(--fixed-color);
+    border-radius: 7px;
     display: flex;
     justify-content: center;
     align-items: center;
     cursor: pointer;
+    filter: drop-shadow(1px 2px 4px var(--secondary-color));
 }
 
 .selem:hover{
-    background-color: var(--change-color);
-    box-shadow: 0 8px 20px 0 rgba(1, 118, 136, 0.751);
+    background-color: var(--hover-color);
+    box-shadow: 0 3px 20px 0 var(--hover-color);
 }
 
 
@@ -241,15 +347,15 @@ h1,h3{
     }
     h1{
         margin-left: 8vw;
-        font-size: xx-large;
+        font-size: 30px;
     }
     .online{
-        margin-left: 28vw;
+        margin-left: 25vw;
     }
     .loginWithGoogle{
         margin-top: 2vh;
-        width: 15vw;
-        margin-right : 1.5vw
+        width: 13vw;
+        margin-right : 1vw
     }
     .googleBtn{
         border-radius: 50px;       
@@ -265,9 +371,29 @@ h1,h3{
         width: 10vw;
     }
 
+
     .leaderBoard{
         border-radius: 50%;
         margin-top: 2.5vh;
+        height: 5vh;
+    }
+
+    .leaderBoard img{
+        height: 35px;
+        width: 35px;
+    }
+ 
+    .darkMode{
+        border-radius: 50%;
+        padding: 1vw;
+        margin-top: 2.7vh;
+        height: 5vh;
+        margin-left: 1.2vw;
+    }
+
+    .darkMode img{
+        height: 40px;
+        width: 34px;
     }
     .hud{
         margin-left: 17vw;
@@ -289,10 +415,24 @@ h1,h3{
         width: 85vw;
         height: 50vh;
     }
+    .pauseCover{
+        width: 85vw;
+        height: 54vh;
+    }
     .elem{
         width: 9vw;
         height: 5.55vh;
     }
+
+    .middle{
+        margin-left: 35vw;
+        display: flex;
+    }
+
+    .controlElem{
+        width: 7vw;
+    }
+    
     .right{
         margin-left: 7.5vw;
         flex-wrap: nowrap;
@@ -301,27 +441,8 @@ h1,h3{
         margin-top: 2vh;
     }
     .selem{
-        color: var(--text-color);
         width: 9vw;
         height: 8vh;
     }
-    .btns{
-        margin-left: 22vw;
-        margin-top: 2.5vh;
-    }
-    
-    .submitbtn{
-        padding-top: 0.5vh;
-        width: 23vw;
-        height: 5vh;
-    }
-    .resetbtn{
-        width: 23vw;
-        height: 5vh;
 
-    }
-    .pauseCover{
-        width: 85vw;
-        height: 53vh;
-    }
   }
