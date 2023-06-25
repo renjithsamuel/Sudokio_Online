@@ -145,7 +145,8 @@
                 timer : {hours : 0 , minutes : 0 , seconds : 0},
                 streak :  0,
                 gameOverToday : false,
-                todayBoard : []
+                todayBoard : [],
+                theme : 'light'
             }
             const user = await Users.create(obj);
             if(!user){
@@ -170,7 +171,7 @@
     exports.patchUser = async (req,res,next) =>{
         const Id = req.params.id;
         if(Id==null)return res.status(400).send("send valid id of user!");
-        if(req.body.username==null && req.body.emailId==null && req.body.todayScore==null && req.body.totalScore==null && req.body.numberOfGamesPlayed==null && req.body.todayRanking ==null && req.body.overallRanking==null && req.body.todayGameWon == null && req.body.heart == null && req.body.timer == null && req.body.gameOverToday && req.body.todayBoard){
+        if(req.body.username==null && req.body.emailId==null && req.body.todayScore==null && req.body.totalScore==null && req.body.numberOfGamesPlayed==null && req.body.todayRanking ==null && req.body.overallRanking==null && req.body.todayGameWon == null && req.body.heart == null && req.body.timer == null && req.body.gameOverToday && req.body.todayBoard && req.body.theme){
             console.log("heree!");
             return res.status(400).json({
                 success : false,
@@ -193,6 +194,7 @@
                 streak : req.body.streak || userOldObj.streak,
                 gameOverToday : req.body.gameOverToday || userOldObj.gameOverToday,
                 todayBoard : req.body.todayBoard || userOldObj.todayBoard,
+                theme : req.body.theme || userOldObj.theme
             }
             const user = await Users.findByIdAndUpdate(Id , obj, {new:true});
             if(!user){

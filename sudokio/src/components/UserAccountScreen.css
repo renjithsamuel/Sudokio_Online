@@ -130,9 +130,13 @@
         width: 86vw;
         left: 2vw;
     }
+    .userWelcome{
+        font-size: large;
+    }
     .topOfUserAcc{
         margin-left: 10vw;
         width: 80vw;
+      
     }
     .closeUserAccBtn,.logoutBtn{
         width: 9vw;
@@ -140,11 +144,14 @@
     }
     .userListItem{
         margin-left: 12vw;
+        font-size: small;
     }
     .userLeft {
+        font-size: small;
         width: 26vw;
     }
     .userRight{
+        font-size: small;
         width: 50vw;
     }
 

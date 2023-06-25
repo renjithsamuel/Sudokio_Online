@@ -140,11 +140,13 @@
                 // console.log("currentusers inside currentuser timer  " , currentUser );
                  setGameTimer(currentUser.timer);
                  setHeart(currentUser.heart);
+                 setTheme(currentUser.theme);
                 //  console.log("today game won : " , todayGameWon);
                  setTodayGameWon(currentUser.todayGameWon);
                  setGameOver(currentUser.gameOverToday);
                  if(JSON.stringify(currentUser.todayBoard)!='[]'){
-                 setBoard(currentUser.todayBoard);}
+                 setBoard(currentUser.todayBoard);
+                }
             }
             if(currentUser!=null)localStorage.setItem('userId',currentUser._id)
         },[currentUser]);
@@ -200,6 +202,11 @@
                 alert('Game Over')
             }
         },[heart]);
+
+        useEffect(()=>{
+            if(JSON.stringify(currentUser)=='{}')return;
+            updateTheme();
+        },[theme]);
 
         // small functions for various online competitive game environment
         const fetchBoard = async (date) => {
@@ -388,6 +395,19 @@
                     console.log("something else went wrong");
                 }
              }
+        }
+
+        const updateTheme = async ()=>{
+                const updateThemeUrl = `https://sudokionode.onrender.com/api/v1/patchUserById/${currentUser._id}`;
+                let updatedTheme = await sendHTTPRequest(updateThemeUrl , `PATCH` , {theme : theme});
+                console.log(updatedGameOver);
+                if(updatedTheme && updatedTheme.success==false){
+                    console.log("something went wrong while updating Theme!");
+                }else if(updatedTheme &&  updatedTheme.success==true){
+                    console.log("updated Theme successfull!");
+                }else{
+                    console.log("something else went wrong");
+                }
         }
 
         const submitFunc = () => {
@@ -624,7 +644,7 @@
                                         />
                                         ))
                                     ))}
-                            <div className="pauseCover" style={{display:(gameStarted)?'none':'flex'}}>
+                            <div className="pauseCover" style={{display:(gameStarted)?'none':'flex'}} onClick={()=>{updatePausedGame();}}>
                                 {(theme=='light')?<img src={pauseLight} alt="paused" height={50} width={50} />
                                                     :  <img src={pauseDark} alt="paused" height={50} width={50} />}
                             </div>

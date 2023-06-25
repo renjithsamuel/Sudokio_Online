@@ -44,6 +44,9 @@ const usersSchema = mongoose.Schema({
         type : Boolean
     },todayBoard : {
         type : Array
+    },
+    theme:  {
+        type : String
     }
 }, { timestamps: true }) 
 

@@ -347,10 +347,10 @@ h1,h3{
     }
     h1{
         margin-left: 8vw;
-        font-size: 30px;
+        font-size: 25px;
     }
     .online{
-        margin-left: 25vw;
+        margin-left: 13vw;
     }
     .loginWithGoogle{
         margin-top: 2vh;
@@ -365,10 +365,10 @@ h1,h3{
     }
     .userAccBtn{
         margin-top: 2.5vh;
-        margin-right: 4vw;
+        margin-right: 2vw;
     }
     .userAccBtn img{
-        width: 10vw;
+        width: auto;
     }
 
 
@@ -385,15 +385,16 @@ h1,h3{
  
     .darkMode{
         border-radius: 50%;
-        padding: 1vw;
+        padding: 1vh;
         margin-top: 2.7vh;
         height: 5vh;
+        width: auto;
         margin-left: 1.2vw;
     }
 
     .darkMode img{
-        height: 40px;
-        width: 34px;
+        height: 35px;
+        width: 35px;
     }
     .hud{
         margin-left: 17vw;
@@ -425,12 +426,14 @@ h1,h3{
     }
 
     .middle{
-        margin-left: 35vw;
+        margin-left: 30vw;
         display: flex;
     }
 
     .controlElem{
-        width: 7vw;
+        height: 5.5vh;
+        width: auto;
+        border-radius: 6px;
     }
     
     .right{
@@ -441,7 +444,7 @@ h1,h3{
         margin-top: 2vh;
     }
     .selem{
-        width: 9vw;
+        width: 9.5vw;
         height: 8vh;
     }
 

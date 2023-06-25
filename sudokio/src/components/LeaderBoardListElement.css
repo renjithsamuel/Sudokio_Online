@@ -3,7 +3,7 @@
     padding: 0.5vh;
     display: flex;
     justify-content: space-around;
-    font-size: large;
+    font-size: medium;
     font-weight: 500;
     height: 5vh;
     width: 50vw;
@@ -30,8 +30,8 @@
 
 @media only screen and (max-width: 900px) {
     .leaderBoardListWrapper{
-        font-size: large;
-        font-weight: 600;
+        font-size: small;
+        font-weight: 500;
         height: 5vh;
         width: 80vw;
     }

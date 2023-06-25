@@ -100,7 +100,7 @@
     .todayRanking,.overAllRanking{
         width: 15vw;
         height: 4vh;
-
+        font-size: small;
     }
     .sepratorSelector{
         height: 6vh;
