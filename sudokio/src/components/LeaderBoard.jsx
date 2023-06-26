@@ -9,11 +9,10 @@ function LeaderBoard({allUsers,setIsLeaderBoardClicked,currentUser,hudRef,theme}
 
     useEffect(()=>{
         if(isTotal==true){
-            allUsers.sort((a,b)=>a.overallRanking - (b.overallRanking));
+            allUsers.sort((a,b)=>b.totalScore - (a.totalScore));
         }else{
-            allUsers.sort((a,b)=>a.todayRanking - (b.todayRanking));
+            allUsers.sort((a,b)=>b.todayScore - (a.todayScore));
         }
-        console.log(allUsers);
     },[isTotal])
 
     return (
@@ -22,12 +21,12 @@ function LeaderBoard({allUsers,setIsLeaderBoardClicked,currentUser,hudRef,theme}
                 <div className="leaderBoardWrapper">
                     <div className="topOfLeaderBoard">
                         <div className="totalSelector">
-                            <div className="todayRanking" onClick={()=>{setIsTotal(false)}} style={{backgroundColor:(!isTotal)?'var(--primary-color)':'var(--secondary-color)'}}>
+                            <div className="todayRanking" onClick={()=>{setIsTotal(false)}} style={{backgroundColor:(isTotal)?'var(--primary-color)':'var(--secondary-color)'}}>
                                 today
                             </div>
                             <div className="sepratorSelector">
                             </div>
-                            <div className="overAllRanking" onClick={()=>{setIsTotal(true)}} style={{backgroundColor:(isTotal)?'var(--primary-color)':'var(--secondary-color)'}}>
+                            <div className="overAllRanking" onClick={()=>{setIsTotal(true)}} style={{backgroundColor:(!isTotal)?'var(--primary-color)':'var(--secondary-color)'}}>
                                 all time
                             </div>
                         </div>

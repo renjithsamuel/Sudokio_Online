@@ -26,8 +26,8 @@
         const hudRef = useRef();
         const sudoku = useRef();
         const [board, setBoard] = useState([]);
-        const [currX ,  setCurrx] = useState(0);
-        const [currY ,  setCurry] = useState(0);
+        const [currX ,  setCurrx] = useState(-1);
+        const [currY ,  setCurry] = useState(-1);
         const [isValid ,  setIsValid] = useState(true);
         const [currentUser,setCurrentUser] = useState({});
         const [allUsers,setAllUsers] = useState([]);
@@ -352,7 +352,7 @@
             if(currentUser==null)return;
             const  updateHeartUrl = `https://sudokionode.onrender.com/api/v1/patchUserById/${currentUser._id}`;
             const updatedHeart = await sendHTTPRequest(updateHeartUrl , 'PATCH' , {heart : heart});
-            if(updateHeart &&  updatedHeart.success == true){
+            if(updatedHeart &&  updatedHeart.success == true){
                 console.log("heart updated successfully");
             }else{
                 console.log("something went wrong while updating heart!");
@@ -514,10 +514,10 @@
             Solve(newBoard, 0, 0);
             console.log('printing sudoku board : ');
             setBoard(newBoard);
-            for(let i=0;i<(newBoard.length*newBoard[0].length)/3;i++){
+            for(let i=0;i<(newBoard.length*newBoard[0].length)/2;i++){
                     let x = r(9);
                     let y = r(9);
-                    if(newBoard[x][y]==0)i--;
+                    if(newBoard[x][y].val==0)i--;
                     else{
                         newBoard[x][y]={val:0,fixed:false};
                     }
@@ -681,16 +681,17 @@
                                 <SelectElem 
                                 key={i} 
                                 val={i + 1}
-                                onclick = {()=>{           
-                                    if(board[currX][currY].fixed==false &&  currX!=0 && currY!=0){
-                                    if(isSafe(board,currX,currY,i+1)==false){
-                                        if(heart>0)
-                                        setHeart(heart-1);
+                                onclick = {()=>{       
+                                    if( currX!=-1 && currY!=-1 && board[currX][currY].fixed==false){
+                                        if(isSafe(board,currX,currY,i+1)==false){
+                                            if(heart>0)
+                                            setHeart(heart-1);
+                                        }
+                                        board[currX][currY].val = i+1;
+                                        setBoard(board);
                                     }
-                                    board[currX][currY].val = i+1;
-                                    setBoard(board);
-                                }
-                                setCurrx(0);setCurry(0)}}
+                                    setCurrx(-1);setCurry(-1)}
+                                 }
                                 />
                             ))}
                         </div>
