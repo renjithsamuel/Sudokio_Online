@@ -178,6 +178,9 @@
                 error : "send any one valid data to update!"
             })
         }
+        let flag = 0;
+        if(req.body.heart==0){flag=1;}
+        // console.log(req.body.heart);
         try{
             const userOldObj = await Users.findById(Id);
             const obj = {
@@ -189,7 +192,7 @@
                 todayRanking : req.body.todayRanking || userOldObj.todayRanking,
                 overallRanking : req.body.overallRanking || userOldObj.overallRanking,
                 todayGameWon : req.body.todayGameWon || userOldObj.todayGameWon,
-                heart : req.body.heart || userOldObj.heart,
+                heart : (flag==1)?0 : (req.body.heart|| userOldObj.heart),
                 timer : req.body.timer || userOldObj.timer,
                 streak : req.body.streak || userOldObj.streak,
                 gameOverToday : req.body.gameOverToday || userOldObj.gameOverToday,

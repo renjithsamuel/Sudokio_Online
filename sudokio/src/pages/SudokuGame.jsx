@@ -196,12 +196,12 @@
 
 
         useEffect(()=>{
-            updateHeart();
+            updateHeart(heart);
             if(heart==0){
                 setGameStarted(false);
                 setGameOver(true);
                 updateGameOver();
-                updateHeart();
+                updateHeart(0);
                 alert('Game Over')
             }
         },[heart]);
@@ -349,10 +349,11 @@
             setNowGameScore(currentScore);
         }
 
-        const updateHeart = async () => {
+        const updateHeart = async (heart) => {
             if(currentUser==null)return;
             const  updateHeartUrl = `https://sudokionode.onrender.com/api/v1/patchUserById/${currentUser._id}`;
             const updatedHeart = await sendHTTPRequest(updateHeartUrl , 'PATCH' , {heart : heart});
+            console.log(updatedHeart , "here");
             if(updatedHeart &&  updatedHeart.success == true){
                 console.log("heart updated successfully");
             }else{
@@ -387,16 +388,16 @@
 
         const updateGameOver = async ()=>{
             if(gameStarted!=false)setGameStarted(false);
-                const updateGameOver = `https://sudokionode.onrender.com/api/v1/patchUserById/${currentUser._id}`;
-                let updatedGameOver = await sendHTTPRequest(updateGameOver , `PATCH` , {gameOverToday : true});
-                console.log(updatedGameOver);
-                if(updatedGameOver && updatedGameOver.success==false){
-                    console.log("something went wrong while updating game over!");
-                }else if(updatedGameOver &&  updatedGameOver.success==true){
-                    console.log("update Game Over updated successfull!");
-                }else{
-                    console.log("something else went wrong");
-                }
+            const updateGameOverUrl = `https://sudokionode.onrender.com/api/v1/patchUserById/${currentUser._id}`;
+            let updatedGameOver = await sendHTTPRequest(updateGameOverUrl , `PATCH` , {gameOverToday : true});
+            console.log(updatedGameOver , "here2", heart);
+            if(updatedGameOver && updatedGameOver.success==false){
+                console.log("something went wrong while updating game over!");
+            }else if(updatedGameOver &&  updatedGameOver.success==true){
+                console.log("update Game Over updated successfull!");
+            }else{
+                console.log("something else went wrong");
+            }
         }
 
         const updateTheme = async ()=>{
