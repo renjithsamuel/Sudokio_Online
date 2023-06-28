@@ -385,7 +385,7 @@
         }
 
         const updateGameOver = async ()=>{
-            if(gameStarted==false){
+            if(gameStarted!=false)setGameStarted(false);
                 const updateGameOver = `https://sudokionode.onrender.com/api/v1/patchUserById/${currentUser._id}`;
                 let updatedGameOver = await sendHTTPRequest(updateGameOver , `PATCH` , {gameOverToday : true});
                 console.log(updatedGameOver);
@@ -396,7 +396,6 @@
                 }else{
                     console.log("something else went wrong");
                 }
-             }
         }
 
         const updateTheme = async ()=>{
