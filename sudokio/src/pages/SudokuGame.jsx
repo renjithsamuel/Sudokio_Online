@@ -201,6 +201,7 @@
                 setGameStarted(false);
                 setGameOver(true);
                 updateGameOver();
+                updateHeart();
                 alert('Game Over')
             }
         },[heart]);
