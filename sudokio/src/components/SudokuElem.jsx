@@ -16,7 +16,7 @@ function SudokuElem({elem,onclick,style}) {
               onMouseEnter={handleMouseEnter}
             onMouseLeave={handleMouseLeave}
               >
-                   { elem.val}
+                   { (elem.val==0)?'':elem.val}
             </div>
         </> );
 }
