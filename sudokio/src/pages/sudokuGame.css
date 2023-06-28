@@ -19,10 +19,12 @@
     --bg-color : #060315;
     --primary-color : #471E5B;
     --secondary-color :  #101c3f;
+    --secondary-hover-color : #231663;
     --norm-elem-color : rgba(52, 20, 67, 1);
     --fixed-elem-color : rgba(10, 20, 48, 1);
     --text-color : #fdfdfd ;
-    --hover-color :  #7a4096d0;
+    --hover-color :  #6f358dd0;
+    --extra-hover-color :  #ae70cbd0;
     --cover-color : #7a4096d0;
 }   
 
@@ -30,10 +32,12 @@
     --bg-color : rgba(248, 248, 248, 1);;
     --primary-color : #FFFFFF;
     --secondary-color :  #DEDEDE;
+    --secondary-hover-color : #9a9a9a;
     --norm-elem-color : #FFFFFF;
     --fixed-elem-color : #DEDEDE;
     --text-color : #232323 ;
-    --hover-color :  #b5b5b5;
+    --hover-color :  #b4b4b4c6;
+    --extra-hover-color :  #f1f1f1;
     --cover-color : #b5b5b5ee;
 }
 

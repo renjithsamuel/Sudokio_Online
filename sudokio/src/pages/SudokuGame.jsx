@@ -636,7 +636,11 @@
                                         <SudokuElem 
                                         key={`${rowIndex}-${colIndex}`}
                                         elem={elem} 
-                                        style={(currX==rowIndex && currY==colIndex)?'var(--hover-color)':'var(--primary-color)'}
+                                        rowind={rowIndex}
+                                        colind={colIndex}
+                                        currX={currX}
+                                        currY={currY}
+                                        style={(currX==rowIndex && currY==colIndex)?'var(--extra-hover-color)':'var(--primary-color)'}
                                         onclick={()=>{             
                                             setCurrx(rowIndex);
                                             setCurry(colIndex);
