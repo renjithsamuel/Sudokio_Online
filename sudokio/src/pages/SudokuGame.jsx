@@ -18,6 +18,8 @@
     import submitDark from '../assets/submit-dark.svg'
     import resetLight from '../assets/reset-light.svg'
     import resetDark from '../assets/reset-dark.svg'
+    import clearLight from '../assets/clear-light.svg'
+    import clearDark from '../assets/clear-dark.svg'
 
 
     function SudokuGame(){
@@ -455,6 +457,20 @@
             document.documentElement.setAttribute('data-theme', newTheme);
         };
 
+        const clearCurrVal = ()=>{
+            if(gameStarted==false)return;
+            if(currX==-1 || currY==-1 || currVal==0 || board[currX][currY].fixed==true){
+                setCurrx(-1);
+                setCurry(-1);
+                setCurrVal(-1);
+                return;}
+            board[currX][currY].val = 0;
+            setBoard(board);
+            setCurrx(-1);
+            setCurry(-1);
+            setCurrVal(-1);
+        }
+
 
     // board generation logics
         const generateRandomValue = () => Math.floor(Math.random() * 9) + 1;
@@ -686,6 +702,11 @@
                         <div className="controlElem"  onClick={()=>{submitFunc()}}>
                             {(theme=='light')?<img src={submitLight} alt="submit" height={38} width={38} />
                                             : <img src={submitDark} alt="submit" height={38} width={38} />
+                            }
+                        </div>
+                        <div className="controlElem"  onClick={()=>{clearCurrVal()}}>
+                            {(theme=='light')?<img src={clearLight} alt="clear" height={45} width={45} />
+                                            : <img src={clearDark} alt="clear" height={45} width={45} />
                             }
                         </div>
                     </div>

@@ -299,6 +299,9 @@ h1,h3{
 }
 
 .controlElem{
+    display: flex;
+    justify-content: center;
+    align-items: center;
     background-color: var(--primary-color);
     padding: 0.4vh;
     width: 2.5vw;
@@ -436,7 +439,7 @@ h1,h3{
     }
 
     .middle{
-        margin-left: 30vw;
+        margin-left: 26vw;
         display: flex;
     }
 
@@ -478,7 +481,7 @@ h1,h3{
     }
 
     .middle{
-        margin-left: 24vw;
+        margin-left: 21vw;
         display: flex;
     }
     .elem{
