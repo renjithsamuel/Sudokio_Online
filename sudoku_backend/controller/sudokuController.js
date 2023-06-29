@@ -187,7 +187,7 @@
                 username  : req.body.username || userOldObj.username,
                 emailId : req.body.emailId || userOldObj.emailId, 
                 todayScore : req.body.todayScore || userOldObj.todayScore,
-                totalScore : req.body.todayScore || userOldObj.totalScore,
+                totalScore : req.body.totalScore || userOldObj.totalScore,
                 numberOfGamesPlayed : req.body.numberOfGamesPlayed || userOldObj.numberOfGamesPlayed,
                 todayRanking : req.body.todayRanking || userOldObj.todayRanking,
                 overallRanking : req.body.overallRanking || userOldObj.overallRanking,

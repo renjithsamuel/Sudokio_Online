@@ -249,7 +249,6 @@
                 setGameStarted(false);
                 setGameOver(true);
                 updateGameOver();
-                updateHeart(0);
                 alert('Game Over')
             }
         },[heart]);
@@ -273,6 +272,7 @@
         }
 
         const postNewBoard = async (newBoard) => {
+            console.log("posting new board!");
             const postBoardUrl =  `https://sudokionode.onrender.com/api/v1/postBoard`;
             console.log("inside post" , newBoard);
             let postResponse = await sendHTTPRequest(postBoardUrl,'POST',{
@@ -284,6 +284,8 @@
             }else{
                 console.log("board posted successfully!");
             }
+            console.log("getting leaderboard!");
+            getLeaderBoard();
         }
 
         const resetBoard = async ()=>{
@@ -335,7 +337,7 @@
         const getLeaderBoard = async ()=>{
                 const getAllUsersUrl = `https://sudokionode.onrender.com/api/v1/getUsers`;
                 const tempAllUsers = await sendHTTPRequest(getAllUsersUrl , 'GET');
-                
+                console.log(tempAllUsers);
                 if(tempAllUsers && tempAllUsers.success==true){
                     setAllUsers(tempAllUsers.data);
                 }else{
@@ -379,6 +381,7 @@
         const updateStats = async (updatePlayerStats) => {
                     const patchCurrentUserUrl = `https://sudokionode.onrender.com/api/v1/patchUserById/${currentUser._id}`;
                     const updatedStatsResponse = await sendHTTPRequest(patchCurrentUserUrl,'PATCH',updatePlayerStats);
+                    console.log("at update stats function ",updatedStatsResponse);
                     if(updatedStatsResponse.success==true){
                         console.log("user stats updated successfully!");
                     }else{
@@ -395,6 +398,7 @@
             let currentScore = Math.floor((heart*500)/sum);
             console.log("current score ",currentScore);
             setNowGameScore(currentScore);
+            return currentScore;
         }
 
         const updateHeart = async (heart) => {
@@ -446,6 +450,7 @@
             }else{
                 console.log("something else went wrong");
             }
+            updateHeart(0);
         }
 
         const updateTheme = async ()=>{
@@ -468,21 +473,24 @@
             {
                 alert('Congratulations! You won the game');
                 setGameStarted(false);
-                calculateScore();
+                let tempNowGameScore = calculateScore();
                 setTodayGameWon(true);
+                console.log("sc " , tempNowGameScore);
+                let totsc = currentUser.totalScore + tempNowGameScore;
                 const updatePlayerStats = {
                     numberOfGamesPlayed : currentUser.numberOfGamesPlayed+1,
-                    totalScore : currentUser.totalScore + nowGameScore,
-                    todayScore : nowGameScore,
+                    totalScore : totsc,
+                    todayScore : tempNowGameScore,
                     todayGameWon : true,
                     heart : heart,
                     timer : gameTimer,
                 }
+                console.log("stats" , updatePlayerStats);
                 updateStats(updatePlayerStats)
                 .then(()=> setCurrentUser(null))
-                .then(()=>getLeaderBoard())
-                .then(()=>updateRanking())
-                .catch((err)=>console.log(err  , " while updating ranking!"));                
+                .then(()=> getLeaderBoard())
+                .then(()=> updateRanking())
+                .catch((err)=>console.log(err  , " while updating ranking!"));               
             }
             else {alert('try again!');}
             setIsValid(true);
@@ -667,14 +675,14 @@
             Solve(newBoard, 0, 0);
             console.log('printing sudoku board : ');
             setBoard(newBoard);
-            for(let i=0;i<(newBoard.length*newBoard[0].length)/2;i++){
-                    let x = r(9);
-                    let y = r(9);
-                    if(newBoard[x][y].val==0)i--;
-                    else{
-                        newBoard[x][y]={val:0,fixed:false};
-                    }
-                }
+            // for(let i=0;i<(newBoard.length*newBoard[0].length)/2;i++){
+            //         let x = r(9);
+            //         let y = r(9);
+            //         if(newBoard[x][y].val==0)i--;
+            //         else{
+            //             newBoard[x][y]={val:0,fixed:false};
+            //         }
+            //     }
             // posting the newly genereated board:
             postNewBoard(newBoard);
           }
