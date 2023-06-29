@@ -459,3 +459,31 @@ h1,h3{
     }
 
   }
+
+
+  @media only screen and (max-width: 420px) {
+
+    .online{
+        margin-left: 14vw;
+    }
+
+    .sudokubox{
+        margin-left: 2vw;
+        width: 90vw;
+        height: 50vh;
+    }
+    .pauseCover{
+        width: 90vw;
+        height: 54vh;
+    }
+
+    .middle{
+        margin-left: 24vw;
+        display: flex;
+    }
+    .elem{
+        width: 9vw;
+        height: 5.55vh;
+    }
+
+  }
