@@ -422,6 +422,7 @@
             if(verifySudoku(flag))
             {
                 alert('Congratulations! You won the game');
+                setGameStarted(false);
                 calculateScore();
                 setCurrentUser((prevCurrentUser)=>{
                     return {...prevCurrentUser,todayScore : nowGameScore};
