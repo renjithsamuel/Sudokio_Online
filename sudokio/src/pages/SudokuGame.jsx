@@ -28,6 +28,7 @@
         const [board, setBoard] = useState([]);
         const [currX ,  setCurrx] = useState(-1);
         const [currY ,  setCurry] = useState(-1);
+        const [currVal , setCurrVal] = useState(-1);
         const [isValid ,  setIsValid] = useState(true);
         const [currentUser,setCurrentUser] = useState({});
         const [allUsers,setAllUsers] = useState([]);
@@ -509,8 +510,14 @@
               }))
             );
             newBoard[0][0] = { val: generateRandomValue(), fixed: true };
-            newBoard[3][3] = { val: generateRandomValue(), fixed: true };
-            newBoard[6][6] = { val: generateRandomValue(), fixed: true };          
+            newBoard[1][3] = { val: generateRandomValue(), fixed: true };
+            newBoard[3][1] = { val: generateRandomValue(), fixed: true };          
+            newBoard[2][6] = { val: generateRandomValue(), fixed: true };          
+            newBoard[6][2] = { val: generateRandomValue(), fixed: true };          
+            newBoard[4][4] = { val: generateRandomValue(), fixed: true };          
+            newBoard[5][7] = { val: generateRandomValue(), fixed: true };          
+            newBoard[7][5] = { val: generateRandomValue(), fixed: true };          
+            newBoard[8][8] = { val: generateRandomValue(), fixed: true };          
             // Solve the Sudoku puzzle
             Solve(newBoard, 0, 0);
             console.log('printing sudoku board : ');
@@ -642,10 +649,12 @@
                                         colind={colIndex}
                                         currX={currX}
                                         currY={currY}
+                                        currVal={currVal}
                                         style={(currX==rowIndex && currY==colIndex)?'var(--extra-hover-color)':'var(--primary-color)'}
                                         onclick={()=>{             
                                             setCurrx(rowIndex);
                                             setCurry(colIndex);
+                                            setCurrVal(elem.val);
                                             }}
                                         />
                                         ))
@@ -695,7 +704,7 @@
                                         board[currX][currY].val = i+1;
                                         setBoard(board);
                                     }
-                                    setCurrx(-1);setCurry(-1)}
+                                    setCurrx(-1);setCurry(-1);setCurrVal(-1);}
                                  }
                                 />
                             ))}
