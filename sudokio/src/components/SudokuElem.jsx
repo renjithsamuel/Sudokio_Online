@@ -22,7 +22,8 @@ function SudokuElem({elem,onclick,style,currX,currY,rowind,colind,currVal}) {
                      || (((rowind >= (currX - currX%3)) && (rowind< (currX - currX%3) + 3)) 
                      && ((colind >= (currY - currY%3)) && (colind< (currY - currY%3) + 3))))) ? "var(--hover-color)" 
                      : elem.style , color: 'var(--text-color)' ,
-                    borderColor: ((currX==rowind && currY==colind) || (currVal!=0 && currVal==elem.val))?'var(--text-color)':'',
+                    borderColor:(currX==rowind && currY==colind)?'var(--target-color)': ((currX==rowind && currY==colind) || (currVal!=0 && currVal==elem.val))?'var(--text-color)':'',
+                    // borderStyle:(currX==rowind && currY==colind)?'dashed':'',
 
                     // scale :((currX == rowind) || (currY==colind) || (((rowind >= (currX - currX%3)) && (rowind< (currX - currX%3) + 3)) 
                     // && ((colind >= (currY - currY%3)) && (colind< (currY - currY%3) + 3))))?'1.05':'' ,

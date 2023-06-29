@@ -26,6 +26,7 @@
     --hover-color :  #6f358dd0;
     --extra-hover-color :  #ae70cbd0;
     --cover-color : #7a4096d0;
+    --target-color : #06b764d0;
 }   
 
 [data-theme="light"] {
@@ -39,6 +40,7 @@
     --hover-color :  #b4b4b4c6;
     --extra-hover-color :  #f1f1f1;
     --cover-color : #b5b5b5ee;
+    --target-color : blue;
 }
 
 *{

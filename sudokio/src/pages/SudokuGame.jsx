@@ -156,6 +156,51 @@
             if(currentUser!=null)localStorage.setItem('userId',currentUser._id)
         },[currentUser]);
 
+
+
+        //  numpad listeners   
+        useEffect(() => {
+            if(currX==-1 || currY==-1)return;
+            const handleKeyPress = (e) => {
+                // console.log(isNaN(e.key));
+                let s = e.key;
+                console.log(s);
+                if(s=='ArrowRight' || s=='ArrowUp' || s=='ArrowDown' || s=='ArrowLeft'){
+                    updateArrowKeyFun(s);
+                    return;
+                }
+                if(s=='Enter'){incrementXY(currX,currY);return;}
+                if (!(isNaN(s))) {
+                    console.log("ere");
+                    updateCurrElemVal(parseInt(s), currX, currY);
+                }
+            };
+            window.addEventListener('keyup', handleKeyPress);
+
+            return () => {
+                window.removeEventListener('keyup', handleKeyPress);
+            };
+        }, [currX,currY]);
+
+        // escape and enter button listeners
+        useEffect(() => {
+
+            const handleEscapeKeyPress = (e) => {
+                let s = e.key;
+                if (s=='Escape') {
+                    if(isLeaderBoardClicked==false && isUserAccClicked==false)return;
+                    if(isLeaderBoardClicked==true) setIsLeaderBoardClicked(false);
+                    if(isUserAccClicked==true) setIsUserAccClicked(false);
+                    hudRef.current.style.visibility = 'visible'
+                }
+            };
+            window.addEventListener('keyup', handleEscapeKeyPress );
+
+            return () => {
+                window.removeEventListener('keyup', handleEscapeKeyPress);
+            };
+        }, [isLeaderBoardClicked,isUserAccClicked]);
+
         // countDownTimer 
         useEffect(()=>{
                 const countDownTimerFunction = ()=>{
@@ -416,7 +461,7 @@
                 }
         }
 
-        const submitFunc = () => {
+        const submitFunc = async () => {
             if(true)console.log("isValid at listen : " , isValid);
             let flag = 0;
             if(verifySudoku(flag))
@@ -424,22 +469,20 @@
                 alert('Congratulations! You won the game');
                 setGameStarted(false);
                 calculateScore();
-                setCurrentUser((prevCurrentUser)=>{
-                    return {...prevCurrentUser,todayScore : nowGameScore};
-                }) 
                 setTodayGameWon(true);
-                updateRanking();
                 const updatePlayerStats = {
                     numberOfGamesPlayed : currentUser.numberOfGamesPlayed+1,
                     totalScore : currentUser.totalScore + nowGameScore,
                     todayScore : nowGameScore,
-                    todayRanking : currentUser.todayRanking,
-                    overallRanking : currentUser.overallRanking,
                     todayGameWon : true,
                     heart : heart,
                     timer : gameTimer,
                 }
-                updateStats(updatePlayerStats);
+                updateStats(updatePlayerStats)
+                .then(()=> setCurrentUser(null))
+                .then(()=>getLeaderBoard())
+                .then(()=>updateRanking())
+                .catch((err)=>console.log(err  , " while updating ranking!"));                
             }
             else {alert('try again!');}
             setIsValid(true);
@@ -472,7 +515,92 @@
             setCurrVal(-1);
         }
 
+        
+        const updateCurrElemVal = (newVal,x,y)=>{  
+            if(newVal.toString()=='NaN')return
+            if(gameStarted==false || x==-1 || y==-1)return;   
+            // console.log(newVal , x, y );
+            if( x!=-1 && y!=-1 && board[x][y].fixed==false){
+                if(isSafe(board,x,y,newVal)==false){
+                    if(heart>0)
+                    setHeart(heart-1);
+                }
+                board[x][y].val = newVal;
+                setBoard([...board]);
+            }
+            incrementXY(x,y);
+        }
 
+        const incrementXY = (currX, currY) => {
+            let newx = currX;
+            let newy = currY;
+          
+            do {
+              newy++;
+              if (newy > 8) {
+                newy = 0;
+                newx++;
+                if (newx > 8) newx = 0;
+              }
+            } while (board[newx][newy].fixed && !(currX === newx && currY === newy));
+          
+            setCurrx(newx);
+            setCurry(newy);
+            setCurrVal(board[newx][newy].val);
+          };
+
+        //   navigate with arrow keys
+          const updateArrowKeyFun = (s) => {
+            let newx = currX;
+            let newy = currY;
+          
+            if (s === 'ArrowRight') {
+              newy++;
+              if (newy > 8) {
+                newy = 0;
+                newx++;
+                if (newx === 9) {
+                  newx = 8;
+                  newy = 8;
+                }
+              }
+            } else if (s === 'ArrowLeft') {
+              newy--;
+              if (newy < 0) {
+                newy = 8;
+                newx--;
+                if (newx < 0) {
+                  newx = 0;
+                  newy = 0;
+                }
+              }
+            } else if (s === 'ArrowUp') {
+              newx--;
+              if (newx < 0) {
+                newx = 8;
+                newy--;
+                if (newy < 0) {
+                  newy = 0;
+                  newx = 0;
+                }
+              }
+            } else if (s === 'ArrowDown') {
+              newx++;
+              if (newx > 8) {
+                newx = 0;
+                newy++;
+                if (newy > 8) {
+                  newy = 8;
+                  newx = 8;
+                }
+              }
+            }
+          
+            setCurrVal(board[newx][newy].val);
+            setCurrx(newx);
+            setCurry(newy);
+          };
+          
     // board generation logics
         const generateRandomValue = () => Math.floor(Math.random() * 9) + 1;
         // function to generate random numbers
@@ -726,7 +854,9 @@
                                         board[currX][currY].val = i+1;
                                         setBoard(board);
                                     }
-                                    setCurrx(-1);setCurry(-1);setCurrVal(-1);}
+                                    // setCurrx(-1);setCurry(-1);setCurrVal(-1);
+                                    incrementXY(currX,currY);
+                                    }
                                  }
                                 />
                             ))}
