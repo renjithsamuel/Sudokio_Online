@@ -260,7 +260,7 @@ h1,h3{
 .sudokubox{
     margin-left: 20vw;
     border: 1px solid transparent;
-    background-color: transparent;
+    background-color: var(--primary-color);
     height: fit-content;
     width: fit-content;
     display: flex;

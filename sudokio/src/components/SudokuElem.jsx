@@ -31,8 +31,10 @@ function SudokuElem({elem,onclick,style,currX,currY,rowind,colind,currVal}) {
                     // borderColor:(currX==rowind && currY==colind)?'var(--target-color)': ((currX==rowind && currY==colind) || (currVal!=0 && currVal==elem.val))?'var(--text-color)':'',
                     borderTopColor:(currX==rowind && currY==colind)?'var(--target-color)':((currX==rowind && currY==colind) || (currVal!=0 && currVal==elem.val))?'var(--text-color)':((rowind==3 || rowind == 6 ))?'var(--sudoku-border-color)':'',
                     borderLeftColor:(currX==rowind && currY==colind)?'var(--target-color)': ((currX==rowind && currY==colind) || (currVal!=0 && currVal==elem.val))?'var(--text-color)':((colind==3 || colind==6))?'var(--sudoku-border-color)':'',
-                    borderRightColor : (currX==rowind && currY==colind)?'var(--target-color)': ((currX==rowind && currY==colind) || (currVal!=0 && currVal==elem.val))?'var(--text-color)':'',
-                    borderBottomColor : (currX==rowind && currY==colind)?'var(--target-color)': ((currX==rowind && currY==colind) || (currVal!=0 && currVal==elem.val))?'var(--text-color)':''
+                    borderRightColor : (currX==rowind && currY==colind)?'var(--target-color)': ((currX==rowind && currY==colind) || (currVal!=0 && currVal==elem.val))?'var(--text-color)':((colind==2 || colind == 5 ))?'var(--sudoku-border-color)':'',
+                    borderBottomColor : (currX==rowind && currY==colind)?'var(--target-color)': ((currX==rowind && currY==colind) || (currVal!=0 && currVal==elem.val))?'var(--text-color)':((rowind==2 || rowind == 5 ))?'var(--sudoku-border-color)':'',
+                   
+                    borderRadius:(currX!==rowind && currY!==colind && currVal==elem.val && currVal!=0)?'50%':'',
                     // scale :((currX == rowind) || (currY==colind) || (((rowind >= (currX - currX%3)) && (rowind< (currX - currX%3) + 3)) 
                     // && ((colind >= (currY - currY%3)) && (colind< (currY - currY%3) + 3))))?'1.05':'' ,
                     // zIndex :  ((currX == rowind) || (currY==colind) || (((rowind >= (currX - currX%3)) && (rowind< (currX - currX%3) + 3)) 
