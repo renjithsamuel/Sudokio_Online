@@ -48,6 +48,7 @@
         const [isConnected, setIsConnected] = useState(false);
         const [isExploding, setIsExploding] = useState(false);
         const [theme , setTheme] = useState('dark');
+        const [remainCounter,setRemainCounter] = useState({});
         let today = '';
         
         const sendHTTPRequest = async (url , method , data) =>{
@@ -261,6 +262,20 @@
             if(JSON.stringify(currentUser)=='{}')return;
             updateTheme();
         },[theme]);
+
+        useEffect(()=>{
+            let tempRemainCounter = {1:9,2:9,3:9,4:9,5:9,6:9,7:9,8:9,9:9};
+            board.map((rowElem) =>{
+                rowElem.map((colElem)=>{
+                    let num = colElem.val;
+                    if(num!==0){
+                    tempRemainCounter[num]--;
+                    }
+                })
+            })
+            // console.log(tempRemainCounter);
+            setRemainCounter(tempRemainCounter);
+        },[currVal,board]);
 
         // small functions for various online competitive game environment
         const fetchBoard = async (date) => {
@@ -875,6 +890,7 @@
                                 <SelectElem 
                                 key={i} 
                                 val={i + 1}
+                                remVal ={remainCounter[i+1]}
                                 onclick = {()=>{       
                                     if( currX!=-1 && currY!=-1 && board[currX][currY].fixed==false){
                                         if(isSafe(board,currX,currY,i+1)==false){
@@ -888,6 +904,7 @@
                                     incrementXY(currX,currY);
                                     }
                                  }
+
                                 />
                             ))}
                         </div>

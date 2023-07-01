@@ -25,6 +25,7 @@
     --fixed-elem-color : rgba(10, 20, 48, 1);
     --text-color : #fdfdfd ;
     --secondary-text-color : #d3ade7 ;
+    --secondary-text-transparent-color : #d3ade79f ;
     --hover-color :  #6f358dd0;
     --extra-hover-color :  #ae70cbd0;
     --cover-color : #7a4096d0;
@@ -43,6 +44,7 @@
     --fixed-elem-color : #DEDEDE;
     --text-color : #232323 ;
     --secondary-text-color : #616161 ;
+    --secondary-text-transparent-color : #616161b7 ;
     /* --hover-color :  #b4b4b4c6; */
     --hover-color :  #d5d5d5c6;
     --extra-hover-color :  #f1f1f1;
@@ -350,6 +352,7 @@ h3{
     height: 12vh;
     border-radius: 7px;
     display: flex;
+    flex-direction: column;
     justify-content: center;
     align-items: center;
     cursor: pointer;
@@ -360,6 +363,10 @@ h3{
 .selem:hover{
     background-color: var(--hover-color);
     box-shadow: 0 3px 20px 0 var(--hover-color);
+}
+
+.selemRemVal{
+    color:var(--secondary-text-transparent-color) ;
 }
 
 

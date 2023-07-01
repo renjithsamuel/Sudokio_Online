@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 
-function SelectElem({val,onclick}) {
+function SelectElem({val,onclick,remVal}) {
     const [hovered, setHovered] = useState(false);
 
     const handleMouseEnter = () => {
@@ -16,7 +16,8 @@ function SelectElem({val,onclick}) {
             
             onMouseEnter={handleMouseEnter}
             onMouseLeave={handleMouseLeave}>
-            {val}
+            <div className="selemVal">{val}</div>
+            <div className="selemRemVal" style={{fontSize:'medium',color:'(--secondary-text-color)',}}>{remVal}</div>
         </div>
     </> );
 }
