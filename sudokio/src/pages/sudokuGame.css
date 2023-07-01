@@ -251,7 +251,7 @@ h1,h3{
 
 .heart{
     width: 1vw;
-    height: 2.2vh;
+    height: 1vw;
     background-color: var(--hover-color);
     border-radius: 50%;
     margin-right: 0.8vw;
@@ -268,7 +268,7 @@ h1,h3{
     justify-content: center;
     flex-wrap: wrap;
     width: 28vw;
-    height: 56vh;
+    height: auto;
     z-index: 0;
     border: 2px solid var(--secondary-text-color);
 }
@@ -358,6 +358,93 @@ h1,h3{
 }
 
 
+@media only screen and (max-width: 1435px) {
+
+    h1{
+        margin-left: 12vw;
+        font-size: 25px;
+    }
+    .loginWithGoogle{
+        margin-top: 2vh;
+        width: 13vw;
+        margin-right : 1vw
+    }
+    .googleBtn{
+        border-radius: 50%;   
+    }
+    .googleBtn img{
+        height: 25px;
+        width: 25px;
+    }
+    #loginWord{
+        display: none;
+    }
+    .userAccBtn{
+        margin-top: 2.5vh;
+        margin-right: 2vw;
+    }
+    .userAccBtn img{
+        height: 43px;
+        width: 43px;
+    }
+
+
+    .leaderBoard{
+        border-radius: 50%;
+        margin-top: 2.5vh;
+        height: 4vh;
+        
+    }
+
+    .leaderBoard img{
+        height: 30px;
+        width: 30px;
+    }
+ 
+    .darkMode{
+        border-radius: 50%;
+        padding: 1vh;
+        margin-top: 2.7vh;
+        height: 4vh;
+        width: auto;
+        margin-left: 1.2vw;
+    }
+
+    .darkMode img{
+        height: 30px;
+        width: 30px;
+    }
+    .hud{
+        margin-left: 13vw;
+        width: 38vw;
+    }
+    .hudLeft{
+        font-weight: 400;
+        font-size: large;
+    }
+    .pauseBtn img{
+        width:7vw;
+    }
+    .heart{
+        width: 2vh;
+        height: 2vh;
+    }
+    .sudokubox{
+        margin-left: 13vw;
+        width: 38vw;
+        height: auto;
+    }
+    .pauseCover{
+        width: 60vw;
+        height: 54vh;
+    }
+    .elem{
+        width: 4vw;
+        height: 5.55vh;
+    }
+
+
+  }
 
 
 @media only screen and (max-width: 900px) {
@@ -434,13 +521,13 @@ h1,h3{
         width:7vw;
     }
     .heart{
-        width: 3vw;
-        height: 2vh;
+        width: 2.5vh;
+        height: 2.5vh;
     }
     .sudokubox{
         margin-left: 6vw;
         width: 84vw;
-        height: 52vh;
+        height: auto;
     }
     .pauseCover{
         width: 85vw;
@@ -486,7 +573,7 @@ h1,h3{
     .sudokubox{
         margin-left: 4vw;
         width: 85vw;
-        height: 52vh;
+        height: auto;
     }
     .pauseCover{
         width: 90vw;
@@ -521,7 +608,7 @@ h1,h3{
     .sudokubox{
         margin-left: 4vw;
         width: 87vw;
-        height: 52vh;
+        height: auto;
     }
     .pauseCover{
         width: 90vw;
@@ -543,6 +630,47 @@ h1,h3{
     .selem{
         
         width: 25vw;
+        height: 8.5vh;
+    }
+
+  }
+
+
+  @media only screen and (max-width: 280px) {
+
+    .online{
+        margin-left: 5vw;
+    }
+
+    .sudokubox{
+        margin-left: 0.5vw;
+        width: 95vw;
+        height: auto;
+    }
+    .pauseCover{
+        width: 90vw;
+        height: 54vh;
+    }
+
+    .middle{
+        margin-left: 15vw;
+        display: flex;
+    }
+    .controlElem{
+        width: 13vw;
+        height: 8vh;
+    }
+    .elem{
+        width:9.5vw;
+        height: 5.55vh;
+    }
+    .right{
+        width: 92vw;
+        margin-left: 2vw;
+    }
+    .selem{
+        
+        width: 10vw;
         height: 8.5vh;
     }
 
