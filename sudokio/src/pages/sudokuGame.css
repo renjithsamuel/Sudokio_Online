@@ -369,15 +369,9 @@ h1,h3{
         width: 13vw;
         margin-right : 1vw
     }
-    .googleBtn{
-        border-radius: 50%;   
-    }
     .googleBtn img{
         height: 25px;
         width: 25px;
-    }
-    #loginWord{
-        display: none;
     }
     .userAccBtn{
         margin-top: 2.5vh;
@@ -435,8 +429,8 @@ h1,h3{
         height: auto;
     }
     .pauseCover{
-        width: 60vw;
-        height: 54vh;
+        width: 38vw;
+        height: 53vh;
     }
     .elem{
         width: 4vw;
@@ -465,7 +459,7 @@ h1,h3{
         margin-right : 1vw
     }
     .googleBtn{
-        border-radius: 50%;   
+        /* border-radius: 50%;    */
     }
     .googleBtn img{
         height: 25px;
@@ -574,6 +568,10 @@ h1,h3{
         margin-left: 4vw;
         width: 85vw;
         height: auto;
+    }
+
+    .googleBtn{
+        border-radius: 50%;
     }
     .pauseCover{
         width: 90vw;
