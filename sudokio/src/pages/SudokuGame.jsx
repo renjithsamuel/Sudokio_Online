@@ -2,6 +2,7 @@
     import SelectElem from "../components/SelectElem";
     import SudokuElem from "../components/SudokuElem";
     import { LoginSocialGoogle} from "reactjs-social-login";
+    import ConfettiExplosion from 'react-confetti-explosion';
     import './sudokuGame.css';
     import LeaderBoard from "../components/LeaderBoard";
     import UserAccountScreen from "../components/UserAccountScreen";
@@ -45,6 +46,7 @@
         const [gameTimer , setGameTimer ] = useState({hours : 0 , minutes : 0 , seconds : 0});
         const [timerInterval, setTimerInterval] = useState(null);
         const [isConnected, setIsConnected] = useState(false);
+        const [isExploding, setIsExploding] = useState(false);
         const [theme , setTheme] = useState('dark');
         let today = '';
         
@@ -473,6 +475,7 @@
             let flag = 0;
             if(verifySudoku(flag))
             {
+                setIsExploding(true);
                 alert('Congratulations! You won the game');
                 setGameStarted(false);
                 let tempNowGameScore = calculateScore();
@@ -496,6 +499,9 @@
             }
             else {alert('try again!');}
             setIsValid(true);
+            setTimeout(() => {
+                setIsExploding(false);
+            }, 8000);
         }
 
 
@@ -735,9 +741,23 @@
                 console.log(str);
             }
         }
+
+        const tinyExplodeProps = {
+            force: 0.6,
+            duration: 7000,
+            particleCount: 100,
+            floorHeight: 1000,
+            floorWidth: 1000
+          };
+          
     
         return  (
             <>  
+                    {(isExploding)? 
+                        <div style={{position: "absolute",left:'50%'}}>
+                        <ConfettiExplosion {...tinyExplodeProps}/>
+                        </div>:''
+                    }
                 {(isLeaderBoardClicked==true)?<LeaderBoard allUsers={allUsers} setIsLeaderBoardClicked={setIsLeaderBoardClicked} currentUser={localStorage.getItem('username')} hudRef={hudRef} theme={theme}/>:''}
                 {(isUserAccClicked==true)?<UserAccountScreen user={currentUser} setIsUserAccClicked={setIsUserAccClicked} logOut={logOut} hudRef={hudRef} theme={theme}/>:''}
                 <div className="navBar">
