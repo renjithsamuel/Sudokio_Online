@@ -188,10 +188,12 @@
             const handleEscapeKeyPress = (e) => {
                 let s = e.key;
                 if (s=='Escape') {
+                    setCurrx(-1);setCurry(-1);setCurrVal(-1);
                     if(isLeaderBoardClicked==false && isUserAccClicked==false)return;
                     if(isLeaderBoardClicked==true) setIsLeaderBoardClicked(false);
                     if(isUserAccClicked==true) setIsUserAccClicked(false);
-                    hudRef.current.style.visibility = 'visible'
+                    hudRef.current.style.visibility = 'visible';
+                    
                 }
             };
             window.addEventListener('keyup', handleEscapeKeyPress );

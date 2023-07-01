@@ -24,27 +24,31 @@
     --norm-elem-color : rgba(52, 20, 67, 1);
     --fixed-elem-color : rgba(10, 20, 48, 1);
     --text-color : #fdfdfd ;
+    --secondary-text-color : #d3ade7 ;
     --hover-color :  #6f358dd0;
     --extra-hover-color :  #ae70cbd0;
     --cover-color : #7a4096d0;
-    --target-color : #06b764d0;
+    --target-color : #e7e7e7d0;
+    --sudoku-border-color :  #8e07d1;
 }   
 
 [data-theme="light"] {
     --bg-color : rgba(248, 248, 248, 1);;
     --primary-color : #FFFFFF;
-    --secondary-color :  #DEDEDE;
+    --secondary-color :  #a6a6a6;
     --temp-secondary-color :  #FFFFFF;
     /* --secondary-hover-color : #9a9a9a; */
     --secondary-hover-color : #d5d5d5c6;
     --norm-elem-color : #FFFFFF;
     --fixed-elem-color : #DEDEDE;
     --text-color : #232323 ;
+    --secondary-text-color : #616161 ;
     /* --hover-color :  #b4b4b4c6; */
     --hover-color :  #d5d5d5c6;
     --extra-hover-color :  #f1f1f1;
     --cover-color : #b5b5b5ee;
-    --target-color : blue;
+    --target-color : rgb(20, 20, 20);
+    --sudoku-border-color : #1e1e1e;
 }
 
 *{
@@ -266,6 +270,7 @@ h1,h3{
     width: 28vw;
     height: 56vh;
     z-index: 0;
+    border: 2px solid var(--secondary-text-color);
 }
 
 .pauseCover{
@@ -290,6 +295,7 @@ h1,h3{
     justify-content: center;
     align-items: center;
     cursor: pointer;
+    font-size: large;
     transition: all 0.3s ease-in-out;
 }
 
@@ -342,6 +348,7 @@ h1,h3{
     justify-content: center;
     align-items: center;
     cursor: pointer;
+    font-size: larger;
     filter: drop-shadow(1px 2px 4px var(--secondary-color));
 }
 
@@ -432,8 +439,8 @@ h1,h3{
     }
     .sudokubox{
         margin-left: 6vw;
-        width: 85vw;
-        height: 50vh;
+        width: 84vw;
+        height: 52vh;
     }
     .pauseCover{
         width: 85vw;
@@ -477,9 +484,9 @@ h1,h3{
     }
 
     .sudokubox{
-        margin-left: 2vw;
-        width: 90vw;
-        height: 50vh;
+        margin-left: 4vw;
+        width: 85vw;
+        height: 52vh;
     }
     .pauseCover{
         width: 90vw;
