@@ -552,7 +552,7 @@
                 newx++;
                 if (newx > 8) newx = 0;
               }
-            } while (board[newx][newy].fixed && !(currX === newx && currY === newy));
+            } while ((board[newx][newy].fixed || board[newx][newy].val!=0) && !(currX === newx && currY === newy));
           
             setCurrx(newx);
             setCurry(newy);
@@ -814,7 +814,7 @@
                                         />
                                         ))
                                     ))}
-                            <div className="pauseCover" style={{display:(gameStarted)?'none':'flex'}} onClick={()=>{updatePausedGame();}}>
+                            <div className="pauseCover" style={{display:(isConnected)?(gameStarted)?'none':'flex':'none'}} onClick={()=>{updatePausedGame();}}>
                                 {(theme=='light')?<img src={pauseLight} alt="paused" height={50} width={50} />
                                                     :  <img src={pauseDark} alt="paused" height={50} width={50} />}
                             </div>

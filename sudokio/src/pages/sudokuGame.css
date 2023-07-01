@@ -273,6 +273,10 @@ h1,h3{
     border: 2px solid var(--secondary-text-color);
 }
 
+h3{
+    z-index: 2;
+}
+
 .pauseCover{
     position: absolute;
     background-color: var(--cover-color);
