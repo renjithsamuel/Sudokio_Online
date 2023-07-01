@@ -34,7 +34,7 @@ function SudokuElem({elem,onclick,style,currX,currY,rowind,colind,currVal}) {
                     borderRightColor : (currX==rowind && currY==colind)?'var(--target-color)': ((currX==rowind && currY==colind) || (currVal!=0 && currVal==elem.val))?'var(--text-color)':((colind==2 || colind == 5 ))?'var(--sudoku-border-color)':'',
                     borderBottomColor : (currX==rowind && currY==colind)?'var(--target-color)': ((currX==rowind && currY==colind) || (currVal!=0 && currVal==elem.val))?'var(--text-color)':((rowind==2 || rowind == 5 ))?'var(--sudoku-border-color)':'',
                    
-                    borderRadius:(currX!==rowind && currY!==colind && currVal==elem.val && currVal!=0)?'50%':'',
+                    borderRadius:(currVal==elem.val && currVal!=0 && (!(currX==rowind && currY==colind)))?'50%':'',
                     // scale :((currX == rowind) || (currY==colind) || (((rowind >= (currX - currX%3)) && (rowind< (currX - currX%3) + 3)) 
                     // && ((colind >= (currY - currY%3)) && (colind< (currY - currY%3) + 3))))?'1.05':'' ,
                     // zIndex :  ((currX == rowind) || (currY==colind) || (((rowind >= (currX - currX%3)) && (rowind< (currX - currX%3) + 3)) 
