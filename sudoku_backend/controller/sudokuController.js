@@ -234,15 +234,15 @@
             );
       
             // Update totalRanking
-            const updatedTotalRanking = await Users.updateOne(
+            const updatedOverallRanking = await Users.updateOne(
               { emailId: user.emailId },
-              { $set: { totalRanking: user.totalRanking } }
+              { $set: { overallRanking : user.overallRanking } }
             );
       
             return {
               emailId: user.emailId,
               todayRankingUpdated: updatedTodayRanking.nModified > 0,
-              totalRankingUpdated: updatedTotalRanking.nModified > 0
+              totalRankingUpdated: updatedOverallRanking.nModified > 0
             };
           }));
       

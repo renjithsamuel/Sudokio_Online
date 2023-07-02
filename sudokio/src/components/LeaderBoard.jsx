@@ -4,14 +4,16 @@ import LeaderBoardListElement from './LeaderBoardListElement';
 import closeLight from '../assets/close-light.svg'
 import closeDark from '../assets/close-dark.svg'
 
-function LeaderBoard({allUsers,setIsLeaderBoardClicked,currentUser,hudRef,theme}){
+function LeaderBoard({allUsers,setAllUsers,setIsLeaderBoardClicked,currentUser,hudRef,theme}){
     const [isTotal , setIsTotal] = useState(false);
 
     useEffect(()=>{
         if(isTotal==true){
-            allUsers.sort((a,b)=>b.totalScore - (a.totalScore));
+            let tempAllUsers = [...allUsers].sort((a,b)=>b.totalScore - (a.totalScore));
+            setAllUsers(tempAllUsers);
         }else{
-            allUsers.sort((a,b)=>b.todayScore - (a.todayScore));
+            let tempAllUsers = [...allUsers].sort((a,b)=>b.todayScore - (a.todayScore));
+            setAllUsers(tempAllUsers);
         }
     },[isTotal])
 
@@ -36,7 +38,7 @@ function LeaderBoard({allUsers,setIsLeaderBoardClicked,currentUser,hudRef,theme}
                     </div>
                     <LeaderBoardListElement username={'username'} ranking={'ranking'} score={'score'} />
                     {(isTotal)?
-                            allUsers.map((elem,index)=>{
+                        allUsers.map((elem,index)=>{
                                 return <LeaderBoardListElement key={index} username={elem.username} ranking={elem.overallRanking} score={elem.totalScore} currentUser={currentUser} />
                             })
                     :

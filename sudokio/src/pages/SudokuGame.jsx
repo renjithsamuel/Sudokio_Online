@@ -72,8 +72,9 @@
                 today = new Date().toLocaleDateString('en-US',{day : 'numeric' , month : "short",year : "numeric"});
                 // console.log(today);
                 // sudokuGame();
-                const isBoardAvail = await fetchBoard(today); 
-                if(isBoardAvail===false){console.log('entering sudoku game'); sudokuGame();}
+                // const isBoardAvail = await fetchBoard(today); 
+                // if(isBoardAvail===false){console.log('entering sudoku game'); sudokuGame();}
+                sudokuGame();
             }
             boardCreator();   
             
@@ -366,36 +367,53 @@
         }
 
 
-        const updateRanking = async ()=>{
+        const updateRanking = async () => {
             // todayRanking
-            const sortedByTodayRank = allUsers.sort((a,b)=>b.todayScore - a.todayScore);
-            let updatedAllUsers;
-            allUsers.map((user)=>{
-                updatedAllUsers =  sortedByTodayRank.map((sortedUser,index)=>{
-                    if(user.emailId == sortedUser.emailId){
-                        user.todayRanking = index+1;
-                        return user;
-                    }
-                })
-            })
-            const sortedByTotalRank = allUsers.sort((a,b)=>b.totalScore - a.totalScore);
-            allUsers.map((user)=>{
-                updatedAllUsers =  sortedByTotalRank.map((sortedUser,index)=>{
-                    if(user.emailId == sortedUser.emailId){
-                        user.totalRanking = index+1;
-                        return user;
-                    }
-                })
-            })
+            const sortedByTodayRank = [...allUsers].sort((a, b) => b.todayScore - a.todayScore);
+            let updatedAllUsers = [];
+            allUsers.forEach((user) => {
+              sortedByTodayRank.forEach((sortedUser, index) => {
+                if (user.emailId == sortedUser.emailId) {
+                  user.todayRanking = index + 1;
+                  updatedAllUsers.push(user);
+                }
+              });
+            });
+            console.log("Today ranking updating object", sortedByTodayRank , updatedAllUsers);
+          
             const updateRankingUrl = `https://sudokionode.onrender.com/api/v1/patchManyUsers`;
-            const updatedTodayRankingResponse = await sendHTTPRequest(updateRankingUrl , 'PATCH' , updatedAllUsers);
-            if(updatedTodayRankingResponse.success==true){
-                console.log(updatedTodayRankingResponse);
-                console.log("ranking updated successfully!");
-            }else{
-                console.log("something went wrong while updating ranking!");
+            const filteredUpdatedAllUsers = updatedAllUsers.filter((user) => user !== undefined);
+            const updatedTodayRankingResponse = await sendHTTPRequest(updateRankingUrl, 'PATCH', filteredUpdatedAllUsers);
+            if (updatedTodayRankingResponse.success == true) {
+              console.log(updatedTodayRankingResponse);
+              console.log("Today Ranking updated successfully!");
+            } else {
+              console.log("something went wrong while updating ranking!");
             }
-        }
+          
+            const sortedByTotalRank = [...allUsers].sort((a, b) => b.totalScore - a.totalScore);
+            updatedAllUsers = [];
+            allUsers.forEach((user) => {
+              sortedByTotalRank.forEach((sortedUser, index) => {
+                if (user.emailId == sortedUser.emailId) {
+                  user.overallRanking = index + 1;
+                  updatedAllUsers.push(user);
+                }
+              });
+            });
+          
+            console.log("total ranking updating object", sortedByTotalRank,updatedAllUsers);
+          
+            const filteredUpdatedAllUsers2 = updatedAllUsers.filter((user) => user !== undefined);
+            const updatedTotalRankingResponse = await sendHTTPRequest(updateRankingUrl, 'PATCH', filteredUpdatedAllUsers2);
+            if (updatedTotalRankingResponse.success == true) {
+              console.log(updatedTotalRankingResponse);
+              console.log("ranking updated successfully!");
+            } else {
+              console.log("something went wrong while updating ranking!");
+            }
+          };
+          
 
         const updateStats = async (updatePlayerStats) => {
                     const patchCurrentUserUrl = `https://sudokionode.onrender.com/api/v1/patchUserById/${currentUser._id}`;
@@ -544,7 +562,7 @@
             setCurrx(-1);
             setCurry(-1);
             setCurrVal(-1);
-        }
+        };
 
         
         const updateCurrElemVal = (newVal,x,y)=>{  
@@ -581,7 +599,7 @@
           };
 
         //   navigate with arrow keys
-          const updateArrowKeyFun = (s) => {
+        const updateArrowKeyFun = (s) => {
             let newx = currX;
             let newy = currY;
           
@@ -630,7 +648,7 @@
             setCurrVal(board[newx][newy].val);
             setCurrx(newx);
             setCurry(newy);
-          };
+        };  
           
     // board generation logics
         const generateRandomValue = () => Math.floor(Math.random() * 9) + 1;
@@ -698,16 +716,16 @@
             Solve(newBoard, 0, 0);
             console.log('printing sudoku board : ');
             setBoard(newBoard);
-            for(let i=0;i<(newBoard.length*newBoard[0].length)/2;i++){
-                    let x = r(9);
-                    let y = r(9);
-                    if(newBoard[x][y].val==0)i--;
-                    else{
-                        newBoard[x][y]={val:0,fixed:false};
-                    }
-                }
+            // for(let i=0;i<(newBoard.length*newBoard[0].length)/2;i++){
+            //         let x = r(9);
+            //         let y = r(9);
+            //         if(newBoard[x][y].val==0)i--;
+            //         else{
+            //             newBoard[x][y]={val:0,fixed:false};
+            //         }
+            //     }
             // posting the newly genereated board:
-            postNewBoard(newBoard);
+            // postNewBoard(newBoard);
           }
 
         // Partially solved sudoku generated
@@ -773,7 +791,7 @@
                         <ConfettiExplosion {...tinyExplodeProps}/>
                         </div>:''
                     }
-                {(isLeaderBoardClicked==true)?<LeaderBoard allUsers={allUsers} setIsLeaderBoardClicked={setIsLeaderBoardClicked} currentUser={localStorage.getItem('username')} hudRef={hudRef} theme={theme}/>:''}
+                {(isLeaderBoardClicked==true)?<LeaderBoard allUsers={allUsers} setAllUsers={setAllUsers} setIsLeaderBoardClicked={setIsLeaderBoardClicked} currentUser={localStorage.getItem('username')} hudRef={hudRef} theme={theme}/>:''}
                 {(isUserAccClicked==true)?<UserAccountScreen user={currentUser} setIsUserAccClicked={setIsUserAccClicked} logOut={logOut} hudRef={hudRef} theme={theme}/>:''}
                 <div className="navBar">
                     <h1>Sudoku</h1>
