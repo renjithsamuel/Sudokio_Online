@@ -132,9 +132,6 @@
 
 
         useEffect(()=>{
-            if(allUsers!==null){
-                updateRanking();
-            }
             if(localStorage.getItem('emailId')!=null || currentUser==null){
                 console.log('setting current user~ ',allUsers.filter((elem)=> elem.emailId == localStorage.getItem('emailId'))[0]);
                 setCurrentUser(()=>{return (allUsers.filter((elem)=> elem.emailId == localStorage.getItem('emailId')))[0]});
@@ -159,6 +156,12 @@
             }
             if(currentUser!=null)localStorage.setItem('userId',currentUser._id)
         },[currentUser]);
+
+        useEffect(()=>{
+            if(allUsers!==null && todayGameWon===true){
+                updateRanking();
+            }
+        },[todayGameWon,allUsers]);
 
 
 
@@ -512,7 +515,6 @@
                 alert('Congratulations! You won the game');
                 setGameStarted(false);
                 let tempNowGameScore = calculateScore();
-                setTodayGameWon(true);
                 console.log("sc " , tempNowGameScore);
                 let totsc = currentUser.totalScore + tempNowGameScore;
                 const updatePlayerStats = {
@@ -528,6 +530,7 @@
                 .then(()=> setCurrentUser(null))
                 .then(()=> getLeaderBoard())
                 .catch((err)=>console.log(err  , " while updating ranking!"));               
+                // setTodayGameWon(true);
             }
             else {alert('try again!');}
             setIsValid(true);

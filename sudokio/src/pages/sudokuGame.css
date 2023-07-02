@@ -607,13 +607,39 @@ h3{
 
     }
 
+    
+    @media only screen and (max-width: 625px) {
+
+
+        .sudokubox{
+            margin-left: 10vw;
+            width: 76vw;
+            height: auto;
+        }
+        .pauseCover{
+            width: 76vw;
+            height: 76vw;
+        }
+        .elem{
+            width: 8vw;
+            height: 8vw;
+        }
+    
+        .middle{
+            margin-left: 28vw;
+            display: flex;
+        }
+
+    }
+
+
 
   @media only screen and (max-width: 475px) {
 
 
 
     .online{
-        margin-left: 14vw;
+        margin-left: 18vw;
     }
 
     .googleBtn{
@@ -642,8 +668,8 @@ h3{
     }
 
     .sudokubox{
-        margin-left: 5vw;
-        width: 85vw;
+        margin-left: 3vw;
+        width: 90vw;
     }
 
     .googleBtn{
@@ -652,8 +678,8 @@ h3{
         align-items: center;
     }
     .pauseCover{
-        width: 85vw;
-        height: 85vw;
+        width: 90vw;
+        height: 90vw;
     }
 
     .middle{
@@ -665,8 +691,8 @@ h3{
         height: 10vw;
     }
     .elem{
-        width: 9vw;
-        height: 9vw;
+        width: 9.5vw;
+        height: 9.5vw;
     }
     .right{
         width: 90vw;

@@ -55,7 +55,7 @@
     background-color: var(--secondary-color);
     padding: 0.3vh;
     width: 3vw;
-    height: 6vh;
+    height: 3VW;
     border-radius: 50%;
     display: flex;
     justify-content: center;
@@ -74,7 +74,7 @@
     background-color: var(--secondary-color);
     padding: 0.3vh;
     width: 3vw;
-    height: 6vh;
+    height: 3VW;
     border-radius: 50%;
     display: flex;
     justify-content: center;
@@ -140,8 +140,8 @@
       
     }
     .closeUserAccBtn,.logoutBtn{
-        width: 9vw;
-        height: 6vh;
+        width: 7vw;
+        height: 7VW;
     }
     .userListItem{
         margin-left: 12vw;
