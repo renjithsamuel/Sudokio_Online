@@ -157,7 +157,8 @@ h1,h3{
     background-color: var(--primary-color);
     padding: 1vh;
     margin-top: 3.5vh;
-    height: 5vh;
+    height: 2.5vw;
+    width: 2.5vw;
     border-radius: 10px;
     filter: drop-shadow(1px 1px 5px var(--hover-color));
 }
@@ -184,6 +185,7 @@ h1,h3{
     padding: 1.5vh;
     background-color: var(--primary-color);
     display: flex;
+    
     border-radius: 15px;
     transition: all 0.2s ease;
     margin-right: 0.7vw;
@@ -212,7 +214,11 @@ h1,h3{
 
 .darkMode{
     background-color: var(--primary-color);
-    height: 6vh;
+    height: 2.8vw;
+    width: 2.8vw;
+    display: flex;
+    justify-content: center;
+    align-items: center;
     padding: 0.5vh;
     border-radius: 10px;
     margin-top: 3.5vh;
@@ -284,7 +290,7 @@ h3{
     position: absolute;
     background-color: var(--cover-color);
     width: 28vw;
-    height: 56vh;
+    height: 28vw;
     display: flex;
     justify-content: center;
     align-items: center;
@@ -296,7 +302,7 @@ h3{
 .elem{
     border: 1px solid var(--bg-color);
     background-color: var(--primary-color);
-    height: 6vh;
+    height: 3vw;
     width: 3vw; 
     display: flex;
     justify-content: center;
@@ -324,7 +330,7 @@ h3{
     background-color: var(--primary-color);
     padding: 0.4vh;
     width: 2.5vw;
-    height: 5.2vh;
+    height: 2.5vw;
     margin: 0.5vh;
     margin-top: 1vh;
     border-radius: 2px;
@@ -396,10 +402,13 @@ h3{
 
 
     .leaderBoard{
+        display: flex;
+        align-items: center;
+        justify-content: center;
         border-radius: 50%;
         margin-top: 2.5vh;
-        height: 4vh;
-        
+        height: 4vw;
+        width: 4vw;
     }
 
     .leaderBoard img{
@@ -442,11 +451,11 @@ h3{
     }
     .pauseCover{
         width: 38vw;
-        height: 53vh;
+        height: 38vw;
     }
     .elem{
         width: 4vw;
-        height: 5.55vh;
+        height: 4vw;
     }
 
 
@@ -463,58 +472,29 @@ h3{
         font-size: 25px;
     }
     .online{
-        margin-left: 18vw;
+        margin-left: 40vw;
     }
     .loginWithGoogle{
         margin-top: 2vh;
         width: 13vw;
         margin-right : 1vw
     }
-    .googleBtn{
-        /* border-radius: 50%;    */
-    }
-    .googleBtn img{
-        height: 25px;
-        width: 25px;
-    }
     #loginWord{
         display: none;
     }
-    .userAccBtn{
-        margin-top: 2.5vh;
-        margin-right: 2vw;
-    }
-    .userAccBtn img{
-        height: 43px;
-        width: 43px;
-    }
-
 
     .leaderBoard{
+
         border-radius: 50%;
         margin-top: 2.5vh;
-        height: 4vh;
-        
     }
 
-    .leaderBoard img{
-        height: 30px;
-        width: 30px;
-    }
- 
     .darkMode{
         border-radius: 50%;
-        padding: 1vh;
-        margin-top: 2.7vh;
-        height: 4vh;
-        width: auto;
+        margin-top: 2.5vh;
         margin-left: 1.2vw;
     }
 
-    .darkMode img{
-        height: 30px;
-        width: 30px;
-    }
     .hud{
         margin-left: 17vw;
         width: 60vw;
@@ -531,21 +511,21 @@ h3{
         height: 2.5vh;
     }
     .sudokubox{
-        margin-left: 6vw;
-        width: 84vw;
+        margin-left: 15vw;
+        width: 65vw;
         height: auto;
     }
     .pauseCover{
-        width: 85vw;
-        height: 54vh;
+        width: 65vw;
+        height: 65vw;
     }
     .elem{
-        width: 9vw;
-        height: 5.55vh;
+        width: 7vw;
+        height: 7vw;
     }
 
     .middle{
-        margin-left: 26vw;
+        margin-left: 32vw;
         display: flex;
     }
 
@@ -556,7 +536,7 @@ h3{
     }
     
     .right{
-        margin-left: 7.5vw;
+        margin-left: 9vw;
         flex-wrap: nowrap;
         width: 81vw;
         height: fit-content;
@@ -569,34 +549,116 @@ h3{
 
   }
 
+    @media only screen and (max-width: 735px) {
+
+        .leaderBoard{
+
+            border-radius: 50%;
+            margin-top: 2.5vh;
+            width: 5vw;
+            height: 5vw;
+        }
+    
+        .darkMode{
+            border-radius: 50%;
+            margin-top: 2.7vh;
+            margin-left: 1.2vw;
+            width: 5vw;
+            height: 5vw;
+        }
+
+        .sudokubox{
+            margin-left: 15vw;
+            width: 66vw;
+            height: auto;
+        }
+        .pauseCover{
+            width: 65vw;
+            height: 65vw;
+        }
+        .elem{
+            width: 7vw;
+            height: 7vw;
+        }
+    
+        .middle{
+            margin-left: 32vw;
+            display: flex;
+        }
+    
+        .controlElem{
+            height: 5.5vh;
+            width: auto;
+            border-radius: 6px;
+        }
+        
+        .right{
+            margin-left: 9vw;
+            flex-wrap: nowrap;
+            width: 81vw;
+            height: fit-content;
+            margin-top: 2vh;
+        }
+        .selem{
+            width: 9.5vw;
+            height: 8vh;
+        }
+
+
+    }
+
 
   @media only screen and (max-width: 475px) {
+
+
 
     .online{
         margin-left: 14vw;
     }
 
+    .googleBtn{
+        width: 7vw;
+        height: 7vw;
+    }
+
+    .leaderBoard{
+
+        border-radius: 50%;
+        margin-top: 2.5vh;
+        width: 8vw;
+        height: 8vw;
+    }
+
+    .darkMode{
+        border-radius: 50%;
+        margin-top: 2.7vh;
+        margin-left: 1.2vw;
+        width: 8vw;
+        height: 8vw;
+    }
+
     .sudokubox{
-        margin-left: 4vw;
-        width: 85vw;
-        height: auto;
+        margin-left: 10vw;
+        width: 76vw;
     }
 
     .googleBtn{
         border-radius: 50%;
+        justify-content: center;
+        align-items: center;
     }
     .pauseCover{
-        width: 90vw;
-        height: 54vh;
+        width: 76vw;
+        height: 76vw;
     }
 
     .middle{
-        margin-left: 21vw;
+        margin-left: 25vw;
         display: flex;
     }
     .elem{
-        width: 9vw;
-        height: 5.55vh;
+        width: 8vw;
+        height: 8vw;
     }
     .right{
         width: 90vw;
@@ -618,11 +680,10 @@ h3{
     .sudokubox{
         margin-left: 4vw;
         width: 87vw;
-        height: auto;
     }
     .pauseCover{
-        width: 90vw;
-        height: 54vh;
+        width: 87vw;
+        height: 87vw;
     }
 
     .middle{
@@ -631,7 +692,7 @@ h3{
     }
     .elem{
         width: 9vw;
-        height: 5.55vh;
+        height: 9vw;
     }
     .right{
         width: 90vw;
@@ -648,18 +709,37 @@ h3{
 
   @media only screen and (max-width: 280px) {
 
+    h1{
+        font-size: large;
+    }
+
+    h3{
+        font-size: medium;
+    }
+
     .online{
         margin-left: 5vw;
     }
 
+    .leaderBoard , .darkMode, .googleBtn{
+        width: 8vw;
+        height: 8vw;
+        margin-right: 2vw;
+    }
+
+    .leaderBoard img, .darkMode img, .googleBtn img{
+        width: 25px;
+        height: 25px;
+    }
+
     .sudokubox{
-        margin-left: 0.5vw;
-        width: 95vw;
+        margin-left: 0.7vw;
+        width: 93vw;
         height: auto;
     }
     .pauseCover{
-        width: 90vw;
-        height: 54vh;
+        width: 93vw;
+        height: 93vw;
     }
 
     .middle{
@@ -667,12 +747,17 @@ h3{
         display: flex;
     }
     .controlElem{
-        width: 13vw;
-        height: 8vh;
+        width: 12vw;
+        height: 12vw;
     }
+    .controlElem img{
+        height: 35px;
+        width: 35px;
+    }
+
     .elem{
         width:9.5vw;
-        height: 5.55vh;
+        height: 9.5vw;
     }
     .right{
         width: 92vw;
