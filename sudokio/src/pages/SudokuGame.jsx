@@ -72,9 +72,8 @@
                 today = new Date().toLocaleDateString('en-US',{day : 'numeric' , month : "short",year : "numeric"});
                 // console.log(today);
                 // sudokuGame();
-                // const isBoardAvail = await fetchBoard(today); 
-                // if(isBoardAvail===false){console.log('entering sudoku game'); sudokuGame();}
-                sudokuGame();
+                const isBoardAvail = await fetchBoard(today); 
+                if(isBoardAvail===false){console.log('entering sudoku game'); sudokuGame();}
             }
             boardCreator();   
             
@@ -716,16 +715,16 @@
             Solve(newBoard, 0, 0);
             console.log('printing sudoku board : ');
             setBoard(newBoard);
-            // for(let i=0;i<(newBoard.length*newBoard[0].length)/2;i++){
-            //         let x = r(9);
-            //         let y = r(9);
-            //         if(newBoard[x][y].val==0)i--;
-            //         else{
-            //             newBoard[x][y]={val:0,fixed:false};
-            //         }
-            //     }
+            for(let i=0;i<(newBoard.length*newBoard[0].length)/2;i++){
+                    let x = r(9);
+                    let y = r(9);
+                    if(newBoard[x][y].val==0)i--;
+                    else{
+                        newBoard[x][y]={val:0,fixed:false};
+                    }
+                }
             // posting the newly genereated board:
-            // postNewBoard(newBoard);
+            postNewBoard(newBoard);
           }
 
         // Partially solved sudoku generated
