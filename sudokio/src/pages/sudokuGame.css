@@ -657,8 +657,12 @@ h3{
     }
 
     .middle{
-        margin-left: 25vw;
+        margin-left: 20vw;
         display: flex;
+    }
+    .controlElem{
+        width: 10vw;
+        height: 10vw;
     }
     .elem{
         width: 9vw;
