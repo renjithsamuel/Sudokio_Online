@@ -637,9 +637,13 @@ h3{
         height: 8vw;
     }
 
+    .hud{
+        margin-top: 3vh;
+    }
+
     .sudokubox{
-        margin-left: 10vw;
-        width: 76vw;
+        margin-left: 5vw;
+        width: 85vw;
     }
 
     .googleBtn{
@@ -657,8 +661,8 @@ h3{
         display: flex;
     }
     .elem{
-        width: 8vw;
-        height: 8vw;
+        width: 9vw;
+        height: 9vw;
     }
     .right{
         width: 90vw;
