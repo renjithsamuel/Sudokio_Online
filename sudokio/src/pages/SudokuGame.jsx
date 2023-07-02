@@ -132,8 +132,9 @@
 
 
         useEffect(()=>{
-            console.log("all users  " , allUsers );
-            console.log("currentusers  " , currentUser );
+            if(allUsers!==null){
+                updateRanking();
+            }
             if(localStorage.getItem('emailId')!=null || currentUser==null){
                 console.log('setting current user~ ',allUsers.filter((elem)=> elem.emailId == localStorage.getItem('emailId'))[0]);
                 setCurrentUser(()=>{return (allUsers.filter((elem)=> elem.emailId == localStorage.getItem('emailId')))[0]});
@@ -526,7 +527,6 @@
                 updateStats(updatePlayerStats)
                 .then(()=> setCurrentUser(null))
                 .then(()=> getLeaderBoard())
-                .then(()=> updateRanking())
                 .catch((err)=>console.log(err  , " while updating ranking!"));               
             }
             else {alert('try again!');}
