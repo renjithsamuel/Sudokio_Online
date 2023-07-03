@@ -12,10 +12,10 @@ function LeaderBoard({allUsers,setAllUsers,setIsLeaderBoardClicked,currentUser,h
 
     useEffect(()=>{
         if(isTotal==true){
-            let tempAllUsers = [...allUsers].sort((a,b)=>b.totalScore - (a.totalScore));
+            let tempAllUsers = [...allUsers].sort((a,b)=>a.overallRanking - (b.overallRanking));
             setAllUsers(tempAllUsers);
         }else{
-            let tempAllUsers = [...allUsers].sort((a,b)=>b.todayScore - (a.todayScore));
+            let tempAllUsers = [...allUsers].sort((a,b)=>a.todayRanking - (b.todayRanking));
             setAllUsers(tempAllUsers);
         }
     },[isTotal]);

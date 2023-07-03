@@ -38,7 +38,6 @@
         const [oauthData,setOauthData] = useState({});
         const [isLeaderBoardClicked,setIsLeaderBoardClicked] = useState(false);
         const [isUserAccClicked,setIsUserAccClicked] = useState(false);
-        const [nowGameScore,setNowGameScore] = useState(0);
         const [heart,setHeart] = useState(3);
         const [gameStarted,setGameStarted] = useState(false);
         const [gameOver,setGameOver] = useState(false);
@@ -435,7 +434,6 @@
             sum=Math.floor(sum);
             let currentScore = Math.floor((heart*500)/sum);
             console.log("current score ",currentScore);
-            setNowGameScore(currentScore);
             return currentScore;
         }
 
@@ -778,9 +776,7 @@
         const tinyExplodeProps = {
             force: 0.6,
             duration: 7000,
-            particleCount: 100,
-            floorHeight: 1000,
-            floorWidth: 1000
+            particleCount: 150,
           };
           
     
