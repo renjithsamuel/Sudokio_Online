@@ -54,11 +54,9 @@ function LeaderBoardListElement({username , ranking , score,currentUser,elem,cli
                             </div>
                             <div className="clickedUserListItem">
                                 <div className="clickedUserLeft">streak  </div><div className="clickedUserRight" style={{fontSize:'x-large'}}>  {clickedUser.streak} {(clickedUser.streak!=0)? <img src={fireIcon} alt="fire" height={30} width={30} style={{marginLeft:'0.5vw'}}/>:''}</div>
-                            </div>
-                            
+                            </div> 
                     </div>)
                 :   
-
                 (<div className="unclickedWrapper">
                     <div className="leaderBoardListWrapper" style={{backgroundColor:(currentUser==username)?'var(--secondary-color)':'var(--primary-color)',border:(ranking==1)?'2px solid var(--secondary-text-color)':''}}>
                         <div className="username">
