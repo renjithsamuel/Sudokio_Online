@@ -158,12 +158,10 @@
         },[currentUser]);
 
         useEffect(()=>{
-            if(allUsers!==null && todayGameWon===true){
+            if(allUsers!==null && todayGameWon===true && isExploding===true){
                 updateRanking();
             }
-        },[todayGameWon,allUsers]);
-
-
+        },[todayGameWon,allUsers,isExploding]);
 
         //  numpad listeners   
         useEffect(() => {
