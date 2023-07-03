@@ -24,7 +24,7 @@ function LeaderBoardListElement({username , ranking , score,currentUser,elem,cli
             {(clickedUser && elem && clickedUser.username === elem.username)?
                  (<div className="clickedWrapper">
                             {(ranking==1)?
-                                <div className="confetti">
+                                <div className="confettiInsideClickedWrapper">
                                     <lord-icon
                                         src="https://cdn.lordicon.com/xxdqfhbi.json"
                                         trigger="loop"

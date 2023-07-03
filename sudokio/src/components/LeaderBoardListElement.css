@@ -12,6 +12,7 @@
     margin-bottom: 0.4vh;
     transform: scale(1);
     z-index: 2;
+    transition: none;
 }
 .leaderBoardListWrapper:hover{
         cursor: pointer;
@@ -28,8 +29,8 @@
 
 .clickedWrapper{
     
-    animation: zoom-in-user 0.1s ease-in-out !important;
-    transition: all 0.1s ease-in-out;
+    /* animation: zoom-in-user 0.1s ease-in-out !important; */
+    transition: none;
     background-color: var(--primary-color);
     padding: 1vw;
     border-radius: 10px;
@@ -39,7 +40,7 @@
 }
 
 .clickedWrapper *{
-    animation: zoom-in-user 0.1s ease-in-out !important;
+    /* animation: zoom-in-user 0.1s ease-in-out !important; */
 }
 
 .clickedWrapper:hover{
@@ -47,7 +48,7 @@
 }
 
 .clickedUserListItem{
-    animation: zoom-in-user 0.1s ease-in-out !important;
+    /* animation: zoom-in-user 0.1s ease-in-out !important; */
     color: var(--secondary-text-color);
     display: flex;
     justify-content: space-between;
@@ -56,15 +57,16 @@
     padding-right: 8vw;
 }
 .clickedUserLeft{
-    animation: zoom-in-user 0.1s ease-in-out !important;
+    /* animation: zoom-in-user 0.1s ease-in-out !important; */
     width:50%;
     text-align:right;
     margin-right: 2vw;
+    z-index: 3;
 }
 
 
 .clickedUserRight{
-    animation: zoom-in-user 0.1s ease-in-out !important;
+    /* animation: zoom-in-user 0.1s ease-in-out !important; */
     color: var(--text-color);  
     width:50%;
     text-align:left; 
@@ -78,8 +80,15 @@
     margin-left: 2vw;
     width: 5vw;
     height: 4vh;
-    z-index: 5;
+    z-index: 2;
 }
+
+.confettiInsideClickedWrapper{
+    width: 5vw;
+    height: 4vh;
+    z-index: 2;
+}
+
 
 @keyframes zoom-in-user {
     from {
@@ -109,9 +118,18 @@
         width: 75vw;
         padding-left: 1vw;
         padding-right: 1vw;
+        transition: none;
         font-size: small;
     }
 
+    .confettiInsideClickedWrapper{
+        width: 5vw;
+        height: 5vw;
+        z-index: 6;
+        position: relative;
+        left: 50vw;
+        top: 10vw;
+    }   
 
 
 }
