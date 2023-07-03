@@ -22,7 +22,7 @@ function LeaderBoardListElement({username , ranking , score,currentUser,elem,cli
                                 <div className="clickedUserLeft"> username  </div><div className="clickedUserRight">  {elem.username}</div>
                             </div>
                             <div className="clickedUserListItem">
-                                <div className="clickedUserLeft">over all ranking </div> <div className="clickedUserRight">  #{clickedUser.overallRanking}</div>
+                                <div className="clickedUserLeft">over all ranking </div> <div className="clickedUserRight">  {clickedUser.overallRanking}</div>
                             </div>
                             <div className="clickedUserListItem">
                                 <div className="clickedUserLeft">total score </div> <div className="clickedUserRight">   {clickedUser.totalScore}</div>

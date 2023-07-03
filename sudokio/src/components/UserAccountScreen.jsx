@@ -28,7 +28,7 @@ function UserAccountScreen({user,setIsUserAccClicked,logOut,hudRef,theme}){
                                 <div className="userLeft">email  </div><div className="userRight">  : {user.emailId}</div>
                             </div>
                             <div className="userListItem">
-                                <div className="userLeft">over all ranking </div> <div className="userRight"> :  #{user.overallRanking}</div>
+                                <div className="userLeft">over all ranking </div> <div className="userRight"> :  {user.overallRanking}</div>
                             </div>
                             <div className="userListItem">
                                 <div className="userLeft">total score </div> <div className="userRight">  : {user.totalScore}</div>
