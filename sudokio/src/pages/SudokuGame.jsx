@@ -60,6 +60,7 @@
             return returnData;
         } 
 
+
         // initializing game
         useEffect( () => {
             connectToServer();
@@ -276,7 +277,7 @@
             })
             // console.log(tempRemainCounter);
             setRemainCounter(tempRemainCounter);
-        },[currVal,board]);
+        },[currX,currY,board]);
 
         // small functions for various online competitive game environment
         const fetchBoard = async (date) => {

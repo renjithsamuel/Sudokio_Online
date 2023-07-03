@@ -162,6 +162,7 @@ h1,h3{
     height: 2.5vw;
     width: 2.5vw;
     border-radius: 10px;
+    z-index: 2;
     filter: drop-shadow(1px 1px 5px var(--hover-color));
 }
 
