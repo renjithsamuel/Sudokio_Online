@@ -34,7 +34,6 @@
     margin: 0.5vw;
     width: 40vw;
     border: 2px solid var(--secondary-text-color);
-    filter: drop-shadow(1px 1px 5px var(--primary-color));
 }
 
 .clickedWrapper *{
