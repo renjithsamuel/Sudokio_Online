@@ -451,7 +451,19 @@
         }
 
         const updatePausedGame = async ()=> {
-            if(currentUser==null){ setGameStarted(!gameStarted); return;};
+            // user playing without signing in
+            if(currentUser==null){ 
+                if(todayGameWon)
+                    {
+                        alert("You have already won today's Game!");
+                        return;
+                }else if(gameOver){
+                        alert("Your chances have finished for today! try again tomorrow!");
+                        return;
+                    }
+                setGameStarted(!gameStarted); 
+                return;
+            };
             if(todayGameWon)
             {
                 alert("You have already won today's Game!");
