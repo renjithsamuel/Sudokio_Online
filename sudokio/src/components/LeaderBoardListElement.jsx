@@ -35,35 +35,35 @@ function LeaderBoardListElement({username , ranking , score,currentUser,elem,cli
                                 </div>:''
                             }
                             <div className="clickedUserListItem">
-                                <div className="clickedUserLeft"> username  </div><div className="clickedUserRight">  {elem.username}</div>
+                                <div className="clickedUserLeft"> Username  </div><div className="clickedUserRight">  {elem.username}</div>
                             </div>
                             <div className="clickedUserListItem">
-                                <div className="clickedUserLeft">over all ranking </div> <div className="clickedUserRight">  {clickedUser.overallRanking}</div>
+                                <div className="clickedUserLeft">Over All Ranking </div> <div className="clickedUserRight">  {clickedUser.overallRanking}</div>
                             </div>
                             <div className="clickedUserListItem">
-                                <div className="clickedUserLeft">total score </div> <div className="clickedUserRight">   {clickedUser.totalScore}</div>
+                                <div className="clickedUserLeft">Total Score </div> <div className="clickedUserRight">   {clickedUser.totalScore}</div>
                             </div>
                             <div className="clickedUserListItem">
-                                <div className="clickedUserLeft">today ranking </div> <div className="clickedUserRight">  {clickedUser.todayRanking}</div>
+                                <div className="clickedUserLeft">Today Ranking </div> <div className="clickedUserRight">  {clickedUser.todayRanking}</div>
                             </div>
                             <div className="clickedUserListItem">
-                                <div className="clickedUserLeft">today score </div>  <div className="clickedUserRight">   {clickedUser.todayScore}</div>
+                                <div className="clickedUserLeft">Today Score </div>  <div className="clickedUserRight">   {clickedUser.todayScore}</div>
                             </div>
                             <div className="clickedUserListItem">
-                                <div className="clickedUserLeft">sudoku's cleared </div><div className="clickedUserRight">  {clickedUser.numberOfGamesPlayed}</div>
+                                <div className="clickedUserLeft">Sudoku's Cleared </div><div className="clickedUserRight">  {clickedUser.numberOfGamesPlayed}</div>
                             </div>
                             <div className="clickedUserListItem">
-                                <div className="clickedUserLeft">streak  </div><div className="clickedUserRight" style={{fontSize:'x-large'}}>  {clickedUser.streak} {(clickedUser.streak!=0)? <img src={fireIcon} alt="fire" height={30} width={30} style={{marginLeft:'0.5vw'}}/>:''}</div>
+                                <div className="clickedUserLeft">Streak  </div><div className="clickedUserRight" style={{fontSize:'x-large'}}>  {clickedUser.streak} {(clickedUser.streak!=0)? <img src={fireIcon} alt="fire" height={30} width={30} style={{marginLeft:'0.5vw'}}/>:''}</div>
                             </div> 
                     </div>)
                 :   
                 (<div className="unclickedWrapper">
                     <div className="leaderBoardListWrapper" style={{backgroundColor:(currentUser==username)?'var(--secondary-color)':'var(--primary-color)',border:(ranking==1)?'2px solid var(--secondary-text-color)':''}}>
-                        <div className="username">
+                        <div className="LeaderBoardUsername">
                             {username}
                         </div>
                     <div className="separatorListLeaderBoard"></div>
-                        <div className="ranking">
+                        <div className="LeaderBoardRanking">
                             {ranking}
                             {(ranking==1)?
                                 <div className="confetti">
@@ -78,7 +78,7 @@ function LeaderBoardListElement({username , ranking , score,currentUser,elem,cli
                             }
                         </div>
                     <div className="separatorListLeaderBoard"></div>
-                        <div className="score">
+                        <div className="LeaderBoardScore">
                             {score}
                         </div>
                     </div>

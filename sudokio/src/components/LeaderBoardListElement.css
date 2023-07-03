@@ -27,6 +27,26 @@
     background-color: var(--hover-color);
 }
 
+.LeaderBoardRanking{
+    text-indent: 2vw;
+    display: flex;
+    width: 31%;
+    overflow: hidden;
+}
+.LeaderBoardUsername{
+    text-indent: 1vw;
+    word-wrap: unset;
+    display: flex;
+    width: 31%;
+    overflow: hidden;
+}
+.LeaderBoardScore{
+    text-indent: 2vw;
+    display: flex;
+    width: 31%;
+    overflow: hidden;
+}
+
 .clickedWrapper{
     
     /* animation: zoom-in-user 0.1s ease-in-out !important; */
@@ -39,9 +59,9 @@
     border: 2px solid var(--secondary-text-color);
 }
 
-.clickedWrapper *{
-    /* animation: zoom-in-user 0.1s ease-in-out !important; */
-}
+/* .clickedWrapper *{
+    animation: zoom-in-user 0.1s ease-in-out !important;
+} */
 
 .clickedWrapper:hover{
     cursor: pointer;
@@ -72,9 +92,7 @@
     text-align:left; 
     display: flex;
 }
-.ranking{
-    display: flex;
-}
+
 .confetti{
     padding: 0;
     margin-left: 2vw;
@@ -111,7 +129,7 @@
         font-size: small;
         font-weight: 500;
         height: 5vh;
-        width: 80vw;
+        width: 83vw;
     }
 
     .clickedWrapper{

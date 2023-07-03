@@ -3,6 +3,12 @@ import closeLight from '../assets/close-light.svg'
 import closeDark from '../assets/close-dark.svg'
 import logoutLight from '../assets/logout-light.svg'
 import logoutDark from '../assets/logout-dark.svg'
+import fireIcon from '../assets/fire.svg'
+// lottie icon 
+import lottie from 'lottie-web';
+import { defineElement } from 'lord-icon-element';
+
+defineElement(lottie.loadAnimation);
 
 function UserAccountScreen({user,setIsUserAccClicked,logOut,hudRef,theme}){
     return (<>
@@ -25,25 +31,25 @@ function UserAccountScreen({user,setIsUserAccClicked,logOut,hudRef,theme}){
                     </div>
                         <div className="userStatsList">
                             <div className="userListItem">
-                                <div className="userLeft">email  </div><div className="userRight">  : {user.emailId}</div>
+                                <div className="userLeft">Email  </div><div className="userRight">  : {user.emailId}</div>
                             </div>
                             <div className="userListItem">
-                                <div className="userLeft">over all ranking </div> <div className="userRight"> :  {user.overallRanking}</div>
+                                <div className="userLeft">Over All Ranking </div> <div className="userRight"> :  {user.overallRanking}</div>
                             </div>
                             <div className="userListItem">
-                                <div className="userLeft">total score </div> <div className="userRight">  : {user.totalScore}</div>
+                                <div className="userLeft">Total Score </div> <div className="userRight">  : {user.totalScore}</div>
                             </div>
                             <div className="userListItem">
-                                <div className="userLeft">today ranking </div> <div className="userRight">  : {user.todayRanking}</div>
+                                <div className="userLeft">Today Ranking </div> <div className="userRight">  : {user.todayRanking}</div>
                             </div>
                             <div className="userListItem">
-                                <div className="userLeft">today score </div>  <div className="userRight"> :   {user.todayScore}</div>
+                                <div className="userLeft">Today Score </div>  <div className="userRight"> :   {user.todayScore}</div>
                             </div>
                             <div className="userListItem">
-                                <div className="userLeft">sudoku's cleared </div><div className="userRight">  :  {user.numberOfGamesPlayed}</div>
+                                <div className="userLeft">Sudoku's Cleared </div><div className="userRight">  :  {user.numberOfGamesPlayed}</div>
                             </div>
                             <div className="userListItem">
-                                <div className="userLeft">streak  </div><div className="userRight">  :  {user.streak}</div>
+                                <div className="userLeft">Streak  </div><div className="userRight" style={{fontSize:'x-large'}}>  :  {user.streak} {(user.streak!=0)? <img src={fireIcon} alt="fire" height={30} width={30} style={{marginLeft:'0.5vw'}}/>:''}</div>
                             </div>
                         </div>
                 </div>

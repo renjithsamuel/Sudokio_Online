@@ -109,14 +109,17 @@
 }
 
 .userLeft {
+    overflow-x: hidden ;
     text-indent: 0.5vw;
     font-weight: 500;
     font-size: medium;
     width: 15vw;
     letter-spacing: 1.5px;
+    color: var(--secondary-text-color);
 }
 .userRight{
     font-weight: 500;
+    overflow-x: hidden ;
     font-size: medium;
     width: 20vw;
     margin-left: 3vw;
