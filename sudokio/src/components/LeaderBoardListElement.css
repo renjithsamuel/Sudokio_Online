@@ -27,24 +27,30 @@
     background-color: var(--hover-color);
 }
 
+.LeaderBoardUsername{
+    text-indent: 1vw;
+    width: 31%;
+    height: 80%;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
 .LeaderBoardRanking{
     text-indent: 2vw;
     display: flex;
     width: 31%;
+    height: 80%;
+    white-space: nowrap;
     overflow: hidden;
-}
-.LeaderBoardUsername{
-    text-indent: 1vw;
-    word-wrap: unset;
-    display: flex;
-    width: 31%;
-    overflow: hidden;
+    text-overflow: ellipsis;
 }
 .LeaderBoardScore{
     text-indent: 2vw;
-    display: flex;
     width: 31%;
+    height: 80%;
+    white-space: nowrap;
     overflow: hidden;
+    text-overflow: ellipsis;
 }
 
 .clickedWrapper{
