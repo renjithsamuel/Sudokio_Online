@@ -13,7 +13,7 @@
     transform: scale(1);
 }
 .leaderBoardListWrapper:hover{
-        cursor: default;
+        cursor: pointer;
         box-shadow: 0 8px 20px 0 rgba(37, 46, 86, 0.751);
         /* z-index: 1; */
         transform: scale(1.01);
@@ -25,6 +25,63 @@
     background-color: var(--hover-color);
 }
 
+.clickedWrapper{
+    animation: zoom-in-user 0.1s ease-in-out !important;
+    transition: all 0.1s ease-in-out;
+    background-color: var(--primary-color);
+    padding: 1vw;
+    border-radius: 10px;
+    margin: 0.5vw;
+    width: 40vw;
+    border: 2px solid var(--secondary-text-color);
+    filter: drop-shadow(1px 1px 5px var(--primary-color));
+}
+
+.clickedWrapper *{
+    animation: zoom-in-user 0.1s ease-in-out !important;
+}
+
+.clickedWrapper:hover{
+    cursor: pointer;
+}
+
+.clickedUserListItem{
+    animation: zoom-in-user 0.1s ease-in-out !important;
+    color: var(--secondary-text-color);
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding-left: 8vw;
+    padding-right: 8vw;
+}
+.clickedUserLeft{
+    animation: zoom-in-user 0.1s ease-in-out !important;
+    width:50%;
+    text-align:right;
+    margin-right: 2vw;
+}
+
+
+.clickedUserRight{
+    animation: zoom-in-user 0.1s ease-in-out !important;
+    color: var(--text-color);  
+    width:50%;
+    text-align:left; 
+}
+
+@keyframes zoom-in-user {
+    from {
+        transform: translateY(-10px);
+
+        opacity: 0;
+    }
+    to{
+        transform: translateY(0px);
+        opacity: 1;
+    }
+}
+
+
 
 
 
@@ -35,5 +92,14 @@
         height: 5vh;
         width: 80vw;
     }
+
+    .clickedWrapper{
+        width: 75vw;
+        padding-left: 1vw;
+        padding-right: 1vw;
+        font-size: small;
+    }
+
+
 
 }

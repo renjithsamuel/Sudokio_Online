@@ -43,7 +43,6 @@
                     error : "something went wrong!"
                 })
             }
-            await Users.updateMany({},{todayGameWon:false,todayScore:0,heart:3,timer:{hours:0,minutes:0,seconds:0},gameOverToday:false,todayBoard : []}); 
             // updating streak and resetting user for today's game : 
             const users = await Users.find();
             try {
@@ -60,7 +59,9 @@
                     }));
               } catch (error) {
                 console.error(error);
-              }
+            }
+
+            await Users.updateMany({},{todayGameWon:false,todayScore:0,heart:3,timer:{hours:0,minutes:0,seconds:0},gameOverToday:false,todayBoard : []}); 
 
             return res.status(200).json({
                 success : true,

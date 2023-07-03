@@ -788,11 +788,11 @@
     
         return  (
             <>  
-                    {(isExploding)? 
-                        <div style={{position: "absolute",left:'50%'}}>
-                        <ConfettiExplosion {...tinyExplodeProps}/>
-                        </div>:''
-                    }
+                {(isExploding)? 
+                    <div style={{position: "absolute",left:'50%'}}>
+                    <ConfettiExplosion {...tinyExplodeProps}/>
+                    </div>:''
+                }
                 {(isLeaderBoardClicked==true)?<LeaderBoard allUsers={allUsers} setAllUsers={setAllUsers} setIsLeaderBoardClicked={setIsLeaderBoardClicked} currentUser={localStorage.getItem('username')} hudRef={hudRef} theme={theme}/>:''}
                 {(isUserAccClicked==true)?<UserAccountScreen user={currentUser} setIsUserAccClicked={setIsUserAccClicked} logOut={logOut} hudRef={hudRef} theme={theme}/>:''}
                 <div className="navBar">

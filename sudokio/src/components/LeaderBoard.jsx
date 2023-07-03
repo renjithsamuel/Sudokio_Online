@@ -7,6 +7,9 @@ import closeDark from '../assets/close-dark.svg'
 function LeaderBoard({allUsers,setAllUsers,setIsLeaderBoardClicked,currentUser,hudRef,theme}){
     const [isTotal , setIsTotal] = useState(false);
 
+    const [clickedUser,setClickedUser] = useState({});
+
+
     useEffect(()=>{
         if(isTotal==true){
             let tempAllUsers = [...allUsers].sort((a,b)=>b.totalScore - (a.totalScore));
@@ -15,7 +18,7 @@ function LeaderBoard({allUsers,setAllUsers,setIsLeaderBoardClicked,currentUser,h
             let tempAllUsers = [...allUsers].sort((a,b)=>b.todayScore - (a.todayScore));
             setAllUsers(tempAllUsers);
         }
-    },[isTotal])
+    },[isTotal]);
 
     return (
         <>
@@ -39,11 +42,11 @@ function LeaderBoard({allUsers,setAllUsers,setIsLeaderBoardClicked,currentUser,h
                     <LeaderBoardListElement username={'username'} ranking={'ranking'} score={'score'} />
                     {(isTotal)?
                         allUsers.map((elem,index)=>{
-                                return <LeaderBoardListElement key={index} username={elem.username} ranking={elem.overallRanking} score={elem.totalScore} currentUser={currentUser} />
+                                return <LeaderBoardListElement key={index} username={elem.username} ranking={elem.overallRanking} score={elem.totalScore} currentUser={currentUser} elem={elem} clickedUser={clickedUser} setClickedUser={setClickedUser}/>
                             })
                     :
                         allUsers.map((elem,index)=>{
-                            return <LeaderBoardListElement key={index} username={elem.username} ranking={elem.todayRanking} score={elem.todayScore}  currentUser={currentUser}/>
+                            return <LeaderBoardListElement key={index} username={elem.username} ranking={elem.todayRanking} score={elem.todayScore}  currentUser={currentUser} elem={elem}  clickedUser={clickedUser} setClickedUser={setClickedUser}/>
                         })
                     }
                 </div>
