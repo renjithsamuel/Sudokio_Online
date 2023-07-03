@@ -23,6 +23,8 @@
     import clearDark from '../assets/clear-dark.svg'
 
 
+    // pagination for All users
+
     function SudokuGame(){
         
         // global variables 

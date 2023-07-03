@@ -13,18 +13,24 @@
     transform: scale(1);
     z-index: 2;
     transition: none;
+    transition: box-shadow 0.3s ease;
 }
+
+.leaderBoardListWrapper > div{
+    transition: none;
+}
+
 .leaderBoardListWrapper:hover{
         cursor: pointer;
         box-shadow: 0 8px 20px 0 rgba(37, 46, 86, 0.751);
         /* z-index: 1; */
-        transform: scale(1.01);
 }
 
 .separatorListLeaderBoard{
     width: 0.3vw;
     height: 100%;
     background-color: var(--hover-color);
+    transition: none;
 }
 
 .LeaderBoardUsername{
@@ -63,6 +69,11 @@
     margin: 0.5vw;
     width: 40vw;
     border: 2px solid var(--secondary-text-color);
+    transition: box-shadow 0.3s ease;
+}
+
+.clickedWrapper:hover{
+    box-shadow: 0 8px 20px 0 rgba(37, 46, 86, 0.751);
 }
 
 /* .clickedWrapper *{

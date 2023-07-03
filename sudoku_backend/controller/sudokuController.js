@@ -147,7 +147,7 @@
                 streak :  0,
                 gameOverToday : false,
                 todayBoard : [],
-                theme : 'light'
+                theme : 'dark'
             }
             const user = await Users.create(obj);
             if(!user){
