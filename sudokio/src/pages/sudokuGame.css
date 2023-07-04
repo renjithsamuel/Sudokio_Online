@@ -404,12 +404,14 @@ h3{
         border-radius: 50%;
         height: 3vw;
         width: 3vw;
+        padding: 1vh;
     }
-
+    
     .darkMode{
         border-radius: 50%;
         height: 3vw;
         width: 3vw;
+        padding: 1vh;
     }
     .hud{
         margin-left: 13vw;
@@ -544,20 +546,35 @@ h3{
 
     @media only screen and (max-width: 735px) {
 
+        .leaderBoard img , .darkMode img{
+            height: 30px;
+            width: 30px;
+        }
+
+        .googleBtn{
+            padding: 2.5vw;
+        }
+
         .leaderBoard{
             margin-left: 3vw;
             margin-right: 1vw;
             border-radius: 50%;
             width: 5vw;
             height: 5vw;
+            padding: 2vw;
         }
-    
+        
         .darkMode{
             border-radius: 50%;
             width: 6vw;
             height: 6vw;
+            padding: 1.5vw;
         }
 
+        .darkMode img , .leaderBoard img{
+            height: 20;
+            width: 20;
+        }
         .sudokubox{
             margin-left: 15vw;
             /* width: 66vw; */
@@ -627,8 +644,6 @@ h3{
 
   @media only screen and (max-width: 500px) {
 
-
-
     .online{
         margin-left: 18vw;
     }
@@ -638,19 +653,28 @@ h3{
     .googleBtn{
         width: 6vw;
         height: 6vw;
+        padding: 3vw;
     }
-
+    
     .leaderBoard{
         border-radius: 50%;
+        padding: 2vw;
         width: 8vw;
         height: 8vw;
     }
 
+    .leaderBoard img , .darkMode img{
+        height: 25px;
+        width: 25px;
+    }
+    
     .darkMode{
+        padding: 2vw;
         border-radius: 50%;
         width: 8vw;
         height: 8vw;
     }
+
 
     .hud{
         margin-top: 3vh;
