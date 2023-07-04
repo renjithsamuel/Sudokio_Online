@@ -80,7 +80,7 @@
             boardCreator();   
             
             // setInterval(async () => {
-            //     const updateTimerUrl = `https://sudokionode.onrender.com/api/v1/patchUserById/${currentUser._id}`;
+            //     const updateTimerUrl = `http://localhost:3020/api/v1/patchUserById/${currentUser._id}`;
             //     let updatedTimer = await sendHTTPRequest(updateTimerUrl , `PATCH` , {timer : gameTimer , todayBoard : board});
             //     console.log(updatedTimer);
             //     if(updatedTimer && updatedTimer.success==false){
@@ -269,15 +269,19 @@
 
         useEffect(()=>{
             let tempRemainCounter = {1:9,2:9,3:9,4:9,5:9,6:9,7:9,8:9,9:9};
+            // let totalRemainingElements = 0;
             board.map((rowElem) =>{
                 rowElem.map((colElem)=>{
                     let num = colElem.val;
                     if(num!==0){
-                    tempRemainCounter[num]--;
+                        tempRemainCounter[num]--;
+                        // totalRemainingElements++;
                     }
                 })
             })
+            // if(totalRemainingElements==0)submitFunc();
             // console.log(tempRemainCounter);
+            // console.log(totalRemainingElements);
             setRemainCounter(tempRemainCounter);
         },[currX,currY,board]);
 
@@ -844,7 +848,14 @@
                     </div>
                 </div>
 
-                {(isConnected)? '' : <h3>Connecting to server!</h3>}
+                {(isConnected)? '' : <h3 style={{display:'flex',justifyContent:'start',alignItems:'center'}}>Connecting to server! 
+                    <lord-icon
+                        src="https://cdn.lordicon.com/xjovhxra.json"
+                        trigger="loop"
+                        colors={(theme=='light')?'primary:#616161' : "primary:#a866ee"}
+                        style={{width:40 , height:40,marginLeft:5}}>
+                    </lord-icon>
+                    </h3>}
 
                 <div className="hud" ref={hudRef}>
                         <div className="hudLeft" >
@@ -860,24 +871,29 @@
                     <div className="left">
                         <div className="sudokubox" ref={sudoku}>
                                 {board.map((row, rowIndex) => (
-                                    row.map((elem, colIndex) => (
-                                        <SudokuElem 
-                                        key={`${rowIndex}-${colIndex}`}
-                                        elem={elem} 
-                                        rowind={rowIndex}
-                                        colind={colIndex}
-                                        currX={currX}
-                                        currY={currY}
-                                        currVal={currVal}
-                                        style={(currX==rowIndex && currY==colIndex)?'var(--extra-hover-color)':'var(--primary-color)'}
-                                        onclick={()=>{             
-                                            setCurrx(rowIndex);
-                                            setCurry(colIndex);
-                                            setCurrVal(elem.val);
-                                            }}
-                                        />
-                                        ))
-                                    ))}
+                                    <div className="sudokuRow" key={rowIndex}>
+                                    {
+                                        row.map((elem, colIndex) => (
+                                            <SudokuElem 
+                                                key={`${rowIndex}-${colIndex}`}
+                                                gameStarted={gameStarted}
+                                                elem={elem} 
+                                                rowind={rowIndex}
+                                                colind={colIndex}
+                                                currX={currX}
+                                                currY={currY}
+                                                currVal={currVal}
+                                                style={(currX==rowIndex && currY==colIndex)?'var(--extra-hover-color)':'var(--primary-color)'}
+                                                onclick={()=>{             
+                                                    setCurrx(rowIndex);
+                                                    setCurry(colIndex);
+                                                    setCurrVal(elem.val);
+                                                    }}
+                                                />
+                                            ))
+                                        }
+                                     </div>
+                                ))}
                             <div className="pauseCover" style={{display:(isConnected)?(gameStarted)?'none':'flex':'none'}} onClick={()=>{updatePausedGame();}}>
                                 {(theme=='light')?<img src={pauseLight} alt="paused" height={50} width={50} />
                                                     :  <img src={pauseDark} alt="paused" height={50} width={50} />}

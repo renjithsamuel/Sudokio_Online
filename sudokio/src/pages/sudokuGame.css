@@ -28,13 +28,13 @@
     --secondary-text-transparent-color : #d3ade79f ;
     --hover-color :  #6f358dd0;
     --extra-hover-color :  #ae70cbd0;
-    --cover-color : #7a4096d0;
+    --cover-color : #79409695;
     --target-color : #e7e7e7d0;
     --sudoku-border-color :  #d3ade7;
 }   
 
 [data-theme="light"] {
-    --bg-color : rgba(248, 248, 248, 1);;
+    --bg-color : #f2f1f1;;
     --primary-color : #FFFFFF;
     --secondary-color :  #a6a6a6;
     --temp-secondary-color :  #FFFFFF;
@@ -48,7 +48,7 @@
     /* --hover-color :  #b4b4b4c6; */
     --hover-color :  #d5d5d5c6;
     --extra-hover-color :  #f1f1f1;
-    --cover-color : #b5b5b5ee;
+    --cover-color : #b5b5b5aa;
     --target-color : rgb(20, 20, 20);
     --sudoku-border-color : #1e1e1e;
 }
@@ -135,11 +135,14 @@ h1,h3{
 .online{
     margin-left: 50vw;
     display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-top: 3vh;
 }
 
 
 .userAccBtn{
-    margin-top: 3.5vh;
+    /* margin-top: 3.5vh; */
     margin-right: 1vw;
     border-radius: 50%;
     filter: drop-shadow(1px 1px 5px var(--hover-color));
@@ -158,11 +161,14 @@ h1,h3{
 .leaderBoard{
     background-color: var(--primary-color);
     padding: 1vh;
-    margin-top: 3.5vh;
+    /* margin-top: 3.5vh; */
     height: 2.5vw;
     width: 2.5vw;
     border-radius: 10px;
     z-index: 2;
+    display: flex;
+    justify-content: center;
+    align-items: center;
     filter: drop-shadow(1px 1px 5px var(--hover-color));
 }
 
@@ -177,22 +183,21 @@ h1,h3{
 }
 
 .loginWithGoogle{
-    margin-top: 3vh;
-    font-size: small;
-    width: 8vw;
-    height: 3vh;
-    border-radius: 50%;
+    /* margin-top: 3vh; */
 }
 
 .googleBtn{
+    font-size: small;
+    border-radius: 50%;
     padding: 1.5vh;
+    width: 6vw;
     background-color: var(--primary-color);
     display: flex;
-    
+    height: 4vh;
     border-radius: 15px;
     transition: all 0.2s ease;
     margin-right: 0.7vw;
-    margin-top: 0.2vh;
+    /* margin-top: 0.2vh; */
     filter: drop-shadow(1px 1px 5px var(--hover-color));
 }
 
@@ -224,7 +229,7 @@ h1,h3{
     align-items: center;
     padding: 0.5vh;
     border-radius: 10px;
-    margin-top: 3.5vh;
+    /* margin-top: 3.5vh; */
     margin-left: 0.8vw;
     filter: drop-shadow(1px 1px 5px var(--hover-color));
 }
@@ -273,16 +278,21 @@ h1,h3{
     margin-left: 20vw;
     border: 1px solid transparent;
     background-color: var(--primary-color);
-    height: fit-content;
-    width: fit-content;
-    display: flex;
+    height: min-content;
+    width: min-content;
+    /* display: flex; */
     align-items: center;
     justify-content: center;
-    flex-wrap: wrap;
-    width: 28vw;
+    width: auto;
     height: auto;
     z-index: 0;
     border: 2px solid var(--secondary-text-color);
+    position: relative;
+    /* new  */
+}
+
+.sudokuRow{
+    display: flex;
 }
 
 h3{
@@ -291,13 +301,15 @@ h3{
 
 .pauseCover{
     position: absolute;
+    top: 0vw;
     background-color: var(--cover-color);
+    /* background-color: transparent; */
     width: 28vw;
     height: 28vw;
     display: flex;
     justify-content: center;
     align-items: center;
-    backdrop-filter: blur(3px);
+    backdrop-filter: blur(5px);
     border-radius: 2px;
     z-index: 1;
 }
@@ -385,52 +397,19 @@ h3{
         margin-left: 12vw;
         font-size: 25px;
     }
-    .loginWithGoogle{
-        margin-top: 2vh;
-        width: 13vw;
-        margin-right : 1vw
-    }
-    .googleBtn img{
-        height: 25px;
-        width: 25px;
-    }
-    .userAccBtn{
-        margin-top: 2.5vh;
-        margin-right: 2vw;
-    }
-    .userAccBtn img{
-        height: 43px;
-        width: 43px;
-    }
+
 
 
     .leaderBoard{
-        display: flex;
-        align-items: center;
-        justify-content: center;
         border-radius: 50%;
-        margin-top: 2.5vh;
-        height: 4vw;
-        width: 4vw;
+        height: 3vw;
+        width: 3vw;
     }
 
-    .leaderBoard img{
-        height: 30px;
-        width: 30px;
-    }
- 
     .darkMode{
         border-radius: 50%;
-        padding: 1vh;
-        margin-top: 2.7vh;
-        height: 4vh;
-        width: auto;
-        margin-left: 1.2vw;
-    }
-
-    .darkMode img{
-        height: 30px;
-        width: 30px;
+        height: 3vw;
+        width: 3vw;
     }
     .hud{
         margin-left: 13vw;
@@ -449,8 +428,8 @@ h3{
     }
     .sudokubox{
         margin-left: 13vw;
-        width: 38vw;
-        height: auto;
+        /* width: 38vw;
+        height: auto; */
     }
     .pauseCover{
         width: 38vw;
@@ -475,30 +454,39 @@ h3{
         font-size: 25px;
     }
     .online{
+        margin-top: 0.5vw;
         margin-left: 40vw;
     }
     .loginWithGoogle{
-        margin-top: 2vh;
-        width: 13vw;
-        margin-right : 1vw
+        /* margin-top: 2vh; */
+        width: 8vw;
+    }
+    .googleBtn{
+        justify-content: center;
+        align-items: center;
+        border-radius: 50%;
+        width: 4vw;
+        height: 4vw;
+        margin-right : 3vw
     }
     #loginWord{
         display: none;
     }
 
     .leaderBoard{
-
+        width: 5vw;
+        height: 5vw;
         border-radius: 50%;
-        margin-top: 2.5vh;
     }
 
     .darkMode{
+        width: 5vw;
+        height: 5vw;
         border-radius: 50%;
-        margin-top: 2.5vh;
-        margin-left: 1.2vw;
     }
 
     .hud{
+        margin-top: 2vh;
         margin-left: 17vw;
         width: 60vw;
     }
@@ -515,9 +503,11 @@ h3{
     }
     .sudokubox{
         margin-left: 15vw;
-        width: 65vw;
+        /* width: 65vw; */
+        width: min-content;
         height: auto;
     }
+
     .pauseCover{
         width: 65vw;
         height: 65vw;
@@ -555,24 +545,22 @@ h3{
     @media only screen and (max-width: 735px) {
 
         .leaderBoard{
-
+            margin-left: 3vw;
+            margin-right: 1vw;
             border-radius: 50%;
-            margin-top: 2.5vh;
             width: 5vw;
             height: 5vw;
         }
     
         .darkMode{
             border-radius: 50%;
-            margin-top: 2.7vh;
-            margin-left: 1.2vw;
-            width: 5vw;
-            height: 5vw;
+            width: 6vw;
+            height: 6vw;
         }
 
         .sudokubox{
             margin-left: 15vw;
-            width: 66vw;
+            /* width: 66vw; */
             height: auto;
         }
         .pauseCover{
@@ -616,7 +604,7 @@ h3{
 
         .sudokubox{
             margin-left: 10vw;
-            width: 76vw;
+            /* width: 76vw; */
             height: auto;
         }
         .pauseCover{
@@ -637,31 +625,29 @@ h3{
 
 
 
-  @media only screen and (max-width: 475px) {
+  @media only screen and (max-width: 500px) {
 
 
 
     .online{
         margin-left: 18vw;
     }
-
+    .loginWithGoogle{
+        margin-right: 2vw;
+    }
     .googleBtn{
-        width: 7vw;
-        height: 7vw;
+        width: 6vw;
+        height: 6vw;
     }
 
     .leaderBoard{
-
         border-radius: 50%;
-        margin-top: 2.5vh;
         width: 8vw;
         height: 8vw;
     }
 
     .darkMode{
         border-radius: 50%;
-        margin-top: 2.7vh;
-        margin-left: 1.2vw;
         width: 8vw;
         height: 8vw;
     }
@@ -672,7 +658,7 @@ h3{
 
     .sudokubox{
         margin-left: 3vw;
-        width: 90vw;
+        /* width: 90vw; */
     }
 
     .googleBtn{
@@ -716,7 +702,7 @@ h3{
 
     .sudokubox{
         margin-left: 4vw;
-        width: 87vw;
+        /* width: 87vw; */
     }
     .pauseCover{
         width: 87vw;
@@ -756,9 +742,13 @@ h3{
 
     .online{
         margin-left: 5vw;
+    }   
+
+    .loginWithGoogle{
+        margin-right: 3vw;
     }
 
-    .leaderBoard , .darkMode, .googleBtn{
+    .leaderBoard , .darkMode, .googleBtn {
         width: 8vw;
         height: 8vw;
         margin-right: 2vw;
@@ -771,7 +761,7 @@ h3{
 
     .sudokubox{
         margin-left: 0.7vw;
-        width: 93vw;
+        /* width: 93vw; */
         height: auto;
     }
     .pauseCover{

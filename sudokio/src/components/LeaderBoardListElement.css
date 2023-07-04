@@ -3,6 +3,7 @@
     padding: 0.5vh;
     display: flex;
     justify-content: space-around;
+    align-items: center;
     font-size: medium;
     font-weight: 500;
     height: 5vh;
@@ -82,6 +83,8 @@
 
 .clickedWrapper:hover{
     cursor: pointer;
+    animation: none;
+    transition: none;   
 }
 
 .clickedUserListItem{
@@ -92,6 +95,8 @@
     align-items: center;
     padding-left: 8vw;
     padding-right: 8vw;
+    animation: none;
+    transition: none;
 }
 .clickedUserLeft{
     /* animation: zoom-in-user 0.1s ease-in-out !important; */
@@ -99,6 +104,8 @@
     text-align:right;
     margin-right: 2vw;
     z-index: 3;
+    animation: none;
+    transition: none;
 }
 
 
@@ -108,6 +115,8 @@
     width:50%;
     text-align:left; 
     display: flex;
+    animation: none;
+    transition: none;
 }
 
 .confetti{
@@ -116,12 +125,23 @@
     width: 5vw;
     height: 4vh;
     z-index: 2;
+    animation: none;
+    transition: none;
 }
 
 .confettiInsideClickedWrapper{
     width: 5vw;
     height: 4vh;
     z-index: 2;
+    animation: none;
+    transition: none;
+}
+
+.nothingToDisplay{
+    margin: 2vh;
+    font-size: large;
+    font-weight: 600;
+    color: var(--text-color);
 }
 
 
@@ -165,6 +185,10 @@
         left: 50vw;
         top: 10vw;
     }   
+
+    .nothingToDisplay{
+        font-size:  medium;
+    }
 
 
 }

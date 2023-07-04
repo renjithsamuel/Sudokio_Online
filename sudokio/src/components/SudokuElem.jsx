@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 
-function SudokuElem({elem,onclick,style,currX,currY,rowind,colind,currVal}) {
+function SudokuElem({elem,onclick,style,currX,currY,rowind,colind,currVal,gameStarted}) {
       const [hovered, setHovered] = useState(false);
 
       const handleMouseEnter = () => {
@@ -28,12 +28,11 @@ function SudokuElem({elem,onclick,style,currX,currY,rowind,colind,currVal}) {
                      fontWeight:(elem.fixed==true)?'400':'600',
                      fontSize:(elem.fixed==true)?'large':'larger',
                      // borderStyle:(currX==rowind && currY==colind)?'dashed':'',
-                    // borderColor:(currX==rowind && currY==colind)?'var(--target-color)': ((currX==rowind && currY==colind) || (currVal!=0 && currVal==elem.val))?'var(--text-color)':'',
+                     // borderColor:(currX==rowind && currY==colind)?'var(--target-color)': ((currX==rowind && currY==colind) || (currVal!=0 && currVal==elem.val))?'var(--text-color)':'',
                     borderTopColor:(currX==rowind && currY==colind)?'var(--target-color)':((currX==rowind && currY==colind) || (currVal!=0 && currVal==elem.val))?'var(--text-color)':((rowind==3 || rowind == 6 ))?'var(--sudoku-border-color)':'',
                     borderLeftColor:(currX==rowind && currY==colind)?'var(--target-color)': ((currX==rowind && currY==colind) || (currVal!=0 && currVal==elem.val))?'var(--text-color)':((colind==3 || colind==6))?'var(--sudoku-border-color)':'',
                     borderRightColor : (currX==rowind && currY==colind)?'var(--target-color)': ((currX==rowind && currY==colind) || (currVal!=0 && currVal==elem.val))?'var(--text-color)':((colind==2 || colind == 5 ))?'var(--sudoku-border-color)':'',
                     borderBottomColor : (currX==rowind && currY==colind)?'var(--target-color)': ((currX==rowind && currY==colind) || (currVal!=0 && currVal==elem.val))?'var(--text-color)':((rowind==2 || rowind == 5 ))?'var(--sudoku-border-color)':'',
-                   
                     borderRadius:(currVal==elem.val && currVal!=0 && (!(currX==rowind && currY==colind)))?'50%':'',
                     // scale :((currX == rowind) || (currY==colind) || (((rowind >= (currX - currX%3)) && (rowind< (currX - currX%3) + 3)) 
                     // && ((colind >= (currY - currY%3)) && (colind< (currY - currY%3) + 3))))?'1.05':'' ,
@@ -44,7 +43,7 @@ function SudokuElem({elem,onclick,style,currX,currY,rowind,colind,currVal}) {
               onMouseEnter={handleMouseEnter}
             onMouseLeave={handleMouseLeave}
               >
-                   { (elem.val==0)?'':elem.val}
+                   { (elem.val==0 || gameStarted==false)?'':elem.val}
             </div>
         </> );
 }
