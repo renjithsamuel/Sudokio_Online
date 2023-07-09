@@ -24,9 +24,11 @@ mongoose.connect(mongoDBString, {
 app.get('/api/v1/health',(req,res,next)=>{
     return res.status(200).json({success : true,message : "app is working prefectly!"});
 })
+
 app.use('/api/v1', sudokuRoutes);
 
 const port = process.env.PORT || 3000;
+
 app.listen(port , ()=>{
     console.log('App is listening to' , port);
 })
