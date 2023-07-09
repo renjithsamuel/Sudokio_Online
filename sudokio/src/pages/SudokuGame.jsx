@@ -291,6 +291,7 @@
             const getBoardUrl = `https://sudokionode.onrender.com/api/v1/getBoard`;
             let tempBoard = await sendHTTPRequest(getBoardUrl,'POST',{date : date});
             if(tempBoard && tempBoard.success==true){
+                console.log(tempBoard);
                 let newBoardData = tempBoard.data.board;
                 setBoard(newBoardData);
                 return true;
