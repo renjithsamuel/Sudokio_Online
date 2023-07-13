@@ -153,14 +153,16 @@
                  setTodayGameWon(currentUser.todayGameWon);
                  setGameOver(currentUser.gameOverToday);
                  if(JSON.stringify(currentUser.todayBoard)!='[]'){
-                 setBoard(currentUser.todayBoard);
-                }
+                        setBoard(currentUser.todayBoard);
+                    }else{
+                        resetBoard();
+                    }
             }
             if(currentUser!=null)localStorage.setItem('userId',currentUser._id)
         },[currentUser]);
 
         useEffect(()=>{
-            if(allUsers!==null && todayGameWon===true && isExploding===true){
+            if(allUsers!==null && todayGameWon==true && isExploding==true){
                 updateRanking();
             }
         },[todayGameWon,allUsers,isExploding]);
@@ -523,6 +525,7 @@
         }
 
         const submitFunc = async () => {
+            if(!gameStarted || !isConnected)return;
             if(true)console.log("isValid at listen : " , isValid);
             let flag = 0;
             if(verifySudoku(flag))
@@ -832,11 +835,11 @@
                             </LoginSocialGoogle>
                         </div>
                         :
-                            <div className="userAccBtn" onClick={()=>{if(isLeaderBoardClicked==true){setIsLeaderBoardClicked(false);}setIsUserAccClicked(true);hudRef.current.style.visibility = 'hidden'}}>
+                            <div className="userAccBtn" onClick={()=>{if(isLeaderBoardClicked==true){setIsLeaderBoardClicked(false);}setIsUserAccClicked(true);hudRef.current.style.visibility = 'hidden';setGameStarted(false);}}>
                                 <img src={localStorage.getItem('userImgLink')} alt="user" height={50} width={50} />
                             </div>        
                         }
-                        <div className="leaderBoard" onClick={()=>{if(isUserAccClicked==true){setIsUserAccClicked(false);}setIsLeaderBoardClicked(true);hudRef.current.style.visibility = 'hidden';}}> 
+                        <div className="leaderBoard" onClick={()=>{if(isUserAccClicked==true){setIsUserAccClicked(false);}setIsLeaderBoardClicked(true);hudRef.current.style.visibility = 'hidden';setGameStarted(false);}}> 
                             {(theme=='light')?<img src={leaderBoardImgLight} alt="leaderBoard" height={40} width={40} />
                             : <img src={leaderBoardImgDark} alt="leaderBoard" height={40} width={40} /> }    
                         </div>
@@ -937,7 +940,8 @@
                                 key={i} 
                                 val={i + 1}
                                 remVal ={remainCounter[i+1]}
-                                onclick = {()=>{       
+                                onclick = {()=>{  
+                                    if(!gameStarted)return;
                                     if( currX!=-1 && currY!=-1 && board[currX][currY].fixed==false){
                                         if(isSafe(board,currX,currY,i+1)==false){
                                             if(heart>0)
@@ -950,7 +954,7 @@
                                     incrementXY(currX,currY);
                                     }
                                  }
-
+                            
                                 />
                             ))}
                         </div>

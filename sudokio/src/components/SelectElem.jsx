@@ -13,7 +13,6 @@ function SelectElem({val,onclick,remVal}) {
     return (
          <>
             <div className="selem" style={{backgroundColor:(hovered)?'var(--cover-color)':'var(--primary-color)'}} onClick={onclick}
-            
             onMouseEnter={handleMouseEnter}
             onMouseLeave={handleMouseLeave}>
             <div className="selemVal">{val}</div>
