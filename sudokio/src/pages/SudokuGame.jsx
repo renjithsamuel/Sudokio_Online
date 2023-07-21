@@ -122,6 +122,7 @@ import Skeleton from '@mui/material/Skeleton';
                 // console.log(tempCurrentUser);
                 if(tempCurrentUser && tempCurrentUser.success==true){
                     setCurrentUser(tempCurrentUser.data);
+                    console.log("current user",tempCurrentUser.data);
                     localStorage.setItem('userId',tempCurrentUser.data._id)
                 }else if(tempCurrentUser.error == 'cannot find user! or something went wrong!'){
                     const postNewUser = await sendHTTPRequest(postCurrentUserUrl,'POST',currentUserObj);
@@ -151,7 +152,8 @@ import Skeleton from '@mui/material/Skeleton';
         
         useEffect(()=>{            
             if(JSON.stringify(currentUser)!='{}' && currentUser!=undefined){
-                // console.log("currentusers inside currentuser timer  " , currentUser );
+                
+                console.log("currentusers inside currentuser timer  " , currentUser );
                  setGameTimer(currentUser.timer);
                  setHeart(currentUser.heart);
                  setTheme(currentUser.theme);
