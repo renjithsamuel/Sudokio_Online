@@ -71,7 +71,7 @@ import Skeleton from '@mui/material/Skeleton';
             getLeaderBoard();
             async function boardCreator(){
 
-                const getTimeApi = `https://sudokionode.onrender.com/api/v1/getTimeApi`;
+                const getTimeApi = `    `;
                 let dateApiData = await sendHTTPRequest(getTimeApi,'GET');
                 if(dateApiData && dateApiData.success){
                     console.log(dateApiData.time);
