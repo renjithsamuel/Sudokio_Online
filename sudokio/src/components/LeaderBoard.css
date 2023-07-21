@@ -91,6 +91,19 @@
     border-bottom-right-radius: 20px;
 }
 
+.leaderBoardListsWrapper{
+    border-radius: 20px;
+    width: max-content;
+    padding: 1vh;
+    max-height: 70vh;
+    min-height: 40vh;
+    overflow-x: hidden;
+    overflow-y: scroll;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
 @media only screen and (max-width: 900px) {
     .leaderBoardBackDrop{
         background-color: var(--cover-color);

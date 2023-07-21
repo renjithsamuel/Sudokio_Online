@@ -45,6 +45,7 @@ function LeaderBoard({allUsers,setAllUsers,setIsLeaderBoardClicked,currentUser,h
                                {(theme=='light')? <img src={closeLight} alt="close" height={40} width={40} /> : <img src={closeDark} alt="close" height={40} width={40} />  }
                         </div>
                     </div>
+                    <div className="leaderBoardListsWrapper">
                     <LeaderBoardListElement username={'Username'} ranking={'Ranking'} score={'Score'} />
                     {(isTotal)?
                         (leaderBoardCount==0)? 
@@ -67,6 +68,7 @@ function LeaderBoard({allUsers,setAllUsers,setIsLeaderBoardClicked,currentUser,h
                                     }
                                 })
                     }
+                    </div>
                 </div>
             </div>
         </>

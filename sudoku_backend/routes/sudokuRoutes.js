@@ -6,10 +6,11 @@ router.use(cors({
     origin:'*'
 }));
 
-const {getBoard , postBoard , getUsers , postUser , patchUser , deleteUserById, getCurrentUser, patchManyUsers} = require('../controller/sudokuController')
+const {getBoard , postBoard , getUsers,  getTimeApi , postUser , patchUser , deleteUserById, getCurrentUser, patchManyUsers} = require('../controller/sudokuController')
 
 // Board router
 router.post('/getBoard', getBoard);
+router.get('/getTimeApi', getTimeApi);
 router.post('/postBoard',postBoard);
 
 // User Router

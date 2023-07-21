@@ -1,3 +1,4 @@
+import Skeleton from '@mui/material/Skeleton';
     import { useEffect, useRef, useState } from "react";
     import SelectElem from "../components/SelectElem";
     import SudokuElem from "../components/SudokuElem";
@@ -62,20 +63,26 @@
             return returnData;
         } 
 
-
+        // http://localhost:13000
+        // https://sudokionode.onrender.1com
         // initializing game
         useEffect( () => {
             connectToServer();
             getLeaderBoard();
             async function boardCreator(){
-                // const getTimeApi = `http://worldtimeapi.org/api/timezone/Asia/Kolkata`;
-                // let dateApiData = await sendHTTPRequest(getTimeApi,'GET');
-                // console.log(dateApiData);
-                today = new Date().toLocaleDateString('en-US',{day : 'numeric' , month : "short",year : "numeric"});
-                // console.log(today);
-                // sudokuGame();
-                const isBoardAvail = await fetchBoard(today); 
-                if(isBoardAvail===false){console.log('entering sudoku game'); sudokuGame();}
+
+                const getTimeApi = `https://sudokionode.onrender.com/api/v1/getTimeApi`;
+                let dateApiData = await sendHTTPRequest(getTimeApi,'GET');
+                if(dateApiData && dateApiData.success){
+                    console.log(dateApiData.time);
+                    today = new Date(dateApiData.time).toLocaleDateString('en-US',{day : 'numeric' , month : "short",year : "numeric"});
+                    // console.log(today);
+                    // sudokuGame();
+                    const isBoardAvail = await fetchBoard(today); 
+                    if(isBoardAvail===false){console.log('entering sudoku game'); sudokuGame();}
+                }else{
+                    console.log("something went wrong!");
+                }
             }
             boardCreator();   
             
@@ -461,6 +468,9 @@
 
         const updatePausedGame = async ()=> {
             // user playing without signing in
+            if(!isConnected){
+                return;
+            }
             if(currentUser==null){ 
                 if(todayGameWon)
                     {
@@ -560,6 +570,9 @@
 
 
         const resetFunc =  ()=>{
+            if(!isConnected){
+                return;
+            }
             if( confirm("Are you sure!")==true){
             resetBoard();
             }else return;
@@ -572,6 +585,9 @@
         };
 
         const clearCurrVal = ()=>{
+            if(!isConnected){
+                return;
+            }
             if(gameStarted==false)return;
             if(currX==-1 || currY==-1 || currVal==0 || board[currX][currY].fixed==true){
                 setCurrx(-1);
@@ -874,7 +890,13 @@
                 <div className="pagewrap">
                     <div className="left">
                         <div className="sudokubox" ref={sudoku}>
-                                {board.map((row, rowIndex) => (
+                            {(!isConnected)?
+                            <div className="pauseCover" >
+                                <Skeleton variant="rounded" animation="wave" width={"100%"} height={"100%"}/>
+                            </div>
+                            
+                            :
+                                board.map((row, rowIndex) => (
                                     <div className="sudokuRow" key={rowIndex}>
                                     {
                                         row.map((elem, colIndex) => (
@@ -897,8 +919,9 @@
                                             ))
                                         }
                                      </div>
-                                ))}
-                            <div className="pauseCover" style={{display:(isConnected)?(gameStarted)?'none':'flex':'none'}} onClick={()=>{updatePausedGame();}}>
+                                ))
+                            }
+                            <div className="pauseCover" style={{display:(isConnected)?(gameStarted)?'none':'flex':'none',position:'absolute',top:'0'}} onClick={()=>{updatePausedGame();}}>
                                 {(theme=='light')?<img src={pauseLight} alt="paused" height={50} width={50} />
                                                     :  <img src={pauseDark} alt="paused" height={50} width={50} />}
                             </div>

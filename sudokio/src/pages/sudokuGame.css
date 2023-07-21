@@ -94,19 +94,19 @@ body{
 
 ::-webkit-scrollbar {
     /* display: none; */
-    width: 2px;
+    width: 4px;
     border-radius: 30px;
   }
   
   /* Track */
   ::-webkit-scrollbar-track {
-    background: var(--primary-color);
+    background: var(--secondary-color);
     border-radius: 30px;
   }
   
   /* Handle */
   ::-webkit-scrollbar-thumb {
-      background: var(--secondary-color);
+      background: var(--primary-color);
       border-radius: 30px;
       transition: all 0.5s ease;
   }
@@ -300,8 +300,6 @@ h3{
 }
 
 .pauseCover{
-    position: absolute;
-    top: 0vw;
     background-color: var(--cover-color);
     /* background-color: transparent; */
     width: 28vw;

@@ -3,7 +3,7 @@
 
 Sudokio is a web-based Sudoku game that allows you to play Sudoku, compete with other players, and track your scores. It provides a simple and easy Google Sign-In system, a leaderboard with overall and daily rankings, and various features to enhance your Sudoku experience.
 
-Live site : https://sudokio.vercel.app/
+Live site : https://sudokio.vercel.app
 
 ## Features
 
@@ -17,7 +17,7 @@ Live site : https://sudokio.vercel.app/
 - Node.js and React.js: Sudokio is built using Node.js on the backend and React.js on the frontend.
 - Responsive design for seamless gameplay on different devices.
 
-![Sudokio Screenshot](https://i.ibb.co/pLWyVh8/Sudokio.png)
+![Sudokio Screenshot](https://i.ibb.co/kXyZKFX/sudokio2.png)
 
 
 

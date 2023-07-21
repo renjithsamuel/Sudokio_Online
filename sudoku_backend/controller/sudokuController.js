@@ -288,3 +288,17 @@
             })
         }
     }
+
+
+
+    exports.getTimeApi =  async (req, res , next) => {
+        try {
+          const getTimeApiUrl = 'http://worldtimeapi.org/api/timezone/Asia/Kolkata';
+          const response = await fetch(getTimeApiUrl);
+          const data = await response.json();
+        //   console.log(data.datetime);
+          res.json({success : true,time :  data.datetime });
+        } catch (error) {
+          res.status(500).json({ error: 'Failed to fetch time' });
+        }
+      };
