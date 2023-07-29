@@ -59,26 +59,27 @@ import Skeleton from '@mui/material/Skeleton';
                 method : method,
                 body : JSON.stringify(data),
                 headers : {'content-Type' : 'application/json'}  
-            }).then((response)=>{return response.json()}).then((response)=>returnData = response).catch((err)=>console.log("cannot retrive data!",err));
+            }).then((response)=>{return response.json()}).then((response)=>returnData = response).catch((err)=>console.log("cannot retrive data!",err.toString()));
             return returnData;
         } 
 
         // http://localhost:13000
         // https://sudokionode.onrender.1com
         // initializing game
+        
         useEffect( () => {
             connectToServer();
             getLeaderBoard();
             async function boardCreator(){
 
-                const getTimeApi = `    `;
+                const getTimeApi = `https://sudokionode.onrender.com/api/v1/getTimeApi`;
                 let dateApiData = await sendHTTPRequest(getTimeApi,'GET');
                 if(dateApiData && dateApiData.success){
                     console.log(dateApiData.time);
                     today = new Date(dateApiData.time).toLocaleDateString('en-US',{day : 'numeric' , month : "short",year : "numeric"});
                     // console.log(today);
                     // sudokuGame();
-                    const isBoardAvail = await fetchBoard(today); 
+                    const isBoardAvail = await fetchBoard(today); ;
                     if(isBoardAvail===false){console.log('entering sudoku game'); sudokuGame();}
                 }else{
                     console.log("something went wrong!");
@@ -142,7 +143,8 @@ import Skeleton from '@mui/material/Skeleton';
 
 
         useEffect(()=>{
-            if(localStorage.getItem('emailId')!=null || currentUser==null){
+            if((localStorage.getItem('emailId')!=null || currentUser==null ) && allUsers!=null){
+            
                 console.log('setting current user~ ',allUsers.filter((elem)=> elem.emailId == localStorage.getItem('emailId'))[0]);
                 setCurrentUser(()=>{return (allUsers.filter((elem)=> elem.emailId == localStorage.getItem('emailId')))[0]});
             }else if(localStorage.getItem('emailId')==null ){
@@ -189,7 +191,7 @@ import Skeleton from '@mui/material/Skeleton';
                 }
                 if(s=='Enter'){incrementXY(currX,currY);return;}
                 if (!(isNaN(s))) {
-                    console.log("ere");
+                    console.log(s);
                     updateCurrElemVal(parseInt(s), currX, currY);
                 }
             };
@@ -328,6 +330,7 @@ import Skeleton from '@mui/material/Skeleton';
         }
 
         const resetBoard = async ()=>{
+            if(currentUser==null)return;
             setBoard((prevBoard)=>{
                 return prevBoard.map((arr)=>{
                     return (arr).map(e=>{
@@ -607,16 +610,21 @@ import Skeleton from '@mui/material/Skeleton';
         const updateCurrElemVal = (newVal,x,y)=>{  
             if(newVal.toString()=='NaN')return
             if(gameStarted==false || x==-1 || y==-1)return;   
-            // console.log(newVal , x, y );
+            console.log(newVal , x, y );
             if( x!=-1 && y!=-1 && board[x][y].fixed==false){
-                if(isSafe(board,x,y,newVal)==false){
+                if(isSafe(board,x,y,newVal)==false || handleEachInput(board,x,y,newVal)==false){
                     if(heart>0)
                     setHeart(heart-1);
+                    board[currX][currY].wrong = true;
+                }
+                else{
+                    board[currX][currY].wrong = false;
                 }
                 board[x][y].val = newVal;
+                setCurrVal(newVal);
                 setBoard([...board]);
             }
-            incrementXY(x,y);
+            // incrementXY(x,y);
         }
 
         const incrementXY = (currX, currY) => {
@@ -688,6 +696,16 @@ import Skeleton from '@mui/material/Skeleton';
             setCurrx(newx);
             setCurry(newy);
         };  
+
+
+        // handle each input!
+        const handleEachInput = (board,x,y,val) => {
+            console.log("here");
+            let tempBoard = structuredClone(board);
+            tempBoard[x][y].val = val;
+            return Solve(tempBoard,0,0) 
+        }
+
           
     // board generation logics
         const generateRandomValue = () => Math.floor(Math.random() * 9) + 1;
@@ -715,20 +733,21 @@ import Skeleton from '@mui/material/Skeleton';
 
         // backtracking function that solves the puzzle
         function Solve( board, row, col){
+           
             if(row==board.length-1 && col==board[0].length)return true;
             if(col==board[0].length){row++;col=0;}
             if(board[row][col].val!=0)return Solve(board,row,col+1);
             for(let i=1;i<=board.length;i++){
                 let obj = new Object({
                     val : i,
-                    fixed : true
+                    fixed : true,
+                    wrong : false
                 })  
                 if(isSafe(board,row,col,i)){
                     board[row][col] = obj;
                     if(Solve(board,row,col+1)){return true;}
-                    
                 }
-                board[row][col] = { val: 0, fixed: false };
+                board[row][col] = { val: 0, fixed: false , wrong : false};
             }
             return false;
         }
@@ -740,29 +759,30 @@ import Skeleton from '@mui/material/Skeleton';
               Array.from({ length: 9 }, (_, j) => ({
                 val: 0,
                 fixed: false,
+                wrong : false
               }))
             );
-            newBoard[0][0] = { val: generateRandomValue(), fixed: true };
-            newBoard[1][3] = { val: generateRandomValue(), fixed: true };
-            newBoard[3][1] = { val: generateRandomValue(), fixed: true };          
-            newBoard[2][6] = { val: generateRandomValue(), fixed: true };          
-            newBoard[6][2] = { val: generateRandomValue(), fixed: true };          
-            newBoard[4][4] = { val: generateRandomValue(), fixed: true };          
-            newBoard[5][7] = { val: generateRandomValue(), fixed: true };          
-            newBoard[7][5] = { val: generateRandomValue(), fixed: true };          
-            newBoard[8][8] = { val: generateRandomValue(), fixed: true };          
+            newBoard[0][0] = { val: generateRandomValue(), fixed: true , wrong : false };
+            newBoard[1][3] = { val: generateRandomValue(), fixed: true , wrong : false};
+            newBoard[3][1] = { val: generateRandomValue(), fixed: true , wrong : false};          
+            newBoard[2][6] = { val: generateRandomValue(), fixed: true , wrong : false};          
+            newBoard[6][2] = { val: generateRandomValue(), fixed: true , wrong : false};          
+            newBoard[4][4] = { val: generateRandomValue(), fixed: true , wrong : false};          
+            newBoard[5][7] = { val: generateRandomValue(), fixed: true , wrong : false};          
+            newBoard[7][5] = { val: generateRandomValue(), fixed: true , wrong : false};          
+            newBoard[8][8] = { val: generateRandomValue(), fixed: true , wrong : false};          
             // Solve the Sudoku puzzle
             Solve(newBoard, 0, 0);
             console.log('printing sudoku board : ');
-            setBoard(newBoard);
             for(let i=0;i<(newBoard.length*newBoard[0].length)/2;i++){
-                    let x = r(9);
-                    let y = r(9);
-                    if(newBoard[x][y].val==0)i--;
-                    else{
-                        newBoard[x][y]={val:0,fixed:false};
-                    }
+                let x = r(9);
+                let y = r(9);
+                if(newBoard[x][y].val==0)i--;
+                else{
+                    newBoard[x][y]={val:0,fixed:false,wrong : false};
                 }
+            }
+            setBoard(newBoard);
             // posting the newly genereated board:
             postNewBoard(newBoard);
           }
@@ -968,15 +988,20 @@ import Skeleton from '@mui/material/Skeleton';
                                 onclick = {()=>{  
                                     if(!gameStarted)return;
                                     if( currX!=-1 && currY!=-1 && board[currX][currY].fixed==false){
-                                        if(isSafe(board,currX,currY,i+1)==false){
+                                        if(isSafe(board,currX,currY,i+1)==false || handleEachInput(board,currX,currY,i+1)==false){
                                             if(heart>0)
                                             setHeart(heart-1);
+                                            board[currX][currY].wrong = true;
                                         }
+                                        else{
+                                            board[currX][currY].wrong = false;
+                                        }
+                                        setCurrVal(i + 1);
                                         board[currX][currY].val = i+1;
                                         setBoard(board);
                                     }
                                     // setCurrx(-1);setCurry(-1);setCurrVal(-1);
-                                    incrementXY(currX,currY);
+                                    // incrementXY(currX,currY);
                                     }
                                  }
                             

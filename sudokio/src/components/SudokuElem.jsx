@@ -24,7 +24,7 @@ function SudokuElem({elem,onclick,style,currX,currY,rowind,colind,currVal,gameSt
                      || (((rowind >= (currX - currX%3)) && (rowind< (currX - currX%3) + 3)) 
                      && ((colind >= (currY - currY%3)) && (colind< (currY - currY%3) + 3))))) ? "var(--hover-color)" 
                      : elem.style ,
-                     color:(elem.fixed==false || currX==rowind && currY==colind)?'var(--text-color)':'var(--secondary-text-color)' ,
+                     color:(elem.wrong==true)?'red' : (elem.fixed==false || currX==rowind && currY==colind)?'var(--text-color)':'var(--secondary-text-color)' ,
                      fontWeight:(elem.fixed==true)?'400':'600',
                      fontSize:(elem.fixed==true)?'large':'larger',
                      // borderStyle:(currX==rowind && currY==colind)?'dashed':'',
