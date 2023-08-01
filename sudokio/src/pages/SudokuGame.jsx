@@ -296,7 +296,7 @@ import Skeleton from '@mui/material/Skeleton';
             // console.log(tempRemainCounter);
             // console.log(totalRemainingElements);
             setRemainCounter(tempRemainCounter);
-        },[currX,currY,board]);
+        },[currX,currY,board,currVal]);
 
         // small functions for various online competitive game environment
         const fetchBoard = async (date) => {
@@ -610,7 +610,6 @@ import Skeleton from '@mui/material/Skeleton';
         const updateCurrElemVal = (newVal,x,y)=>{  
             if(newVal.toString()=='NaN')return
             if(gameStarted==false || x==-1 || y==-1)return;   
-            console.log(newVal , x, y );
             if( x!=-1 && y!=-1 && board[x][y].fixed==false){
                 if(isSafe(board,x,y,newVal)==false || handleEachInput(board,x,y,newVal)==false){
                     if(heart>0)
@@ -618,6 +617,13 @@ import Skeleton from '@mui/material/Skeleton';
                     board[currX][currY].wrong = true;
                 }
                 else{
+                    let tempC = 0;
+                    Array.from({length : 9}).map((_,index) =>{
+                        tempC+=remainCounter[index];
+                    })
+                    if(tempC==1){
+                        submitFunc()
+                    }
                     board[currX][currY].wrong = false;
                 }
                 board[x][y].val = newVal;
@@ -701,6 +707,7 @@ import Skeleton from '@mui/material/Skeleton';
         // handle each input!
         const handleEachInput = (board,x,y,val) => {
             console.log("here");
+
             let tempBoard = structuredClone(board);
             tempBoard[x][y].val = val;
             return Solve(tempBoard,0,0) 
@@ -994,6 +1001,13 @@ import Skeleton from '@mui/material/Skeleton';
                                             board[currX][currY].wrong = true;
                                         }
                                         else{
+                                            let tempC = 0;
+                                            Array.from({length : 9}).map((_,index) =>{
+                                                tempC+=remainCounter[index];
+                                            })
+                                            if(tempC==1){
+                                                submitFunc()
+                                            }
                                             board[currX][currY].wrong = false;
                                         }
                                         setCurrVal(i + 1);
