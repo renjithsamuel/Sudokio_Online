@@ -574,27 +574,28 @@ h3{
             width: 20;
         }
         .sudokubox{
-            margin-left: 15vw;
+            margin-left: 8vw;
             /* width: 66vw; */
             height: auto;
         }
         .pauseCover{
-            width: 65vw;
-            height: 65vw;
+            width: 78vw;
+            height: 78vw;
         }
         .elem{
-            width: 7vw;
-            height: 7vw;
+            width: 8.5vw;
+            height: 8.5vw;
         }
     
         .middle{
-            margin-left: 32vw;
+            margin-left: 28vw;
             display: flex;
         }
     
         .controlElem{
-            height: 5.5vh;
+            height: 6vh;
             width: auto;
+            padding: 0.7vh;
             border-radius: 6px;
         }
         
@@ -606,8 +607,8 @@ h3{
             margin-top: 2vh;
         }
         .selem{
-            width: 9.5vw;
-            height: 8vh;
+            width: 10.5vw;
+            height: 10.5vh;
         }
 
 
@@ -623,12 +624,12 @@ h3{
             height: auto;
         }
         .pauseCover{
-            width: 76vw;
-            height: 76vw;
+            width: 79vw;
+            height: 79vw;
         }
         .elem{
-            width: 8vw;
-            height: 8vw;
+            /* width: 8vw;
+            height: 8vw; */
         }
     
         .middle{
@@ -689,16 +690,16 @@ h3{
         align-items: center;
     }
     .pauseCover{
-        width: 90vw;
-        height: 90vw;
+        width: 89vw;
+        height: 89vw;
     }
 
     .middle{
-        margin-left: 20vw;
+        margin-left: 23vw;
         display: flex;
     }
     .controlElem{
-        width: 10vw;
+        padding: 0.5vh;
         height: 10vw;
     }
     .elem{
@@ -710,8 +711,8 @@ h3{
         margin-left: 3vw;
     }
     .selem{
-        width: 25vw;
-        height: 8.5vh;
+        width: 9vw;
+        height: 9vh;
     }
 
   }
